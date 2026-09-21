@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8 Fecha Formulario</title>
+</head>
+<body>
+
+    <p>Fecha de Nacimiento:</p>
+
+    <form id="form1" name="form1" method="post" action="">
+        <select name="semana" id="semana"></select>
+        <select name="dia" id="dia"></select>
+        <select name="mes" id="mes"></select>
+        <select name="anio" id="anio"></select>
+    </form>
+
+    <script>
+
+        const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+        function createOptions(select, desde, hasta, selected) {
+            for (let i = desde; i <= hasta; i++) {
+                const option = document.createElement("option");
+                if (select.id === "semana") {
+                    option.value = dias[i];
+                    option.textContent = dias[i];
+                } else {
+                    option.value = i;
+                    option.textContent = i;
+                }
+            
+                if (i === selected) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            }
+        }
+
+        const hoy = new Date();
+
+        createOptions(document.getElementById("semana"), 0, dias.length - 1, hoy.getDay());
+        createOptions(document.getElementById("dia"), 1, 31, hoy.getDate());
+        createOptions(document.getElementById("mes"), 1, 12, hoy.getMonth() + 1);
+        createOptions(document.getElementById("anio"), 1920, 2026, hoy.getFullYear());
+
+    </script>
+    
+</body>
+</html>

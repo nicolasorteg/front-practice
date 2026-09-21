@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 10 Tablas Sucursales</title>
+</head>
+<body>
+
+    <table id="tablaSucursales" width="200" border="1"></table>
+
+    <script>
+
+        const meses = 12;
+        const tabla = document.getElementById("tablaSucursales");
+
+        let cantidadSucursales = parseInt(prompt("Ingrese cantidad de sucursales"), 10);
+        // validamos entrada
+        if (isNaN(cantidadSucursales) || cantidadSucursales < 0) {
+            cantidadSucursales = 0;
+        }
+    
+        // cabecera
+        const filaCabecera = document.createElement("tr");
+        const thSucursal = document.createElement("th");
+        thSucursal.textContent = "Sucursal";
+        filaCabecera.appendChild(thSucursal);
+
+        for (let mes = 1; mes <= meses; mes++) {
+            const th = document.createElement("th");
+            th.textContent = `Mes ${mes}`;
+            filaCabecera.appendChild(th);
+        }
+        tabla.appendChild(filaCabecera);
+
+        // una fila por sucursal
+        for (let i = 1; i <= cantidadSucursales; i++) {
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+
+            td.textContent = `Suc. ${i}`;
+            tr.appendChild(tr);
+        }
+
+    </script>
+    
+</body>
+</html>

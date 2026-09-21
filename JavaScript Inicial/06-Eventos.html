@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6 Contador</title>
+</head>
+<body>
+
+    <h1>Contador de clics</h1>
+    <p>Has pulsado el botón <span id="contador">0</span> veces.</p>
+    <button id="botonContar">Pulsa aquí</button>
+
+    <script>
+        
+        let count = 0;
+        const boton = document.getElementById(`botonContar`);
+        const contador = document.getElementById(`contador`);
+
+        boton.addEventListener("mouseover", () => {
+            count++;
+            contador.textContent = count;
+        });
+
+    </script>
+    
+</body>
+</html>

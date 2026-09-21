@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga de Campeones de la UEFA</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        #caja {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #cabecera {
+            background-color: #122f61;
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .estado {
+            text-align: center;
+            margin-left: 15px;
+            white-space: nowrap;
+            margin-top: 1px;
+        }
+
+        .logo-champions {
+            font-size: 36px;
+            line-height: 1;
+        }
+
+        #titulo h1 {
+            margin: 0;
+            font-size: 21px;
+        }
+        #titulo p {
+            color: rgb(195, 198, 205);
+        }
+
+        #menu {
+            display: flex;
+            gap: 85px;
+        }
+
+        #menu p {
+            margin: 0;
+            padding-bottom: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #d1e1f4;
+        }
+
+        #menu p.activo {
+            color: white;
+            font-weight: bold;
+            border-bottom: 3px solid white;
+        }
+        
+        .partido {
+            width: 50%;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e1e4e8;
+            border-right: 1px solid #e1e4e8;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #linea-partido {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .resultado-global {
+            color: #6e6e6e;
+        }
+
+        .equipo {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+
+        .equipo-perdedor {
+            font-size: 20px;
+            color: rgb(75, 75, 75);
+        }
+
+        .goles {
+            font-size: 20px;
+        }
+
+        .goles-perdedor {
+            font-size: 20px;
+            color: rgb(75, 75, 75);
+        }
+
+        .fecha {
+            color: rgb(75, 75, 75);
+        }
+
+        .equipos-container {
+            display: grid;
+            grid-template-columns: 24px 1fr auto auto auto;
+            gap: 15px;
+        }
+
+        .logo-competicion {
+            width: 65px;
+            height: 79px;
+            object-fit: contain;
+            margin-right: 12px;
+            margin-bottom: 12px;
+        }
+
+        .escudo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;  
+            flex-shrink: 0;        
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="caja">
+        <div id="cabecera">
+            <div class="header-top">
+                <img class="logo-competicion" src="images/champions-logo.png" alt="Logo de la UEFA Champions League">
+                <div id="titulo">
+                   <h1>Liga de Campeones de la UEFA</h1>
+                   <p>Play-off &middot; Jornada 2 de 2</p>
+                </div>
+            </div>
+            
+            <div id="menu">
+
+                    <p class="activo">PARTIDOS</p>
+                    <p>NOTICIAS</p>
+                    <p>CLASIFICACIÓN</p>
+                    <p>ESTADÍSTICAS</p>
+                    <p>JUGADORES</p>
+
+            </div>
+        </div>    
+
+        <div id="linea-partido">
+            <!-- Partido 1 -->
+            <div class="partido">
+                <div class="resultado-global">
+                    <p>Resultado global: 3 - 3, Ferencváros gana por los goles maracdos fuera de casa</p>
+                </div>
+                <div class="equipos-container">
+                    <img class="escudo" src="images/escudo-ferencvaros.png" alt="Escudo de Ferencváros">
+                    <div class="equipo">Ferencváros</div>
+                    <div class="goles">0</div>
+                    <div class="flecha"></div>
+                    <div class="estado"><span>Fin</span><br><span class="fecha">Mar., 29/9</span></div>
+
+                <img class="escudo" src="images/escudo-moldefk.png" alt="Escudo de Molde FK">
+                    <div class="equipo">Molde FK</div>
+                    <div class="goles">0</div>
+                    <div class="flecha"></div>
+                </div>
+            </div>
+
+            <!-- Partido 2 -->
+            <div class="partido">
+                <div class="resultado-global">
+                    <p>Resultado global: 5 - 1</p>
+                </div>
+                <div class="equipos-container">
+                    <img class="escudo" src="images/escudo-dinamo.png" alt="Escudo de Dinamo">
+                    <div class="equipo">Dinamo</div>
+                    <div class="goles">3</div>
+                    <div class="flecha">◀</div>
+                    <div class="estado"><span>Fin</span><br><span class="fecha">Mar., 29/9</span></div>
+
+                    <img class="escudo" src="images/escudo-gent.png" alt="Escudo de Gent">
+                    <div class="equipo-perdedor">Gent</div>
+                    <div class="goles-perdedor">0</div>
+                    <div class="flecha"></div>
+                </div>
+            </div>
+
+            <!-- Partido 3 -->
+            <div class="partido">
+                <div class="resultado-global">
+                    <p>Resultado global: 0 - 2</p>
+                </div>
+                <div class="equipos-container">
+                    <img class="escudo" src="images/escudo-omonia.png" alt="Escudo de Omonia">
+                    <div class="equipo">Omonia</div>
+                    <div class="goles">0</div>
+                    <div class="flecha"></div>
+                    <div class="estado"><span>Fin</span><br><span class="fecha">Mar., 29/9</span></div>
+
+                    <img class="escudo" src="images/escudo-olympiacos.png" alt="Escudo de Olympiacos">
+                    <div class="equipo">Olympiacos</div>
+                    <div class="goles">0</div>
+                    <div class="flecha"></div>
+                </div>
+            </div>
+
+            <!-- Partido 4 -->
+            <div class="partido">
+                <div class="resultado-global">
+                    <p>Resultado global: 4 - 1</p>
+                </div>
+                <div class="equipos-container">
+                    <img class="escudo" src="images/escudo-midtjylland.png" alt="Escudo de Midtjylland">
+                    <div class="equipo">Midtjylland</div>
+                    <div class="goles">4</div>
+                    <div class="flecha">◀</div>
+                    <div class="estado"><span>Fin</span><br>Mié., 30/9</div>
+
+                    <img class="escudo" src="images/escudo-slavia-praha.png" alt="Escudo de Slavia Praha">
+                    <div class="equipo-perdedor">Slavia Praga</div>
+                    <div class="goles-perdedor">1</div>
+                    <div class="flecha"></div>
+                </div>
+            </div>
+
+            <!-- Partido 5 -->
+            <div class="partido">
+                <div class="resultado-global">
+                    <p>Resultado global: 2 - 4</p>
+                </div>
+                <div class="equipos-container">
+                    <img class="escudo" src="images/escudo-paok.png" alt="Escudo de PAOK">
+                    <div class="equipo-perdedor">PAOK</div>
+                    <div class="goles-perdedor">1</div>
+                    <div class="flecha"></div>
+                    <div class="estado"><span>Fin</span><br>Mié., 30/9</div>
+
+                    <img class="escudo" src="images/escudo-krasnodar.png" alt="Escudo de Krasnodar">
+                    <div class="equipo">Krasnodar</div>
+                    <div class="goles">2</div>
+                    <div class="flecha">◀</div>
+                </div>
+            </div>
+
+            <!-- Partido 6 -->
+            <div class="partido">
+                <div class="resultado-global">
+                    <p>Resultado global: 5 - 2</p>
+                </div>
+                <div class="equipos-container">
+                    <img class="escudo" src="images/escudo-red-bull-salzburg.png" alt="Escudo de Red Bull Salzburg">
+                    <div class="equipo">Red Bull Salzburg</div>
+                    <div class="goles">3</div>
+                    <div class="flecha">◀</div>
+                    <div class="estado"><span class="fin">Fin</span><br>Mié., 30/9</div>
+
+                    <img class="escudo" src="images/escudo-maccabi-tel-aviv.png" alt="Escudo de Maccabi Tel Aviv">
+                    <div class="equipo-perdedor">M. Tel-Aviv</div>
+                    <div class="goles-perdedor">1</div>
+                    <div class="flecha"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
