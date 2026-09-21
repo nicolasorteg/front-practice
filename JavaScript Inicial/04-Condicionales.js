@@ -1,17 +1,17 @@
 function clasificarNumero(num) {
     // par o impar
     if (num % 2 === 0) {
-        console.log(`El nº ${num} es par.`)
+        console.log(`El nº ${num} es par.`);
     } else {
-        console.log(`El nº ${num} es impar.`)
+        console.log(`El nº ${num} es impar.`);
     }
     // positivo, negativo o 0
     if (num === 0) {
-        console.log(`El nº es 0`)
+        console.log(`El nº es 0`);
     } else if (num > 0) {
-        console.log(`El ${num} es positivo.`)
+        console.log(`El ${num} es positivo.`);
     } else {
-        console.log(`El ${num} es negativo.`)
+        console.log(`El ${num} es negativo.`);
     }
 }
 

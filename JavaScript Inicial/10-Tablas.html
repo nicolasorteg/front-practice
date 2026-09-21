@@ -20,26 +20,46 @@
             cantidadSucursales = 0;
         }
     
-        // cabecera
-        const filaCabecera = document.createElement("tr");
-        const thSucursal = document.createElement("th");
-        thSucursal.textContent = "Sucursal";
-        filaCabecera.appendChild(thSucursal);
+        createCabecera();
+        createFilas();
 
-        for (let mes = 1; mes <= meses; mes++) {
-            const th = document.createElement("th");
-            th.textContent = `Mes ${mes}`;
-            filaCabecera.appendChild(th);
+        function createCabecera() {
+            // cabecera
+            const filaCabecera = document.createElement("tr");
+            const thSucursal = document.createElement("th");
+            thSucursal.textContent = "Sucursal";
+            filaCabecera.appendChild(thSucursal);
+
+            for (let mes = 1; mes <= meses; mes++) {
+                const th = document.createElement("th");
+                th.textContent = `Mes ${mes}`;
+                filaCabecera.appendChild(th);
+            }
+            tabla.appendChild(filaCabecera);
         }
-        tabla.appendChild(filaCabecera);
 
-        // una fila por sucursal
-        for (let i = 1; i <= cantidadSucursales; i++) {
-            const tr = document.createElement("tr");
-            const td = document.createElement("td");
+        function createFilas() {
 
-            td.textContent = `Suc. ${i}`;
-            tr.appendChild(tr);
+            // una fila por sucursal
+            for (let i = 1; i <= cantidadSucursales; i++) {
+                const tr = document.createElement("tr");
+                const td = document.createElement("td");
+
+                td.textContent = `Suc. ${i}`;
+                tr.appendChild(td);
+
+                for (let mes = 1; mes <= meses; mes++) {
+                    const td = document.createElement("td");
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.value = `${i}-${mes}`;
+                    input.size = 5;
+                    td.appendChild(input);
+                    tr.appendChild(td);
+                }
+
+                tabla.appendChild(tr);
+            }
         }
 
     </script>

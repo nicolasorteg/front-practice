@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 11 Eventos Formulario</title>
+</head>
+<body>
+
+   <form id="form" name="Formulario" method="post" action="">
+    <p>
+        <label for="nombre">Nombre Completo:</label>
+        <input type="text" name="nombre" id="nombre" />
+    </p>
+    <p>
+        <input type="submit" name="button" id="button" value="Enviar" />
+    </p>
+   </form>
+
+    <script>
+
+        function mostrarTecla(event) {
+            alert(event.key);
+            if (event.ctrlKey) {
+                alert("Control presionado");
+            }
+        }
+
+        const form = document.getElementById("form");
+        const nombre = document.getElementById("nombre");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // evita refresh
+            alert("Formulario envidado");
+        });
+
+        nombre.addEventListener("change", () => alert("Has cambiado el valor"));
+        nombre.addEventListener("keyup", mostrarTecla);
+        //nombre.addEventListener("focus", () => alert("Has entrado en foco"));
+        //nombre.addEventListener("blur", () => alert("Has salido del foco"));
+
+    </script>
+    
+</body>
+</html>
