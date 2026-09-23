@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 12 Formulario</title>
+    <style>
+
+        body {
+            background-color: rgb(49, 43, 101);
+            color: aliceblue;
+            font-size: bold;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form {
+            width: 300px;
+            height: auto;
+        }
+
+        label {
+            width: 200px;
+            display: block;
+            margin: 10px;
+            float: left;
+        }
+
+        input[type="text"], select {
+            width: 200px;
+            float: left;
+        }
+
+        button {
+            display: block;
+            clear: both;
+            margin-left: 200px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 20px;
+        }
+
+        li {
+            margin: 0px;
+            padding: 0px;
+            height: 0px;
+        }
+
+        .enfoco {
+            background-color: rgb(0, 255, 0);
+            border: 1px solid greenyellow;
+        }
+
+        input.error {
+            background-color: antiquewhite;
+            border: 1px solid red;
+        }
+
+    </style>
+</head>
+<body>
+
+   <form id="formulario" name="formulario">
+        <ul>
+            <li>
+                <label for="nombre">Nombre*</label>
+                <input type="text" id="nombre" name="nombre" />
+            </li>
+            <li>
+                <label for="direccion">Dirección*</label>
+                <input type="text" id="direccion" name="direccion" />
+            </li>
+            <li>
+                <label for="edad">Edad*</label>
+                <input type="text" id="edad" name="edad" />
+            </li>
+            <li>
+                <label for="email">Email*</label>
+                <input type="text" id="email" name="email" />
+            </li>
+            <li>
+                <label for="estado-civil">Estado Civil*</label>
+                <select name="estado-civil" id="estado-civil">
+                    <option>Seleccione</option>
+                    <option value="soltero">Soltero/a</option>
+                    <option value="casado">Casado/a</option>
+                    <option value="viudo">Viudo/a</option>
+                    <option value="divorciado">Divorciado/a</option>
+                </select>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" value="SI" id="aceptoCondiciones" />
+                    Acepto las Condiciones
+                </label>
+            </li>
+        </ul>
+        <button type="submit">Registrame</button>
+   </form>
+
+    <script>
+
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        function entroEnFoco(elemento) {
+            elemento.className = "enfoco"
+        }
+
+        function salirDeFoco(elemento) {
+            elemento.className = ""
+        }
+
+        function revisarObligatorio(elemento) {
+            elemento.className = elemento.value === "" ? "error" : "";
+        }
+
+        function revisarLongitud(elemento, longitud) {
+
+            if(elemento.value !== "") {
+                if (elemento.value.length < longitud) {
+                    alert(`El campo no supera la longitud mínima ${longitud}.`);
+                    elemento.className = "error"
+                }
+            }
+        }
+
+        function revisarNumerico(elemento) {
+            if(elemento.value !== "") {
+                if (isNaN(elemento.value)) {
+                    alert(`El elemento no es un valor numérico`);
+                    elemento.className = "error"
+                }
+            }
+        }
+
+        function revisarEmail(elemento) {
+
+            if (elemento.value !== "") {
+                elemento.className = regex.test(elemento.value) ? "" : "error";
+            }
+        }
+
+        function validar() {
+            let estaTodoOk = true;
+
+            const nombre = document.getElementById("nombre");
+            const direccion = document.getElementById("direccion");
+            const edad = document.getElementById("edad");
+            const email = document.getElementById("email");
+            const estadoCivil = document.getElementById("estado-civil");
+            const aceptoCondiciones = document.getElementById("aceptoCondiciones");
+
+            if (nombre.value.length < 2) {
+                estaTodoOk = false;
+            }
+            if (direccion.value.length < 8) {
+                estaTodoOk = false;
+            }
+            if (edad.value !== "" && isNaN(edad.value)) {
+                estaTodoOk = false;
+            }
+            if(!regex.test(email.value)) {
+                estaTodoOk = false
+            }
+            if (estadoCivil.value === "") {
+                estaTodoOk = false;
+            }
+
+            if(!aceptoCondiciones.checked) {
+                estaTodoOk = false
+            }
+
+            if (!estaTodoOk) {
+                alert("Algunos datos tienen errores, por favor corrígalos para enviar el formulario")
+            }
+
+            return estaTodoOk;
+        }
+
+        // conexion eventos
+        const nombre = document.getElementById("nombre");
+        nombre.addEventListener("focus", () => entroEnFoco(nombre));
+        nombre.addEventListener("blur", () => {
+            salirDeFoco(nombre);
+            revisarObligatorio(nombre);
+            revisarLongitud(nombre, 2);
+        });
+
+        const direccion = document.getElementById("direccion");
+        direccion.addEventListener("focus", () => entroEnFoco(direccion));
+        direccion.addEventListener("blur", () => {
+            salirDeFoco(direccion);
+            revisarObligatorio(direccion);
+            revisarLongitud(direccion, 8);
+        });
+
+        const edad = document.getElementById("edad");
+        edad.addEventListener("focus", () => entroEnFoco(edad));
+        edad.addEventListener("blur", () => {
+            salirDeFoco(edad);
+            revisarObligatorio(edad);
+            revisarNumerico(edad);
+        });
+
+        const email = document.getElementById("email");
+        email.addEventListener("focus", () => entroEnFoco(email));
+        email.addEventListener("blur", () => {
+            salirDeFoco(email);
+            revisarObligatorio(email);
+            revisarEmail(email)
+        });
+
+        const estadoCivil = document.getElementById("estado-civil");
+        estadoCivil.addEventListener("focus", () => entroEnFoco(estadoCivil));
+        estadoCivil.addEventListener("blur", () => salirDeFoco(estadoCivil));
+
+        document.getElementById("formulario").addEventListener("submit", (event) => {
+            if (!validar()) {
+                event.preventDefault();
+            }
+            else alert("Formulario enviado 😊");
+        });
+
+    </script>
+    
+</body>
+</html>
