@@ -88,6 +88,7 @@
         const ciudad = document.getElementById("ciudad");   
         const provincia = document.getElementById("provincias");
         const preferente = document.getElementById("preferente");
+        const sexo = document.getElementById("sexo");
 
         // funcion generica para marcos un campo valido/invalido
         function marcarError(campo, esValido, mensajeError) {
@@ -115,9 +116,15 @@
         function comprobarCiudad() {
             return marcarError(ciudad, validarLongitud(ciudad.value, 1, 50), document.getElementById("errorCiudad"));
         }
+        function comprobarSexo() {
+            const marcado = validarRadioMarcado("sexo");
+            sexo.classList.toggle("campo-valido", marcado);
+            document.getElementById("obligatorioSexo").classList.toggle("visible", !marcado);
+            return marcado;
+        }
 
         // resaltado visual al entrar/salir
-        const camposConFoco = [nombre, direccion, direccionCompleta, telefono, codigoPostal, ciudad, provincia];
+        const camposConFoco = [nombre, direccion, direccionCompleta, telefono, codigoPostal, ciudad, provincia, sexo];
         camposConFoco.forEach((campos) => {
             campos.addEventListener("focus", () => campos.classList.add("foco"));
             campos.addEventListener("blur", () => campos.classList.remove("foco"));
@@ -128,11 +135,14 @@
         telefono.addEventListener("blur", comprobarTelefono);
         codigoPostal.addEventListener("blur", comprobarCodigoPostal);
         ciudad.addEventListener("blur", comprobarCiudad);
+        document.querySelectorAll('input[name="sexo"]').forEach((radio) => {
+            radio.addEventListener("change", comprobarSexo);
+        });
 
         function obtenerResumen() {
             const textoProvincia = provincia.options[provincia.selectedIndex].text;
             const preferenteChecked = preferente.checked ? "Sí" : "No";
-            return `Nombre y apellidos: ${nombre.value}\nDireccion: ${direccion.value}\nDireccion Completa: ${direccionCompleta.value}\nTeléfono: ${telefono.value}\nCódigo Postal: ${codigoPostal.value}\nCiudad: ${ciudad.value}\nProvincia: ${textoProvincia}\nPreferente: ${preferenteChecked}`;
+            return `Nombre y apellidos: ${nombre.value}\nDireccion: ${direccion.value}\nDireccion Completa: ${direccionCompleta.value}\nTeléfono: ${telefono.value}\nCódigo Postal: ${codigoPostal.value}\nCiudad: ${ciudad.value}\nProvincia: ${textoProvincia}\nPreferente: ${preferenteChecked}\nSexo: ${document.getElementById("hombre").checked ? "Hombre" : "Mujer"}`;
         }
 
         document.getElementById("formulario").addEventListener("submit", (event) => {
@@ -145,6 +155,7 @@
                 comprobarTelefono(),
                 comprobarCodigoPostal(),
                 comprobarCiudad(),
+                comprobarSexo()
             ];
             const formularioValido = resultados.every((resultado) => resultado);
 

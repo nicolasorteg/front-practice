@@ -47,3 +47,14 @@ function validarTelefono(telefono) {
 function validarCodigoPostal(codigo) {
     return validarSoloNumeros(codigo, 5) && codigo < 52006 && codigo > 1000;
 }
+
+function validarRadioMarcado(nombreGrupo) {
+    const opciones = document.getElementsByName(nombreGrupo); // array
+
+    for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].checked) {
+            return true;
+        }
+    }
+    return false; // si no hay ninguno marcado
+}
