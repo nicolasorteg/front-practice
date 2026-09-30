@@ -1,0 +1,223 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Verdana, Arial, sans-serif;
+    color: #333;
+    background-image: url("../images/fondo.png");
+    background-size: cover;
+}
+
+#body {
+    padding: 40px 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #edffa5;
+}
+
+h2 {
+    color: #d6e0ee;
+    font-size: 100%;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+#formulario {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #dcdfe3;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#formulario > div {
+    margin-bottom: 16px;
+}
+
+#formulario br {
+    display: none;
+}
+
+.linea {
+    display: block;
+    font-size: 90%;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.caja,
+.cajaList1 {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 95%;
+    font-family: inherit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.caja:focus,
+.cajaList1:focus,
+.foco {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    outline: none;
+}
+
+#sexo,
+#situacion {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+input[type="radio"] + label.linea,
+input[type="checkbox"] + label.linea {
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    accent-color: #4a90e2;
+    cursor: pointer;
+}
+
+.boton-file {
+    display: block;
+    font-size: 90%;
+    font-weight: 600;
+    color: #444;
+    padding: 6px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 6px 12px;
+    margin-right: 10px;
+    color: #fff;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.campo-error {
+    border-color: #ff1900;
+    background-color: #fdf0ef;
+}
+
+.boton-file.campo-error {
+    padding: 6px 10px;
+}
+
+.campo-valido {
+    border-color: #2ecc71;
+    background-color: #f0fbf3;
+}
+
+.obligatorio {
+    display: none;
+    color: #ff1900;
+    font-size: 82%;
+    margin-top: 4px;
+}
+
+.obligatorio.visible {
+    display: block;
+}
+
+#formulario > p.obligatorio.visible {
+    margin: -8px 0 16px 0;
+}
+
+#submit,
+#limpiar {
+    padding: 12px;
+    font-size: 95%;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align: top;
+    transition: background-color 0.15s ease;
+}
+
+#submit {
+    width: 66%;
+    margin-top: 8px;
+    background-color: #4a90e2;
+}
+
+#submit:hover {
+    background-color: #3d7fcc;
+}
+
+#limpiar {
+    width: 30%;
+    margin-top: 8px;
+    margin-left: 2%;
+    background-color: #7a8594;
+}
+
+#limpiar:hover {
+    background-color: #657080;
+}
+
+#submit:disabled {
+    background-color: #b5bcc6;
+    cursor: not-allowed;
+}
+
+footer {
+    max-width: 480px;
+    margin: 30px auto 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+footer p {
+    margin: 0 0 14px 0;
+    font-weight: 600;
+    color: #666;
+}
+
+.logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.logos img {
+    height: 45px;
+    width: auto;
+}
+
+.logos .deJovenes {
+    height: 110px;
+    width: auto;
+    margin-left: -25px;
+}

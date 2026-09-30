@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario DeJovenes</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="body">
+        <header>
+            <h1>FORMULARIO DE INSCRIPCIÓN</h1>
+            <h2>Rellena este formulario y envíalo a dejovenes@leganes.org</h2>
+        </header>
+        <form id="formulario">
+            <div>
+                <label class="linea">Nombre :</label>
+                <input class="caja" id="nombre" type="text" placeholder="Nombre" maxlength="60">
+                <p class="obligatorio" id="errorNombre">Nombre obligatorio, entre 2 y 60 caracteres</p>
+            </div>
+            <div>
+                <br><label class="linea">Apellidos :</label>
+                <input class="caja" id="apellidos" type="text" placeholder="Apellidos" maxlength="80">
+                <p class="obligatorio" id="errorApellidos">Apellidos obligatorios, entre 2 y 80 caracteres</p>
+            </div>
+            <div>
+                <br><label class="linea">DNI :</label>
+                <input class="caja" id="dni" type="text" placeholder="DNI" maxlength="9">
+                <p class="obligatorio" id="errorDni">DNI obligatorio, tiene que seguir el formato NNNNNNNNL</p>
+            </div>
+            <div>
+                <br><label class="linea">Fecha Nacimiento :</label>
+                <input class="caja" id="fecha" type="date">
+                <p class="obligatorio" id="errorFecha">Fecha obligatoria, no puede ser posterior a hoy</p>    
+            </div>
+            <div id="sexo">
+                <br><label class="linea">Sexo :</label>
+                <input id="hombre" type="radio" name="sexo" value="H">
+                <label class="linea">Hombre</label>
+                <input id="mujer" type="radio" name="sexo" value="M">
+                <label class="linea">Mujer</label>
+                <input id="noBinario" type="radio" name="sexo" value="X">
+                <label class="linea">No binario</label>
+            </div>
+            <p class="obligatorio" id="obligatorioSexo">Debe seleccionar una opción</p>
+            <div>
+                <br><label class="boton-file">Seleccionar archivo :</label>
+                <input class="caja" id="imagenDni" type="file" accept=".png, .jpg, .jpeg, image/png, image/jpeg">
+            </div>
+            <p class="obligatorio" id="errorImagenDni">Debe adjuntar una imagen del DNI</p>
+            <div>
+                <br><label class="linea">Intereses :</label>
+                <select class="cajaList1" id="intereses">
+                    <option value="selecciona" selected>-</option>
+                    <option value="cultura">Arte</option>
+                    <option value="deportes">Literatura</option>
+                    <option value="tecnologia">Música</option>
+                    <option value="ocio">Cocina</option>
+                </select>
+                <p class="obligatorio" id="errorIntereses">Debe seleccionar un interés</p>
+            </div>
+            <div>
+                <br><label class="linea">Código postal :</label>
+                <input class="caja" id="codigoPostal" type="text" placeholder="Código postal" maxlength="5">
+                <p class="obligatorio" id="errorCP">Código postal erróneo, 5 dígitos entre 01001 y 52006</p>
+            </div>
+            <div>
+                <br><label class="linea">Provincia :</label>
+                <select class="cajaList1" id="provincias">
+                    <option value="selecciona" selected>- Selecciona provincia -</option>
+                </select>
+                <p class="obligatorio" id="errorProvincia">Debe seleccionar una provincia</p>
+            </div>
+            <div id="situacion">
+                <br><label class="linea">Situación actual :</label>
+                <input id="estudiante" type="radio" name="situacion" value="E">
+                <label class="linea">Estudiante</label>
+                <input id="trabajando" type="radio" name="situacion" value="T">
+                <label class="linea">Trabajando</label>
+                <input id="enParo" type="radio" name="situacion" value="P">
+                <label class="linea">En paro</label>
+            </div>
+            <p class="obligatorio" id="obligatorioSituacion">Debe seleccionar una situación</p>
+            <div>
+                <br>
+                <input id="condiciones" type="checkbox">
+                <label class="linea" for="condiciones">Acepto las condiciones</label>
+            </div>
+
+            <br>
+            <button id="submit" type="submit" disabled>Inscribir</button>
+            <button id="limpiar" type="reset">Limpiar</button>
+
+        </form>
+
+        <footer>
+            <p>Con la colaboración de:</p>
+            <div class="logos">
+                <img src="images/dejovenes.png" alt="DeJóvenes" class="deJovenes">
+                <img src="images/leganes_ayuntamiento.png" alt="Ayuntamiento de Leganés">
+                <img src="images/los40.png" alt="Los 40">
+                <img src="images/parquesur.png" alt="Parquesur">
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/validar.js"></script>
+    <script>
+
+        const provinciasEspana = [
+            "Álava", "Albacete", "Alicante", "Almería", "Asturias", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ceuta", "Ciudad Real", "Córdoba", "Cuenca", "Gerona", "Granada", "Guadalajara", "Guipúzcoa", "Huelva", "Huesca", "Islas Baleares", "Jaén", "La Coruña", "La Rioja", "Las Palmas", "León", "Lérida", "Lugo", "Madrid", "Málaga", "Melilla", "Murcia", "Navarra", "Orense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife", "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia", "Valladolid", "Vizcaya", "Zamora", "Zaragoza"
+        ];
+        const nombre = document.getElementById("nombre");
+        const apellidos = document.getElementById("apellidos");
+        const dni = document.getElementById("dni");
+        const fecha = document.getElementById("fecha");
+        const imagenDni = document.getElementById("imagenDni");
+        const intereses = document.getElementById("intereses");
+        const sexo = document.getElementById("sexo");
+        const codigoPostal = document.getElementById("codigoPostal");
+        const provincia = document.getElementById("provincias");
+        const situacion = document.getElementById("situacion");
+        const condiciones = document.getElementById("condiciones");
+        const botonInscribir = document.getElementById("submit");
+        const formulario = document.getElementById("formulario");
+
+        provinciasEspana.forEach((nombreProvincia) => {
+            const option = document.createElement("option");
+            option.value = nombreProvincia;
+            option.text = nombreProvincia;
+            provincia.appendChild(option);
+        });
+
+        // funcion generica para marcos un campo valido/invalido
+        function marcarError(campo, esValido, mensajeError) {
+            campo.classList.toggle("campo-error", !esValido);
+            if (mensajeError) mensajeError.classList.toggle("visible", !esValido);
+            return esValido;
+        }
+
+        function comprobarNombre() {
+            return marcarError(nombre, validarLongitud(nombre.value, 2, 60), document.getElementById("errorNombre"));
+        }
+        function comprobarApellidos() {
+            return marcarError(apellidos, validarLongitud(apellidos.value, 2, 80), document.getElementById("errorApellidos"));
+        }
+        function comprobarDni() {
+            return marcarError(dni, validarDNI(dni.value), document.getElementById("errorDni"));
+        }
+        function comprobarFecha() {
+            return marcarError(fecha, validarFecha(fecha.value), document.getElementById("errorFecha"));
+        }
+        function comprobarSexo() {
+            const marcado = validarRadioMarcado("sexo");
+            document.getElementById("obligatorioSexo").classList.toggle("visible", !marcado);
+            return marcado;
+        }
+        function comprobarImagenDni() {
+            const boton = document.querySelector(".boton-file");
+            return marcarError(boton, validarImagenDni(imagenDni), document.getElementById("errorImagenDni"));
+        }
+        function comprobarIntereses() {
+            return marcarError(intereses, validarIntereses(intereses), document.getElementById("errorIntereses"));
+        }
+        function comprobarCodigoPostal() {
+            return marcarError(codigoPostal, validarCodigoPostal(codigoPostal.value), document.getElementById("errorCP"));
+        }
+        function comprobarProvincia() {
+            return marcarError(provincia, validarSelect(provincia), document.getElementById("errorProvincia"));
+        }
+        function comprobarSituacion() {
+            const marcado = validarRadioMarcado("situacion");
+            document.getElementById("obligatorioSituacion").classList.toggle("visible", !marcado);
+            return marcado;
+        }
+
+        // resaltado visual al entrar/salir
+        const camposConFoco = [nombre, apellidos];
+        camposConFoco.forEach((campos) => {
+            campos.addEventListener("focus", () => campos.classList.add("foco"));
+            campos.addEventListener("blur", () => campos.classList.remove("foco"));
+        });
+        nombre.addEventListener("blur", comprobarNombre);
+        apellidos.addEventListener("blur", comprobarApellidos);
+        dni.addEventListener("blur", comprobarDni);
+        fecha.addEventListener("blur", comprobarFecha);
+        fecha.addEventListener("change", comprobarFecha);
+        imagenDni.addEventListener("change", comprobarImagenDni);
+        intereses.addEventListener("change", comprobarIntereses);
+        document.querySelectorAll('input[name="sexo"]').forEach((radio) => {
+            radio.addEventListener("change", comprobarSexo);
+        });
+        codigoPostal.addEventListener("blur", comprobarCodigoPostal);
+        provincia.addEventListener("change", comprobarProvincia);
+        document.querySelectorAll('input[name="situacion"]').forEach((radio) => {
+            radio.addEventListener("change", comprobarSituacion);
+        });
+
+        condiciones.addEventListener("change", () => {
+            botonInscribir.disabled = !condiciones.checked;
+        });
+
+        formulario.addEventListener("reset", () => {
+            document.querySelectorAll(".campo-error, .foco").forEach((el) => {
+                el.classList.remove("campo-error", "foco");
+            });
+            document.querySelectorAll(".obligatorio.visible").forEach((el) => {
+                el.classList.remove("visible");
+            });
+            botonInscribir.disabled = true;
+        });
+
+        function obtenerResumen() {
+            const sexoMarcado = document.querySelector('input[name="sexo"]:checked');
+            const textoSexo = sexoMarcado ? sexoMarcado.nextElementSibling.textContent : "";
+            const situacionMarcada = document.querySelector('input[name="situacion"]:checked');
+            const textoSituacion = situacionMarcada ? situacionMarcada.nextElementSibling.textContent : "";
+            const textoInteres = intereses.options[intereses.selectedIndex].text;
+            const textoProvincia = provincia.options[provincia.selectedIndex].text;
+            const nombreImagen = imagenDni.files[0] ? imagenDni.files[0].name : "";
+
+            return `Nombre: ${nombre.value}\nApellidos: ${apellidos.value}\nDNI: ${dni.value}\nFecha nacimiento: ${fecha.value}\nSexo: ${textoSexo}\nImagen DNI: ${nombreImagen}\nInterés: ${textoInteres}\nCódigo postal: ${codigoPostal.value}\nProvincia: ${textoProvincia}\nSituación: ${textoSituacion}`;
+        }
+
+        document.getElementById("formulario").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const resultados = [
+                comprobarNombre(),
+                comprobarApellidos(),
+                comprobarDni(),
+                comprobarFecha(),
+                comprobarSexo(),
+                comprobarImagenDni(),
+                comprobarIntereses(),
+                comprobarCodigoPostal(),
+                comprobarProvincia(),
+                comprobarSituacion()
+            ];
+            const formularioValido = resultados.every((resultado) => resultado);
+
+            if (formularioValido) {
+                alert(obtenerResumen());
+            } else {
+                alert("Algunos datos tienen errores, por favor corríjalos antes de volver a enviar");
+            }
+        });
+
+    </script>
+</body>
+</html>
