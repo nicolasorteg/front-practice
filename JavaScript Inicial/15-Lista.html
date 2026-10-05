@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="marca">Marca:</label>
+        <select id="marca"></select>
+
+        <label for="modelo">Modelo:</label>
+        <select id="modelo" disabled></select>
+    </form>
+    <p id="resultado"></p>
+</body>
+<script>
+    // datos marca
+    const modelosPorMarca = {
+        "Seat": ["Ibiza", "León", "Arona", "Ateca"],
+        "Renault": ["Clio", "Megane", "Captur"],
+        "Toyota": ["Yaris", "Corolla", "RAV4", "C-HR"],
+        "Ford": ["Fiesta", "Focus", "Kuga"]
+    }
+
+    const selectMarca = document.getElementById("marca");
+    const selectModelo = document.getElementById("modelo");
+    const resultado = document.getElementById("resultado");
+
+    // funcion generica vacia un select y lo rellena con una lista de texto
+    function rellenarSelect(select, lista, textoInicial) {
+        select.innerHtml = "" // borra opciones anteriores
+
+        // primera opcion
+        const opcionInicial = document.createElement("option");
+        opcionInicial.value = "";
+        opcionInicial.textContent = textoInicial;
+        select.appendChild(opcionInicial);
+
+        for (let i = 0; i < lista.length; i++) {
+            const opcion = document.createElement("option");
+            opcion.value = lista[i];
+            opcion.textContent = lista[i];
+            select.appendChild(opcion)
+        }
+    }
+
+    // al cargar la pag. rellenamos con las claves del objeto
+    function cargarMarcas() {
+        const marcas = [];
+        for (const marca in modelosPorMarca) {
+            marcas.push(marca);
+        }
+        rellenarSelect(selectMarca, marcas, "- Selecciona Marca -");
+        rellenarSelect(selectModelo, [], "- Selecciona Modelo -");
+    }
+
+    // al cambiar la marca rellenamos los modelos correspondientes
+    function alCambiarMarca() {
+        const marcaElegida = selectMarca.value;
+
+        if (marcaElegida === "") {
+            // se ha vuelto a seleciona marca, vaciamos y deshabilitamos modelos
+            rellenarSelect(selectModelo, [], "- Selecciona Modelo -");
+            selectModelo.disabled = true
+        } else {
+            rellenarSelect(selectModelo, modelosPorMarca[marcaElegida], "- Seleccionar Modelo -");
+            selectModelo.disabled = false;
+        }
+        mostrarResultado();
+    }
+
+    // mostrar eleccion user
+    function mostrarResultado() {
+        if (selectMarca.value !== "" && selectModelo.value !== "") {
+            resultado.textContent = "Has elegido: " + selectMarca.value + " " + selectModelo.value;
+        } else {
+            resultado.textContent = "";
+        }
+    }
+
+    selectMarca.addEventListener("change", alCambiarMarca);
+    selectModelo.addEventListener("change", mostrarResultado);
+
+    cargarMarcas();
+</script>
+</html>
