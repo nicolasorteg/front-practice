@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siempre Activos - Actividades de Mayores 2017-2018</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- MENU -->
+    <div id="cabecera">
+        <div class="barra">
+            <span class="logo">Siempre Activos</span>
+            <button id="btnMenu">&#9776;</button>
+            <div id="menu">
+                <a href="#home">Home</a>
+                <a href="#alcalde">Saludo del alcalde</a>
+                <a href="#actividades">Actividades</a>
+                <a href="#video">Vídeo</a>
+                <a href="#inscripciones">Inscripciones</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOME + CARRUSEL -->
+    <div id="home" class="seccion">
+        <h1 class="titulo">Actividades de Mayores 2017-2018</h1>
+        <h2 class="subtitulo">Siempre Activos</h2>
+        <p class="texto">Las actividades son gratuitas. Concejalía de Mayores - Ayuntamiento de Boadilla del Monte.</p>
+
+        <!-- Slideshow container -->
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="images/carrusel1.png" alt="Pareja de mayores abrazados" style="width:100%">
+                <div class="text">Compartir con los amigos</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="images/carrusel2.png" alt="Grupo de mayores paseando" style="width:100%">
+                <div class="text">Paseos en grupo</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="images/carrusel3.png" alt="Pareja haciéndose un selfie" style="width:100%">
+                <div class="text">Siempre activos</div>
+            </div>
+
+            <!-- botones anterior y siguiente -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- puntos -->
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+
+        <a class="btn-inicio" href="#home">Ir a inicio</a>
+    </div>
+
+    <!-- SALUDO DEL ALCALDE -->
+    <div id="alcalde" class="seccion seccion-verde">
+        <h2 class="titulo">Saludo del alcalde</h2>
+        <div class="alcalde">
+            <img class="foto" src="images/alcalde.jpg" alt="Alcalde de Boadilla del Monte">
+            <div class="carta">
+                <p class="texto">Queridos vecinos:</p>
+                <p class="texto">Igual que vuestros nietos, iniciáis el curso con ganas de reencontraros con vuestros compañeros, con mucha ilusión por aprender tras el descanso de las vacaciones y con nuevas expectativas sobre lo que os deparará el nuevo año.</p>
+                <p class="texto">En realidad lo que estáis haciendo es renovar vuestras vidas con actividades que os enriquecen y con nuevos focos de interés que compartís con vuestros conocidos y amigos.</p>
+                <p class="texto">Lo que ha sido llamado "el envejecimiento activo" es lo que todos (médicos, terapeutas y psicólogos) recomiendan como garantía de salud física y psíquica: vivir más intensamente aprovechando cada momento para seguir mejorando y aprendiendo.</p>
+                <p class="texto">Todas las actividades son gratuitas y complementarias de las que organiza la Asociación de Mayores de Boadilla a través de la subvención que anualmente les concedemos.</p>
+                <p class="texto">¡Mucho ánimo, y a por el nuevo curso!</p>
+                <p class="texto firma">D. Antonio González Terol<br>Alcalde de Boadilla del Monte</p>
+            </div>
+        </div>
+        <a class="btn-inicio" href="#home">Ir a inicio</a>
+    </div>
+
+    <!-- ACTIVIDADES (2 tablas en 2 capas) -->
+    <div id="actividades" class="seccion">
+        <h2 class="titulo">Actividades centros de mayores</h2>
+        <div class="tablas">
+            <div class="capa-tabla">
+                <table class="tabla-actividades">
+                    <thead>
+                        <tr><th>Talleres</th><th>Días</th><th>Horario</th><th>Centro</th><th>Horas</th></tr>
+                    </thead>
+                    <tbody id="tabla1"></tbody>
+                </table>
+            </div>
+            <div class="capa-tabla">
+                <table class="tabla-actividades">
+                    <thead>
+                        <tr><th>Talleres</th><th>Días</th><th>Horario</th><th>Centro</th><th>Horas</th></tr>
+                    </thead>
+                    <tbody id="tabla2"></tbody>
+                </table>
+            </div>
+        </div>
+        <a class="btn-inicio" href="#home">Ir a inicio</a>
+    </div>
+
+    <!-- VIDEO -->
+    <div id="video" class="seccion seccion-verde">
+        <h2 class="titulo">Vídeo</h2>
+        <div class="videoWrapper">
+            <iframe src="https://www.youtube.com/embed/Y7VzlLtp-4" title="Vídeo" allowfullscreen></iframe>
+        </div>
+        <a class="btn-inicio" href="#home">Ir a inicio</a>
+    </div>
+
+    <!-- INSCRIPCIONES -->
+    <div id="inscripciones" class="seccion">
+        <h2 class="titulo">Inscripciones</h2>
+        <div class="inscripciones">
+            <div class="caja">
+                <h3 class="subtitulo">Quién puede participar</h3>
+                <p class="texto">Pueden ser usuarios los vecinos que figuren inscritos en el padrón municipal mayores de 65 años, pensionistas o jubilados totales o parciales mayores de 55 años y sus cónyuges de más de 55 años.</p>
+                <h3 class="subtitulo">Fechas y lugares</h3>
+                <p class="texto">Horario de 10 a 14 h.</p>
+                <ul>
+                    <li class="texto">Centro de Mayores de Gutiérrez Soto: del 4 al 8 de septiembre. C/ Gutiérrez Soto, 8, telf. 91 343 2090</li>
+                    <li class="texto">Centro de Mayores María de Vera: del 11 al 15 de septiembre. C/ José Antonio, 42, telf. 91 634 9300 ext. 2460</li>
+                </ul>
+                <p class="texto">Más información: activmayores@aytoboadilla.com</p>
+            </div>
+            <div class="caja">
+                <h3 class="subtitulo">Nuevas actividades curso 2017/2018</h3>
+                <ul class="texto">
+                    <li>Nuevos cursos y grupos de conversación en inglés.</li>
+                    <li>Ampliación de horarios de las actividades de yoga y taichí.</li>
+                    <li>Nuevas actividades en las urbanizaciones históricas.</li>
+                    <li>Escuela de Abuelos.</li>
+                    <li>Visitas guiadas Madrid Cultural.</li>
+                    <li>Taller de mejora de los hábitos de sueño.</li>
+                    <li>Día de San Valentín.</li>
+                    <li>Talleres: Decora la Navidad y Decora la Feria de Abril.</li>
+                    <li>Curso de creación y edición de documentos de word.</li>
+                </ul>
+            </div>
+        </div>
+        <a class="btn-inicio" href="#home">Ir a inicio</a>
+    </div>
+
+    <!-- PIE CON FORMULARIO -->
+    <div id="pie">
+        <h2 class="titulo">Contacta con la Concejalía de Mayores</h2>
+        <p class="texto texto-pequeno">Plaza de la Villa s/n - teléfono (91) 6324910 - mayores@aytoboadilla.com</p>
+        <form id="formulario" name="Contacto" method="post" action="">
+            <p>
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre">
+            </p>
+            <p>
+                <label for="email">Email:</label>
+                <input type="text" name="email" id="email">
+            </p>
+            <p>
+                <label for="telefono">Teléfono:</label>
+                <input type="text" name="telefono" id="telefono">
+            </p>
+            <p>
+                <label for="mensaje">Mensaje:</label>
+                <textarea name="mensaje" id="mensaje"></textarea>
+            </p>
+            <p>
+                <button type="submit">Enviar</button>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        // datos de las tablas: taller | dias | horario | centro | horas
+        const tablaIzquierda = [
+            "Gimnasia aeróbica 1|L/X|9:00-10:00|María de Vera|2",
+            "Gimnasia aeróbica 2|L/X|10:00-11:00|María de Vera|2",
+            "Gimnasia aeróbica 3|M/J|9:00-10:00|C\\ Gutiérrez Soto|2",
+            "Gimnasia aeróbica 4|M/J|11:00-12:00|C\\ Gutiérrez Soto|2",
+            "Gimnasia aeróbica 5|M/J|10:30-11:30|C\\ Gutiérrez Soto|2",
+            "Gimnasia mantenimiento 1|L/X|11:00-12:00|María de Vera|2",
+            "Gimnasia mantenimiento 2|L/X|12:00-13:00|María de Vera|2",
+            "Gimnasia mantenimiento 3|L/X|13:00-14:00|María de Vera|2",
+            "Gimnasia mantenimiento 4|M/J|10:00-11:00|C\\ Gutiérrez Soto|2",
+            "Gimnasia mantenimiento 5|M/J|12:00-13:00|C\\ Gutiérrez Soto|2",
+            "Gimnasia mantenimiento 6|M/J|11:30-12:30|C\\ Gutiérrez Soto|2",
+            "Creación audiovisual|V|11:00-12:00|Centro Empresas|1",
+            "Informática básica 1|V|9:00-10:00|Centro Empresas|1",
+            "Informática básica 2|V|12:00-13:00|Centro Empresas|1",
+            "Informática media|V|10:00-11:00|Centro Empresas|1",
+            "Estimulación cognitiva 1|L/M/J|10:00-11:00|María de Vera|3",
+            "Estimulación cognitiva 2|L/M/J|11:00-12:00|María de Vera|3",
+            "Estimulación cognitiva 3|X/V|11:30-12:30|C\\ Gutiérrez Soto|2",
+            "Dinámica ocupacional 1|M/J|12:00-13:00|María de Vera|2",
+            "Dinámica ocupacional 2|M/J|13:00-14:00|María de Vera|2",
+            "Dinámica ocupacional 3|L/X|12:30-13:30|C\\ Gutiérrez Soto|2",
+            "Baile 1 (individual)|L|17:00-18:00|María de Vera|1",
+            "Baile 2 (pareja)|L|18:00-19:00|María de Vera|1"
+        ];
+
+        const tablaDerecha = [
+            "Baile 3 (individual)|L|19:00-20:00|María de Vera|1",
+            "Baile 4 (individual)|M|17:00-18:00|C\\ Gutiérrez Soto|1",
+            "Baile 5 (pareja)|M|18:00-19:00|C\\ Gutiérrez Soto|1",
+            "Baile 6 (individual)|M|19:00-20:00|María de Vera|1",
+            "Baile 7 (pareja)|J|17:00-18:00|C\\ Gutiérrez Soto|1",
+            "Teatro|M|11:15-13:15|Centro Formación|2",
+            "Coro polifónico 1|L|17:00-19:00|María de Vera|2",
+            "Coro polifónico 2|L|17:00-19:00|C\\ Gutiérrez Soto|2",
+            "Guitarra 1|J|17:00-18:30|María de Vera|1,5",
+            "Guitarra 2|J|18:30-20:00|María de Vera|1,5",
+            "Yoga 1|M/J|9:00-10:00|María de Vera|2",
+            "Yoga 2|M/J|10:00-11:00|María de Vera|2",
+            "Yoga 3|M/J|11:00-12:00|María de Vera|2",
+            "Yoga 4|M/J|10:00-11:00|C\\ Gutiérrez Soto|2",
+            "Yoga 5|M/J|11:00-12:00|C\\ Gutiérrez Soto|2",
+            "Yoga 6|M/J|12:00-13:00|C\\ Gutiérrez Soto|2",
+            "Taichi 1|M/J|9:00-10:00|María de Vera|2",
+            "Taichi 2|V|9:00-10:30|María de Vera|1,5",
+            "Taichi 3|V|10:30-12:00|María de Vera|1,5",
+            "Taichi 4|L/X|10:30-11:30|C\\ Gutiérrez Soto|2",
+            "Taichi 5|L/X|11:30-12:30|C\\ Gutiérrez Soto|2",
+            "Inglés avanzado|J|10:30-11:30|María de Vera|1",
+            "Inglés inicial|J|11:30-12:30|C\\ Gutiérrez Soto|1"
+        ];
+
+        const tabla1 = document.getElementById("tabla1");
+        const tabla2 = document.getElementById("tabla2");
+        const btnMenu = document.getElementById("btnMenu");
+        const menu = document.getElementById("menu");
+        const formulario = document.getElementById("formulario");
+
+
+        // rellena un tbody a partir de una lista de textos
+        function rellenarTabla(tbody, lista) {
+            for (let i = 0; i < lista.length; i++) {
+                const datos = lista[i].split("|");
+                const fila = document.createElement("tr");
+
+                for (let j = 0; j < datos.length; j++) {
+                    const celda = document.createElement("td");
+                    celda.textContent = datos[j];
+                    fila.appendChild(celda);
+                }
+                tbody.appendChild(fila);
+            }
+        }
+
+        // carrusel (w3schools)
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // botones anterior / siguiente
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // puntos
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        // menu hamburguesa: abre y cierra el menu
+        btnMenu.addEventListener("click", () => menu.classList.toggle("abierto"));
+
+        // al pulsar un enlace se cierra el menu
+        menu.addEventListener("click", () => menu.classList.remove("abierto"));
+
+        formulario.addEventListener("submit", (event) => {
+            event.preventDefault(); // evita refresh
+            alert("Formulario enviado");
+        });
+
+        rellenarTabla(tabla1, tablaIzquierda);
+        rellenarTabla(tabla2, tablaDerecha);
+    </script>
+</body>
+</html>

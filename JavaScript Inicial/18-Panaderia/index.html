@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panadería El Sésamo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #fdf1d8;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #3b2a14;
+        }
+
+        .pedido {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fffdf5;
+            border: 1px solid #e0c98a;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #8a5a00;
+            border-bottom: 2px solid #e0c98a;
+            padding-bottom: 10px;
+        }
+
+        .datos-tienda {
+            line-height: 1.5;
+        }
+
+        .datos-tienda strong {
+            font-size: 18px;
+        }
+
+        .formulario {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-end;
+            background-color: #fcecc8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        select, input[type="number"] {
+            padding: 6px;
+            border: 1px solid #c9a24d;
+            border-radius: 4px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+        }
+
+        button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #b5b5b5;
+            cursor: not-allowed;
+        }
+
+        #btnAnadir {
+            background-color: #04b904;
+        }
+
+        #btnBorrar {
+            background-color: #b03a2e;
+        }
+
+        #btnTicket {
+            background-color: #8a5a00;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #8a5a00;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+
+        .pie {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pie h3 {
+            margin: 0;
+        }
+
+        .cabecera {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        img {
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pedido">
+        <h1>Panadería</h1>
+
+        <div class="cabecera">
+            <img src="images/logo-pan.png" alt="Logo pan">
+
+            <div class="datos-tienda">
+                <strong>Panadería El Sésamo S.A.</strong><br>
+                C/ del Trigo, 24<br>
+                28916 Madrid<br>
+                Teléfono: 91 694 55 66
+            </div>
+        </div>
+
+        <div class="formulario">
+            <div>
+                <label for="producto">Producto</label>
+                <select id="producto"></select>
+            </div>
+
+            <div>
+                <label for="precio">Precio</label>
+                <select id="precio" disabled></select>
+            </div>
+
+            <div>
+                <label for="cantidad">Cantidad</label>
+                <input type="number" id="cantidad" value="1" min="1">
+            </div>
+
+            <strong id="totalLinea">Total: 0.00 €</strong>
+
+            <button id="btnAnadir" disabled>Añadir</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio u.</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody id="lineas"></tbody>
+        </table>
+
+        <div class="pie">
+            <h3 id="totalPedido">Total del pedido: 0.00 €</h3>
+            <div>
+                <button id="btnBorrar">Borrar seleccionadas</button>
+                <button id="btnTicket">Imprimir ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // datos de los productos (el precio esta en la misma posicion que su producto)
+        const productos = ["Barra de pan", "Chapata", "Pistola", "Palmera de chocolate", "Magdalena"];
+        const precios = [0.85, 0.65, 0.45, 1.20, 0.50];
+
+        // datos de la tienda para el ticket
+        const nombreTienda = "Panadería El Sésamo S.A.";
+        const direccionTienda = "C/ del Trigo, 24";
+        const ciudadTienda = "28916 Madrid";
+        const telefonoTienda = "91 694 55 66";
+
+        // aqui guardamos las lineas del pedido
+        const pedido = [];
+
+        const selectProducto = document.getElementById("producto");
+        const selectPrecio = document.getElementById("precio");
+        const inputCantidad = document.getElementById("cantidad");
+        const totalLinea = document.getElementById("totalLinea");
+        const btnAnadir = document.getElementById("btnAnadir");
+        const btnBorrar = document.getElementById("btnBorrar");
+        const btnTicket = document.getElementById("btnTicket");
+        const tbodyLineas = document.getElementById("lineas");
+        const totalPedido = document.getElementById("totalPedido");
+
+        // funcion generica: vacia un select y lo rellena con una lista de texto
+        function rellenarSelect(select, lista, textoInicial) {
+            select.innerHTML = ""; // borra opciones anteriores
+
+            // primera opcion
+            const opcionInicial = document.createElement("option");
+            opcionInicial.value = "";
+            opcionInicial.textContent = textoInicial;
+            select.appendChild(opcionInicial);
+
+            for (let i = 0; i < lista.length; i++) {
+                const opcion = document.createElement("option");
+                opcion.value = lista[i];
+                opcion.textContent = lista[i];
+                select.appendChild(opcion);
+            }
+        }
+
+        // al cargar la pagina rellenamos productos y precios
+        function cargarSelects() {
+            const textosPrecios = [];
+            for (let i = 0; i < precios.length; i++) {
+                textosPrecios.push(precios[i].toFixed(2) + " €");
+            }
+            rellenarSelect(selectProducto, productos, "- Selecciona producto -");
+            rellenarSelect(selectPrecio, textosPrecios, "-");
+        }
+
+        // devuelve el precio del producto elegido (0 si no hay ninguno)
+        function obtenerPrecio() {
+            const posicion = selectProducto.selectedIndex; // 0 es la opcion inicial
+            if (posicion === 0) {
+                return 0;
+            }
+            return precios[posicion - 1];
+        }
+
+        // calcula el total de la linea y activa o desactiva el boton
+        function actualizarLinea() {
+            const cantidad = parseInt(inputCantidad.value);
+            const precio = obtenerPrecio();
+
+            if (precio !== 0 && cantidad >= 1) {
+                totalLinea.textContent = "Total: " + (precio * cantidad).toFixed(2) + " €";
+                btnAnadir.disabled = false;
+            } else {
+                totalLinea.textContent = "Total: 0.00 €";
+                btnAnadir.disabled = true;
+            }
+        }
+
+        // al cambiar el producto mostramos su precio en el otro select
+        function alCambiarProducto() {
+            selectPrecio.selectedIndex = selectProducto.selectedIndex;
+            actualizarLinea();
+        }
+
+        // añade la linea al pedido (si ya existe suma la cantidad)
+        function anadirLinea() {
+            const nombre = selectProducto.value;
+            const precio = obtenerPrecio();
+            const cantidad = parseInt(inputCantidad.value);
+            let encontrado = false;
+
+            for (let i = 0; i < pedido.length; i++) {
+                if (pedido[i].nombre === nombre) {
+                    pedido[i].cantidad = pedido[i].cantidad + cantidad;
+                    encontrado = true;
+                }
+            }
+
+            if (!encontrado) {
+                pedido.push({ nombre: nombre, precio: precio, cantidad: cantidad });
+            }
+
+            // reiniciamos el formulario
+            selectProducto.selectedIndex = 0;
+            selectPrecio.selectedIndex = 0;
+            inputCantidad.value = 1;
+            actualizarLinea();
+
+            pintarTabla();
+        }
+
+        // dibuja la tabla con las lineas del pedido y el total
+        function pintarTabla() {
+            tbodyLineas.innerHTML = "";
+            let total = 0;
+
+            for (let i = 0; i < pedido.length; i++) {
+                const subtotal = pedido[i].precio * pedido[i].cantidad;
+                total = total + subtotal;
+
+                const fila = document.createElement("tr");
+
+                const celdaProducto = document.createElement("td");
+                celdaProducto.textContent = pedido[i].nombre;
+                fila.appendChild(celdaProducto);
+
+                const celdaPrecio = document.createElement("td");
+                celdaPrecio.textContent = pedido[i].precio.toFixed(2) + " €";
+                fila.appendChild(celdaPrecio);
+
+                const celdaCantidad = document.createElement("td");
+                celdaCantidad.textContent = pedido[i].cantidad;
+                fila.appendChild(celdaCantidad);
+
+                const celdaSubtotal = document.createElement("td");
+                celdaSubtotal.textContent = subtotal.toFixed(2) + " €";
+                fila.appendChild(celdaSubtotal);
+
+                const celdaBorrar = document.createElement("td");
+                const check = document.createElement("input");
+                check.type = "checkbox";
+                check.value = i; // guardamos la posicion de la linea
+                celdaBorrar.appendChild(check);
+                fila.appendChild(celdaBorrar);
+
+                tbodyLineas.appendChild(fila);
+            }
+
+            totalPedido.textContent = "Total del pedido: " + total.toFixed(2) + " €";
+        }
+
+        // borra las lineas marcadas, pidiendo confirmacion
+        function borrarSeleccionadas() {
+            const checks = tbodyLineas.getElementsByTagName("input");
+            const aBorrar = [];
+
+            for (let i = 0; i < checks.length; i++) {
+                if (checks[i].checked) {
+                    aBorrar.push(parseInt(checks[i].value));
+                }
+            }
+
+            if (aBorrar.length === 0) {
+                alert("No has seleccionado ninguna línea");
+                return;
+            }
+
+            if (confirm("¿Seguro que quieres borrar " + aBorrar.length + " línea(s)?")) {
+                // recorremos de atras hacia delante para no descolocar las posiciones
+                for (let i = pedido.length - 1; i >= 0; i--) {
+                    if (aBorrar.indexOf(i) !== -1) {
+                        pedido.splice(i, 1);
+                    }
+                }
+                pintarTabla();
+            }
+        }
+
+        // muestra el ticket con un alert
+        function imprimirTicket() {
+            if (pedido.length === 0) {
+                alert("El pedido está vacío");
+                return;
+            }
+
+            let ticket = nombreTienda + "\n";
+            ticket += direccionTienda + "\n";
+            ticket += ciudadTienda + "\n";
+            ticket += "Teléfono: " + telefonoTienda + "\n";
+            ticket += "------------------------------\n";
+
+            let total = 0;
+            for (let i = 0; i < pedido.length; i++) {
+                const subtotal = pedido[i].precio * pedido[i].cantidad;
+                total = total + subtotal;
+                ticket += pedido[i].nombre + " - " + pedido[i].cantidad + " x " + pedido[i].precio.toFixed(2) + " € = " + subtotal.toFixed(2) + " €\n";
+            }
+
+            ticket += "------------------------------\n";
+            ticket += "TOTAL: " + total.toFixed(2) + " €";
+
+            alert(ticket);
+        }
+
+        selectProducto.addEventListener("change", alCambiarProducto);
+        inputCantidad.addEventListener("input", actualizarLinea);
+        btnAnadir.addEventListener("click", anadirLinea);
+        btnBorrar.addEventListener("click", borrarSeleccionadas);
+        btnTicket.addEventListener("click", imprimirTicket);
+
+        cargarSelects();
+    </script>
+</body>
+</html>

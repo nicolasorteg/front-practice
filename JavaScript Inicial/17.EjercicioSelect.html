@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio Listas Select</title>
+    <style>
+        body {
+            background-color: rgb(49, 43, 101);
+            color: aliceblue;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenedor {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .caja-lista {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            width: 250px;
+        }
+
+        .controles-centrales {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 170px;
+            padding: 5px;
+        }
+
+        select {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .panel-log {
+            margin-top: 20px;
+            width: 540px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            background-color: #222;
+            color: #0f0;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <div class="caja-lista">
+            <label for="texto1">Añadir Opción</label>
+            <input type="text" id="texto1">
+            <button id="btnAnadir1">+</button>
+
+            <select id="lista1" multiple></select>
+
+            <button id="btnBorrar1">- Borrar</button>
+        </div>
+
+        <div class="controles-centrales">
+            <button id="btnMoverDerecha">></button>
+            <button id="btnMoverIzquierda"><</button>
+        </div>
+
+        <div class="caja-lista">
+            <label for="texto2">Añadir Opción</label>
+            <input type="text" id="texto2">
+            <button id="btnAnadir2">+</button>
+
+            <select id="lista2" multiple></select>
+
+            <button id="btnBorrar2">- Borrar</button>
+        </div>
+    </div>
+
+    <div class="panel-log">
+        <label for="log">Panel de Estado (Log):</label>
+        <textarea id="log" readonly></textarea>
+    </div>
+
+    <script>
+        const input1 = document.getElementById("texto1");
+        const input2 = document.getElementById("texto2");
+        const lista1 = document.getElementById("lista1");
+        const lista2 = document.getElementById("lista2");
+        const log = document.getElementById("log");
+
+        const btnAnadir1 = document.getElementById("btnAnadir1");
+        const btnAnadir2 = document.getElementById("btnAnadir2");
+        const btnBorrar1 = document.getElementById("btnBorrar1");
+        const btnBorrar2 = document.getElementById("btnBorrar2");
+        const btnMoverDerecha = document.getElementById("btnMoverDerecha");
+        const btnMoverIzquierda = document.getElementById("btnMoverIzquierda");
+
+        function registrarLog(mensaje) {
+            log.value += mensaje + "\n";
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function anadirElemento(input, lista, nombreLista) {
+            const valor = input.value;
+            if (valor !== "") {
+                const opcion = document.createElement("option");
+                opcion.value = valor;
+                opcion.textContent = valor;
+                lista.appendChild(opcion);
+                registrarLog("Añadido '" + valor + "' en " + nombreLista);
+                input.value = "";
+            }
+        }
+
+        function borrarSeleccionados(lista, nombreLista) {
+            const opciones = lista.options;
+            for (let i = opciones.length - 1; i >= 0; i--) {
+                if (opciones[i].selected) {
+                    registrarLog("Borrado '" + opciones[i].text + "' de " + nombreLista);
+                    lista.remove(i);
+                }
+            }
+        }
+
+        function moverElementos(origen, destino, nombreOrigen, nombreDestino) {
+            const opciones = origen.options;
+            for (let i = opciones.length - 1; i >= 0; i--) {
+                if (opciones[i].selected) {
+                    const elementoMovido = opciones[i];
+                    origen.remove(i);
+                    elementoMovido.selected = false;
+                    destino.appendChild(elementoMovido);
+                    registrarLog("Movido '" + elementoMovido.text + "' de " + nombreOrigen + " a " + nombreDestino);
+                }
+            }
+        }
+
+        btnAnadir1.addEventListener("click", function() {
+            anadirElemento(input1, lista1, "Lista 1");
+        });
+
+        btnAnadir2.addEventListener("click", function() {
+            anadirElemento(input2, lista2, "Lista 2");
+        });
+
+        btnBorrar1.addEventListener("click", function() {
+            borrarSeleccionados(lista1, "Lista 1");
+        });
+
+        btnBorrar2.addEventListener("click", function() {
+            borrarSeleccionados(lista2, "Lista 2");
+        });
+
+        btnMoverDerecha.addEventListener("click", function() {
+            moverElementos(lista1, lista2, "Lista 1", "Lista 2");
+        });
+
+        btnMoverIzquierda.addEventListener("click", function() {
+            moverElementos(lista2, lista1, "Lista 2", "Lista 1");
+        });
+    </script>
+</body>
+</html>

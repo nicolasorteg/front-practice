@@ -1,0 +1,55 @@
+/* reset.css - elementos basicos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 1em;
+}
+
+/* responsive: imagenes, videos... */
+img, video, iframe, embed, object {
+    max-width: 100%;
+}
+
+img, video {
+    height: auto;
+    display: block;
+}
+
+/* capa para videos responsive */
+.videoWrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+}
+
+.videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
