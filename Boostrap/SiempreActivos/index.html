@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siempre Activos - Actividades de Mayores 2017-2018</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- MENU -->
+    <!-- menu -->
     <div id="cabecera">
         <div class="barra">
             <span class="logo">Siempre Activos</span>
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <!-- HOME + CARRUSEL -->
+    <!-- carrusel -->
     <div id="home" class="seccion">
         <h1 class="titulo">Actividades de Mayores 2017-2018</h1>
         <h2 class="subtitulo">Siempre Activos</h2>
@@ -33,19 +33,19 @@
         <!-- Slideshow container -->
         <div class="slideshow-container">
 
-            <div class="mySlides fade">
+            <div class="mySlides desvanecer">
                 <div class="numbertext">1 / 3</div>
                 <img src="images/carrusel1.png" alt="Pareja de mayores abrazados" style="width:100%">
                 <div class="text">Compartir con los amigos</div>
             </div>
 
-            <div class="mySlides fade">
+            <div class="mySlides desvanecer">
                 <div class="numbertext">2 / 3</div>
                 <img src="images/carrusel2.png" alt="Grupo de mayores paseando" style="width:100%">
                 <div class="text">Paseos en grupo</div>
             </div>
 
-            <div class="mySlides fade">
+            <div class="mySlides desvanecer">
                 <div class="numbertext">3 / 3</div>
                 <img src="images/carrusel3.png" alt="Pareja haciéndose un selfie" style="width:100%">
                 <div class="text">Siempre activos</div>
@@ -67,7 +67,7 @@
         <a class="btn-inicio" href="#home">Ir a inicio</a>
     </div>
 
-    <!-- SALUDO DEL ALCALDE -->
+    <!-- saludo alcalde -->
     <div id="alcalde" class="seccion seccion-verde">
         <h2 class="titulo">Saludo del alcalde</h2>
         <div class="alcalde">
@@ -80,12 +80,14 @@
                 <p class="texto">Todas las actividades son gratuitas y complementarias de las que organiza la Asociación de Mayores de Boadilla a través de la subvención que anualmente les concedemos.</p>
                 <p class="texto">¡Mucho ánimo, y a por el nuevo curso!</p>
                 <p class="texto firma">D. Antonio González Terol<br>Alcalde de Boadilla del Monte</p>
+                <button type="button" class="btn btn-primary" disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Cargando…
+                </button>
             </div>
         </div>
         <a class="btn-inicio" href="#home">Ir a inicio</a>
     </div>
 
-    <!-- ACTIVIDADES (2 tablas en 2 capas) -->
     <div id="actividades" class="seccion">
         <h2 class="titulo">Actividades centros de mayores</h2>
         <div class="tablas">
@@ -109,16 +111,16 @@
         <a class="btn-inicio" href="#home">Ir a inicio</a>
     </div>
 
-    <!-- VIDEO -->
+    <!-- video -->
     <div id="video" class="seccion seccion-verde">
         <h2 class="titulo">Vídeo</h2>
         <div class="videoWrapper">
-            <iframe src="https://www.youtube.com/embed/Y7VzlLtp-4" title="Vídeo" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/ejemplo" title="Vídeo" allowfullscreen></iframe>
         </div>
         <a class="btn-inicio" href="#home">Ir a inicio</a>
     </div>
 
-    <!-- INSCRIPCIONES -->
+    <!-- inscripcciones -->
     <div id="inscripciones" class="seccion">
         <h2 class="titulo">Inscripciones</h2>
         <div class="inscripciones">
@@ -151,7 +153,7 @@
         <a class="btn-inicio" href="#home">Ir a inicio</a>
     </div>
 
-    <!-- PIE CON FORMULARIO -->
+    <!-- pie -->
     <div id="pie">
         <h2 class="titulo">Contacta con la Concejalía de Mayores</h2>
         <p class="texto texto-pequeno">Plaza de la Villa s/n - teléfono (91) 6324910 - mayores@aytoboadilla.com</p>

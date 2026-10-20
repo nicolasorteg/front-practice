@@ -1,25 +1,50 @@
-/* style.css - se carga DESPUES de bootstrap para poder sobrescribirlo */
+/* style.css - Actividades de Mayores 2017-2018 */
 body {
     font-size: 16px; /* base: 1em = 16px */
+    font-family: Arial, Helvetica, sans-serif;
     color: #333;
+    background-color: #fff;
 }
 
 /* ---- fuentes (em) ---- */
 .titulo { font-size: 2.2em; color: #3f8a2c; margin-bottom: 0.6em; }
 .subtitulo { font-size: 1.5em; color: #66bb44; margin-bottom: 0.5em; }
-.texto { font-size: 1em; line-height: 1.5; }
+.texto { font-size: 1em; line-height: 1.5; margin-bottom: 1em; }
 .texto-pequeno { font-size: 0.85em; }
 
-/* ---- colores de las capas ---- */
-.fondo-verde { background-color: #66bb44; }
-.fondo-claro { background-color: #e9f5e3; }
-.fondo-oscuro { background-color: #3f8a2c; color: white; }
+/* ---- capas generales ---- */
+.seccion {
+    width: 100%;
+    padding: 6% 8%;
+}
+
+.seccion-verde { background-color: #e9f5e3; }
 
 /* ---- menu ---- */
-#menu a { color: white; padding: 0.4em 0.8em; }
+#cabecera {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #66bb44;
+    z-index: 10;
+}
+
+#cabecera .barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1% 4%;
+}
+
+.logo { color: white; font-size: 1.2em; font-weight: bold; }
+
+#menu { display: flex; gap: 1.5em; }
+#menu a { color: white; font-size: 1em; }
 #menu a:hover { text-decoration: underline; }
 
 #btnMenu {
+    display: none; /* solo en movil */
     background: none;
     border: none;
     color: white;
@@ -27,12 +52,14 @@ body {
     cursor: pointer;
 }
 
-/* para que el menu fijo no tape las secciones al navegar con anclas */
-html { scroll-padding-top: 4em; scroll-behavior: smooth; }
+/* ---- home ---- */
+#home { padding-top: 7%; text-align: center; }
+#home .titulo { color: #3f8a2c; }
 
 /* ---- carrusel (w3schools slideshow) ---- */
 .slideshow-container {
-    max-width: 100%;
+    max-width: 1000px;
+    width: 70%;
     position: relative;
     margin: auto;
 }
@@ -105,7 +132,7 @@ html { scroll-padding-top: 4em; scroll-behavior: smooth; }
 
 /* animacion fade */
 .desvanecer {
-    animation-name: desvanecer;
+    animation-name: fade;
     animation-duration: 1.5s;
 }
 
@@ -114,8 +141,16 @@ html { scroll-padding-top: 4em; scroll-behavior: smooth; }
     to { opacity: 1; }
 }
 
+/* ---- alcalde ---- */
+.alcalde { display: flex; gap: 4%; align-items: flex-start; }
+.alcalde .foto { width: 25%; }
+.alcalde .carta { width: 71%; }
+.firma { font-weight: bold; text-align: right; }
+
 /* ---- tablas (2 capas al 50%) ---- */
 .tablas { display: flex; gap: 2%; }
+.tablas .capa-tabla { width: 49%; }
+
 .tabla-actividades { font-size: 0.8em; }
 
 .tabla-actividades th {
@@ -136,20 +171,53 @@ html { scroll-padding-top: 4em; scroll-behavior: smooth; }
 .tabla-actividades tbody tr:nth-child(odd) { background-color: #ffffff; }
 .tabla-actividades tbody tr:nth-child(even) { background-color: #dfeed6; }
 
+/* ---- inscripciones ---- */
+.inscripciones { display: flex; gap: 4%; }
+.inscripciones .caja { width: 48%; }
+.inscripciones li { margin-bottom: 0.8em; line-height: 1.4; }
+
 /* ---- boton ir a inicio ---- */
 .btn-inicio {
     display: inline-block;
-    margin-top: 1.5em;
+    margin-top: 3%;
     padding: 0.6em 1.2em;
     background-color: #3f8a2c;
     color: white;
     border-radius: 4px;
-    text-decoration: none;
 }
 
-.firma { font-weight: bold; text-align: end; }
+/* ---- pie con formulario ---- */
+#pie { background-color: #3f8a2c; color: white; padding: 5% 8%; }
+#pie .titulo { color: white; font-size: 1.6em; }
 
-/* ---- formulario del pie ---- */
-#formulario input, #formulario textarea { width: 100%; padding: 0.5em; border: none; border-radius: 4px; }
+#formulario { width: 50%; }
+#formulario p { margin-bottom: 1em; }
+#formulario label { display: block; margin-bottom: 0.3em; }
+#formulario input, #formulario textarea { width: 100%; padding: 2%; border: none; border-radius: 4px; }
 #formulario textarea { height: 6em; }
 #formulario button { padding: 0.6em 1.5em; border: none; border-radius: 4px; background-color: #fff; color: #3f8a2c; cursor: pointer; }
+
+/* ---- media queries ---- */
+@media (max-width: 800px) {
+    #btnMenu { display: block; }
+
+    #menu {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+    #menu.abierto { display: flex; }
+    #menu a { padding: 3% 0; border-top: 1px solid rgba(255,255,255,0.4); }
+
+    #cabecera .barra { flex-wrap: wrap; }
+    #home { padding-top: 20%; }
+
+    .slideshow-container { width: 100%; }
+    .alcalde, .tablas, .inscripciones { flex-direction: column; }
+    .alcalde .foto, .alcalde .carta,
+    .tablas .capa-tabla, .inscripciones .caja { width: 100%; }
+    .alcalde .foto { width: 50%; }
+    .tablas .capa-tabla { margin-bottom: 4%; }
+    #formulario { width: 100%; }
+}
