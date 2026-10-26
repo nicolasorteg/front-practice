@@ -157,26 +157,32 @@
     <div id="pie">
         <h2 class="titulo">Contacta con la Concejalía de Mayores</h2>
         <p class="texto texto-pequeno">Plaza de la Villa s/n - teléfono (91) 6324910 - mayores@aytoboadilla.com</p>
-        <form id="formulario" name="Contacto" method="post" action="">
-            <p>
-                <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" id="nombre">
-            </p>
-            <p>
-                <label for="email">Email:</label>
-                <input type="text" name="email" id="email">
-            </p>
-            <p>
-                <label for="telefono">Teléfono:</label>
-                <input type="text" name="telefono" id="telefono">
-            </p>
-            <p>
-                <label for="mensaje">Mensaje:</label>
-                <textarea name="mensaje" id="mensaje"></textarea>
-            </p>
-            <p>
-                <button type="submit">Enviar</button>
-            </p>
+        <form id="formulario" name="Contacto" method="post" action="" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <div class="valid-feedback">¡Correcto!</div>
+                <div class="invalid-feedback">Escribe tu nombre.</div>
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div class="valid-feedback">¡Correcto!</div>
+                <div class="invalid-feedback">Introduce un email válido (ej. nombre@dominio.es).</div>
+            </div>
+            <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono">
+            </div>
+            <div class="col-12">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="3" required></textarea>
+                <div class="valid-feedback">¡Correcto!</div>
+                <div class="invalid-feedback">Escribe un mensaje.</div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
         </form>
     </div>
 
@@ -292,9 +298,16 @@
         // al pulsar un enlace se cierra el menu
         menu.addEventListener("click", () => menu.classList.remove("abierto"));
 
+        // patrón oficial de validación de Bootstrap (apuntes 11.2)
         formulario.addEventListener("submit", (event) => {
             event.preventDefault(); // evita refresh
-            alert("Formulario enviado");
+            if (!formulario.checkValidity()) {
+                // hay campos sin cumplir las reglas HTML5: no "enviamos"
+                event.stopPropagation();
+            } else {
+                alert("Formulario enviado");
+            }
+            formulario.classList.add("was-validated"); // activa los estilos verde/rojo
         });
 
         rellenarTabla(tabla1, tablaIzquierda);

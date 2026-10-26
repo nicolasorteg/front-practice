@@ -187,15 +187,10 @@ body {
 }
 
 /* ---- pie con formulario ---- */
+/* Los estilos del formulario ahora los da Bootstrap (form-label, form-control,
+   btn...), por eso se han quitado las reglas antiguas de #formulario */
 #pie { background-color: #3f8a2c; color: white; padding: 5% 8%; }
 #pie .titulo { color: white; font-size: 1.6em; }
-
-#formulario { width: 50%; }
-#formulario p { margin-bottom: 1em; }
-#formulario label { display: block; margin-bottom: 0.3em; }
-#formulario input, #formulario textarea { width: 100%; padding: 2%; border: none; border-radius: 4px; }
-#formulario textarea { height: 6em; }
-#formulario button { padding: 0.6em 1.5em; border: none; border-radius: 4px; background-color: #fff; color: #3f8a2c; cursor: pointer; }
 
 /* ---- media queries ---- */
 @media (max-width: 800px) {
@@ -219,5 +214,4 @@ body {
     .tablas .capa-tabla, .inscripciones .caja { width: 100%; }
     .alcalde .foto { width: 50%; }
     .tablas .capa-tabla { margin-bottom: 4%; }
-    #formulario { width: 100%; }
 }
