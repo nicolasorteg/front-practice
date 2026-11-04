@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPTICA</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+          <h1 class="h3 mb-1">OPTICA TÚ!</h1>
+          <p class="mb-0">Solicita información de nuestros productos</p>
+        </div>
+
+        <div class="card-body">
+          <form id="formulario" class="needs-validation" novalidate>
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre *</label>
+                <input type="text" class="form-control" id="nombre" name="nombre"
+                       required minlength="2" maxlength="100" data-nombre="Nombre">
+                <div class="invalid-feedback">El nombre debe tener entre 2 y 100 caracteres.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       required maxlength="100" data-nombre="Email">
+                <div class="invalid-feedback">Introduce un email válido (máximo 100 caracteres).</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="tfno" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="tfno" name="tfno"
+                       pattern="[67][0-9]{8}" maxlength="9" data-nombre="Teléfono">
+                <div class="invalid-feedback">Debe tener 9 cifras y empezar por 6 o 7.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="cp" class="form-label">Código postal *</label>
+                <input type="text" class="form-control" id="cp" name="cp"
+                       required pattern="[0-9]{5}" maxlength="5" data-nombre="Código postal">
+                <div class="invalid-feedback">Debe tener 5 cifras y empezar entre 01 y 52.</div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="provincia" class="form-label">Provincia</label>
+                <input type="text" class="form-control" id="provincia" name="provincia" readonly>
+              </div>
+
+              <div class="col-12">
+                <p class="form-label mb-1">Producto *</p>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="producto" id="gafas"
+                         value="Gafas" required data-nombre="Producto">
+                  <label class="form-check-label" for="gafas">Gafas</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="producto" id="lentes"
+                         value="Lentes de contacto" required>
+                  <label class="form-check-label" for="lentes">Lentes de contacto</label>
+                  <div class="invalid-feedback">Elige una opción.</div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="dolencias" class="form-label">Dolencias</label>
+                <select class="form-select" id="dolencias" name="dolencias" multiple size="5">
+                  <option>Miopía</option>
+                  <option>Astigmatismo</option>
+                  <option>Hipermetropía</option>
+                  <option>Presbicia</option>
+                  <option>Ojos cansados</option>
+                  <option>Ojo seco</option>
+                </select>
+                <div class="form-text">Mantén pulsado Ctrl para elegir varias.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="fecha" class="form-label">
+                  Fecha deseada *
+                  <i class="bi bi-info-circle-fill text-primary" data-bs-toggle="tooltip"
+                     data-bs-title="Elige una fecha a partir del día siguiente a la fecha actual."></i>
+                </label>
+                <input type="date" class="form-control" id="fecha" name="fecha"
+                       required data-nombre="Fecha deseada">
+                <div class="invalid-feedback">Elige una fecha a partir de mañana.</div>
+              </div>
+
+              <div class="col-12">
+                <label for="comentarios" class="form-label">Comentarios</label>
+                <textarea class="form-control" id="comentarios" name="comentarios"
+                          rows="3" maxlength="250"></textarea>
+                <div class="form-text">Máximo 250 caracteres.</div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="condiciones" name="condiciones"
+                         required data-nombre="Condiciones">
+                  <label class="form-check-label" for="condiciones">Aceptar las</label>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#modalCondiciones">condiciones</a> *
+                  <div class="invalid-feedback">Debes aceptar las condiciones.</div>
+                </div>
+              </div>
+
+              <div class="col-12 d-grid d-sm-flex justify-content-sm-end">
+                <button type="submit" class="btn btn-primary btn-lg">ENVIAR</button>
+              </div>
+
+            </div>
+            <p class="form-text mt-3 mb-0">* Campos obligatorios</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCondiciones" tabindex="-1" aria-labelledby="tituloCondiciones" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="tituloCondiciones">Condiciones</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Al marcar la casilla autorizas a OPTICA TÚ! a usar los datos de este formulario solo para responder a tu solicitud de información.</p>
+        <p class="mb-0">Tus datos no se cederán a terceros.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalErrores" tabindex="-1" aria-labelledby="tituloErrores" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-bg-danger">
+        <h1 class="modal-title fs-5" id="tituloErrores">Revisa el formulario</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="listaErrores" class="mb-0"></ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Corregir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEnviado" tabindex="-1" aria-labelledby="tituloEnviado" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header text-bg-success">
+        <h1 class="modal-title fs-5" id="tituloEnviado">¡Solicitud enviada!</h1>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped mb-0">
+          <tbody id="tablaDatos"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const form = document.getElementById('formulario');
+const cp = document.getElementById('cp');
+const provincia = document.getElementById('provincia');
+const fecha = document.getElementById('fecha');
+
+const PROVINCIAS = ['Álava', 'Albacete', 'Alicante', 'Almería', 'Ávila', 'Badajoz', 'Illes Balears', 'Barcelona',
+  'Burgos', 'Cáceres', 'Cádiz', 'Castellón', 'Ciudad Real', 'Córdoba', 'A Coruña', 'Cuenca', 'Girona', 'Granada',
+  'Guadalajara', 'Gipuzkoa', 'Huelva', 'Huesca', 'Jaén', 'León', 'Lleida', 'La Rioja', 'Lugo', 'Madrid', 'Málaga',
+  'Murcia', 'Navarra', 'Ourense', 'Asturias', 'Palencia', 'Las Palmas', 'Pontevedra', 'Salamanca',
+  'Santa Cruz de Tenerife', 'Cantabria', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Teruel', 'Toledo',
+  'Valencia', 'Valladolid', 'Bizkaia', 'Zamora', 'Zaragoza', 'Ceuta', 'Melilla'];
+
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+
+const manana = new Date();
+manana.setDate(manana.getDate() + 1);
+fecha.min = manana.toLocaleDateString('en-CA');
+
+cp.addEventListener('input', () => {
+  const nombre = cp.value.length === 5 ? PROVINCIAS[parseInt(cp.value.slice(0, 2), 10) - 1] : undefined;
+  provincia.value = nombre || '';
+  cp.setCustomValidity(cp.value.length === 5 && !nombre ? 'Provincia no válida' : '');
+});
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  form.classList.add('was-validated');
+  if (form.checkValidity()) {
+    mostrarDatos();
+  } else {
+    mostrarErrores();
+  }
+});
+
+function mostrarErrores() {
+  const lista = document.getElementById('listaErrores');
+  lista.innerHTML = '';
+  form.querySelectorAll('[data-nombre]').forEach(campo => {
+    if (!campo.checkValidity()) {
+      const mensaje = campo.closest('.row > div').querySelector('.invalid-feedback').textContent;
+      const li = document.createElement('li');
+      li.textContent = campo.dataset.nombre + ': ' + mensaje;
+      lista.appendChild(li);
+    }
+  });
+  new bootstrap.Modal('#modalErrores').show();
+}
+
+function mostrarDatos() {
+  const datos = new FormData(form);
+  const filas = [
+    ['Nombre', datos.get('nombre')],
+    ['Email', datos.get('email')],
+    ['Teléfono', datos.get('tfno') || '—'],
+    ['Código postal', datos.get('cp')],
+    ['Provincia', datos.get('provincia')],
+    ['Producto', datos.get('producto')],
+    ['Dolencias', datos.getAll('dolencias').join(', ') || 'Ninguna'],
+    ['Fecha deseada', datos.get('fecha').split('-').reverse().join('/')],
+    ['Comentarios', datos.get('comentarios') || '—']
+  ];
+  const tabla = document.getElementById('tablaDatos');
+  tabla.innerHTML = '';
+  filas.forEach(([etiqueta, valor]) => {
+    const fila = tabla.insertRow();
+    fila.insertCell().textContent = etiqueta;
+    fila.insertCell().textContent = valor;
+  });
+  new bootstrap.Modal('#modalEnviado').show();
+}
+</script>
+
+</body>
+</html>

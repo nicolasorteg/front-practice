@@ -1,0 +1,2426 @@
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apuntes de Bootstrap 5</title>
+<!-- Bootstrap 5.3.8 (CSS) + Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+<!-- Resaltado de código -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" rel="stylesheet">
+<style>
+  /* ====== Estilos propios de los apuntes (no forman parte de Bootstrap) ====== */
+  :root { --apuntes-acento: #7952b3; }
+  html { scroll-padding-top: 76px; }
+  body { background: var(--bs-tertiary-bg); }
+  .navbar-apuntes { background: var(--apuntes-acento); }
+  main section { scroll-margin-top: 76px; }
+  main h2.capitulo { border-bottom: 3px solid var(--apuntes-acento); padding-bottom: .4rem; margin-top: 3rem; }
+  main h3 { margin-top: 2rem; }
+  .hoja { background: var(--bs-body-bg); border-radius: 1rem; padding: 2rem; box-shadow: 0 .25rem 1rem rgba(0,0,0,.05); }
+  @media (max-width: 575.98px) { .hoja { padding: 1rem; border-radius: 0; } }
+  #toc { position: sticky; top: 76px; max-height: calc(100vh - 90px); overflow-y: auto; font-size: .9rem; }
+  #toc .nav-link { padding: .2rem .75rem; color: var(--bs-secondary-color); border-left: 2px solid transparent; }
+  #toc .nav-link.active { color: var(--apuntes-acento); border-left-color: var(--apuntes-acento); font-weight: 600; }
+  #toc .nav-link.sub { padding-left: 1.6rem; font-size: .83rem; }
+  [data-bs-theme="dark"] #toc .nav-link.active { color: #c8a8ff; border-left-color: #c8a8ff; }
+
+  /* Bloques de ejemplo: resultado + código + explicación */
+  .ejemplo { border: 1px solid var(--bs-border-color); border-radius: .75rem; margin: 1.5rem 0; overflow: hidden; background: var(--bs-body-bg); }
+  .ejemplo-titulo { background: var(--bs-secondary-bg); padding: .6rem 1rem; font-weight: 600; border-bottom: 1px solid var(--bs-border-color); }
+  .ejemplo-titulo .bi { color: var(--apuntes-acento); }
+  .demo { padding: 1.25rem; position: relative; }
+  .demo::before { content: "Resultado"; position: absolute; top: .3rem; right: .6rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: var(--bs-secondary-color); }
+  details.codigo { border-top: 1px solid var(--bs-border-color); }
+  details.codigo > summary { padding: .5rem 1rem; cursor: pointer; font-size: .85rem; font-weight: 600; background: var(--bs-tertiary-bg); display: flex; justify-content: space-between; align-items: center; }
+  details.codigo pre { margin: 0; max-height: 520px; overflow: auto; }
+  pre code.hljs { padding: 1rem; font-size: .82rem; line-height: 1.5; }
+  pre.suelto { border-radius: .5rem; overflow: auto; margin: 1rem 0; }
+  .explicacion { padding: 1rem 1.25rem; border-top: 1px solid var(--bs-border-color); font-size: .95rem; }
+  .explicacion > :last-child { margin-bottom: 0; }
+
+  /* Avisos de los apuntes */
+  .callout { border-left: 4px solid; border-radius: .5rem; padding: .9rem 1.1rem; margin: 1.25rem 0; background: var(--bs-tertiary-bg); }
+  .callout > :last-child { margin-bottom: 0; }
+  .callout-por { border-color: var(--apuntes-acento); }
+  .callout-tip { border-color: var(--bs-success); }
+  .callout-aviso { border-color: var(--bs-warning); }
+  .callout-titulo { font-weight: 700; margin-bottom: .3rem; }
+
+  /* Colorear columnas en los ejemplos de grid para poder verlas */
+  .grid-demo .row > * { background: rgba(var(--bs-primary-rgb), .10); border: 1px solid rgba(var(--bs-primary-rgb), .35); padding-top: .6rem; padding-bottom: .6rem; text-align: center; font-size: .85rem; }
+  .grid-demo .row + .row { margin-top: .75rem; }
+  .caja { background: rgba(var(--bs-info-rgb), .15); border: 1px dashed rgba(var(--bs-info-rgb), .7); }
+  code:not(.hljs) { color: #d63384; }
+  [data-bs-theme="dark"] code:not(.hljs) { color: #e685b5; }
+  .tabla-ref td:first-child, .tabla-ref th:first-child { white-space: nowrap; }
+</style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#toc" data-bs-offset="90" tabindex="0">
+
+<!-- ================= BARRA SUPERIOR DE LOS APUNTES ================= -->
+<nav class="navbar navbar-dark navbar-apuntes sticky-top shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="#inicio"><i class="bi bi-bootstrap-fill me-2"></i>Apuntes de Bootstrap 5.3</a>
+    <div class="d-flex align-items-center gap-2">
+      <!-- Indicador de breakpoint: es en sí mismo un ejemplo de utilidades responsive -->
+      <span class="badge text-bg-light" title="Breakpoint activo">
+        <i class="bi bi-aspect-ratio me-1"></i>
+        <span class="d-inline d-sm-none">xs</span><span class="d-none d-sm-inline d-md-none">sm</span><span class="d-none d-md-inline d-lg-none">md</span><span class="d-none d-lg-inline d-xl-none">lg</span><span class="d-none d-xl-inline d-xxl-none">xl</span><span class="d-none d-xxl-inline">xxl</span>
+      </span>
+      <button id="btnTema" class="btn btn-sm btn-outline-light" type="button"><i class="bi bi-moon-stars"></i> <span class="d-none d-sm-inline">Modo oscuro</span></button>
+      <button class="btn btn-sm btn-outline-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#indiceMovil"><i class="bi bi-list"></i> Índice</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Índice para móvil (offcanvas) -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="indiceMovil">
+  <div class="offcanvas-header"><h5 class="offcanvas-title">Índice</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div>
+  <div class="offcanvas-body" id="indiceMovilCuerpo"></div>
+</div>
+
+<div class="container-xxl py-4">
+<div class="row g-4">
+
+<!-- ================= ÍNDICE LATERAL ================= -->
+<aside class="col-lg-3 d-none d-lg-block">
+  <nav id="toc" class="nav flex-column">
+    <a class="nav-link" href="#inicio">0. Cómo usar estos apuntes</a>
+    <a class="nav-link" href="#que-es">1. ¿Qué es Bootstrap?</a>
+    <a class="nav-link" href="#instalacion">2. Instalación</a>
+    <a class="nav-link" href="#grid">3. Containers y grid</a>
+    <a class="nav-link" href="#responsive">4. Diseño responsive</a>
+    <a class="nav-link" href="#utilidades">5. Utilidades</a>
+    <a class="nav-link" href="#tipografia">6. Tipografía</a>
+    <a class="nav-link" href="#tablas">7. Tablas</a>
+    <a class="nav-link" href="#componentes">8. Componentes</a>
+    <a class="nav-link sub" href="#comp-botones">Botones, badges, alerts</a>
+    <a class="nav-link sub" href="#comp-navegacion">Navegación</a>
+    <a class="nav-link sub" href="#comp-cards">Cards y list group</a>
+    <a class="nav-link sub" href="#comp-capas">Modales, toasts, tooltips</a>
+    <a class="nav-link sub" href="#comp-plegables">Accordion, collapse, offcanvas</a>
+    <a class="nav-link" href="#personalizar">9. Personalización</a>
+    <a class="nav-link" href="#formularios">10. Formularios</a>
+    <a class="nav-link sub" href="#form-controles">Controles básicos</a>
+    <a class="nav-link sub" href="#form-checks">Checks, radios, switches</a>
+    <a class="nav-link sub" href="#form-grupos">Input groups y floating labels</a>
+    <a class="nav-link sub" href="#form-layout">Maquetación de formularios</a>
+    <a class="nav-link" href="#validacion">11. Validación</a>
+    <a class="nav-link sub" href="#val-nativa">Validación nativa + Bootstrap</a>
+    <a class="nav-link sub" href="#val-capas">Capas de error e iconos</a>
+    <a class="nav-link sub" href="#val-js">Validación personalizada (JS)</a>
+    <a class="nav-link sub" href="#val-completo">Ejemplo completo</a>
+    <a class="nav-link" href="#templates">12. Templates</a>
+    <a class="nav-link" href="#recursos">13. Recursos web</a>
+    <a class="nav-link" href="#chuleta">14. Chuleta final</a>
+  </nav>
+</aside>
+
+<!-- ================= CONTENIDO ================= -->
+<main class="col-lg-9">
+<div class="hoja">
+
+<!-- ========== 0. CÓMO USAR ========== -->
+<section id="inicio">
+  <h1 class="display-5 fw-bold">Bootstrap 5.3 <small class="text-body-secondary fs-4">— manual de uso y ejemplos explicados</small></h1>
+  <p class="lead">Apuntes para aprender a maquetar páginas web con Bootstrap: qué es, cómo se instala, el sistema de rejilla, el diseño responsive, los componentes más usados, cómo personalizarlo y, con especial detalle, los formularios y su validación.</p>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-lightbulb"></i> Cómo leer estos apuntes</div>
+    <ul class="mb-0">
+      <li>Este archivo <strong>usa el propio Bootstrap</strong> (cargado desde CDN), así que todos los ejemplos son <strong>reales y funcionan</strong>: puedes pulsar botones, abrir modales y probar los formularios. Necesitas conexión a Internet al abrirlo.</li>
+      <li>Cada ejemplo tiene tres partes: el <strong>resultado</strong>, el <strong>código</strong> (se puede plegar y copiar) y la <strong>explicación</strong> de cómo y por qué.</li>
+      <li>Cambia el ancho de la ventana para ver el comportamiento responsive. Arriba a la derecha tienes un indicador del <em>breakpoint</em> activo y un botón de modo oscuro.</li>
+      <li>Versión de referencia: <strong>Bootstrap 5.3.8</strong> (la última estable de la rama 5).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== 1. QUÉ ES ========== -->
+<section id="que-es">
+  <h2 class="capitulo">1. ¿Qué es Bootstrap?</h2>
+  <p><strong>Bootstrap</strong> es un <em>framework</em> front-end de código abierto (licencia MIT) para crear sitios web <strong>responsive</strong> y <strong>mobile first</strong>. Nació en Twitter en 2011 (Mark Otto y Jacob Thornton) y hoy es uno de los frameworks CSS más usados del mundo.</p>
+  <p>En la práctica es un conjunto de tres cosas:</p>
+  <div class="row g-3 mb-3">
+    <div class="col-md-4"><div class="card h-100"><div class="card-body"><h5 class="card-title"><i class="bi bi-filetype-css text-primary"></i> Un archivo CSS</h5><p class="card-text small">Con un sistema de rejilla, estilos base (reboot), tipografía, componentes y cientos de clases de utilidad (<code>mt-3</code>, <code>d-flex</code>, <code>text-center</code>…).</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100"><div class="card-body"><h5 class="card-title"><i class="bi bi-filetype-js text-warning"></i> Un archivo JavaScript</h5><p class="card-text small">Da vida a los componentes interactivos: modales, desplegables, menús colapsables, tooltips, carruseles, toasts… Ya <strong>no necesita jQuery</strong> desde la versión 5.</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100"><div class="card-body"><h5 class="card-title"><i class="bi bi-filetype-scss text-danger"></i> Código fuente Sass</h5><p class="card-text small">Variables, mapas y mixins para generar <strong>tu propia versión</strong> de Bootstrap con tus colores, fuentes y solo los componentes que uses.</p></div></div></div>
+  </div>
+  <h3>¿Por qué usarlo?</h3>
+  <ul>
+    <li><strong>Rapidez</strong>: maquetas en minutos lo que a mano llevaría horas.</li>
+    <li><strong>Responsive de serie</strong>: la rejilla y las utilidades se adaptan a móvil, tablet y escritorio.</li>
+    <li><strong>Consistencia</strong>: todo el equipo usa las mismas clases y el diseño queda homogéneo.</li>
+    <li><strong>Compatibilidad y accesibilidad</strong>: probado en los navegadores modernos y con atributos ARIA en sus componentes.</li>
+    <li><strong>Ecosistema enorme</strong>: plantillas, temas, iconos, documentación y comunidad.</li>
+  </ul>
+  <h3>Inconvenientes a tener en cuenta</h3>
+  <ul>
+    <li>Las webs pueden parecerse mucho entre sí si no se personaliza.</li>
+    <li>Si cargas el CSS completo y usas poco, estás enviando código que no necesitas (se soluciona compilando con Sass solo lo que usas).</li>
+    <li>El HTML se llena de clases; hay que conocer la nomenclatura.</li>
+  </ul>
+  <table class="table table-sm table-bordered tabla-ref">
+    <thead class="table-light"><tr><th>Versión</th><th>Cambios clave</th></tr></thead>
+    <tbody>
+      <tr><td>Bootstrap 3 (2013)</td><td>Primera versión mobile first. Grid con <code>float</code>. Iconos Glyphicons incluidos.</td></tr>
+      <tr><td>Bootstrap 4 (2018)</td><td>Grid con <strong>Flexbox</strong>, componente <em>card</em>, Sass en vez de Less. Dependía de jQuery.</td></tr>
+      <tr><td>Bootstrap 5 (2021)</td><td><strong>Sin jQuery</strong>, sin soporte a Internet Explorer, breakpoint <code>xxl</code>, API de utilidades, <em>floating labels</em>, <em>offcanvas</em>, clases <code>ms-</code>/<code>me-</code> (start/end) en lugar de <code>ml-</code>/<code>mr-</code>.</td></tr>
+      <tr><td>Bootstrap 5.3</td><td><strong>Modo oscuro</strong> (<code>data-bs-theme</code>), más variables CSS, colores <code>-subtle</code> y <code>-emphasis</code>, utilidades de opacidad y <code>link-*</code>.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ========== 2. INSTALACIÓN ========== -->
+<section id="instalacion">
+  <h2 class="capitulo">2. Instalación y uso en una página web</h2>
+  <p>Hay tres formas habituales de incorporar Bootstrap. Elige según el tipo de proyecto:</p>
+  <table class="table table-bordered tabla-ref">
+    <thead class="table-light"><tr><th>Método</th><th>Cuándo usarlo</th><th>Ventajas / inconvenientes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>CDN</strong></td><td>Prototipos, ejercicios, webs sencillas.</td><td>Cero instalación; necesita Internet; no se puede personalizar con Sass.</td></tr>
+      <tr><td><strong>Descarga</strong> de los archivos compilados</td><td>Proyectos que deben funcionar sin conexión o en una intranet.</td><td>Archivos locales en tu carpeta <code>css/</code> y <code>js/</code>; actualizar es manual.</td></tr>
+      <tr><td><strong>npm</strong> (+ Sass / Vite)</td><td>Proyectos profesionales y personalización a fondo.</td><td>Control total de variables y de qué se incluye; requiere Node.js y un proceso de compilación.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.1 Plantilla básica con CDN (la forma más rápida)</h3>
+  <p>Este es el esqueleto mínimo de cualquier página con Bootstrap. Cópialo como punto de partida:</p>
+  <script type="text/plain" class="show-code" data-lang="html" data-titulo="Plantilla mínima (starter template)">
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <!-- 1. Imprescindible para que el diseño responsive funcione en móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi primera página con Bootstrap</title>
+  <!-- 2. CSS de Bootstrap en el <head> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 3. (Opcional) Iconos de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- 4. Tus estilos SIEMPRE después de Bootstrap, para poder sobrescribirlo -->
+  <link href="css/estilos.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-5">
+    <h1>¡Hola, Bootstrap!</h1>
+    <button class="btn btn-primary">Un botón</button>
+  </div>
+
+  <!-- 5. JavaScript al final del <body>. El "bundle" ya incluye Popper
+          (necesario para dropdowns, tooltips y popovers) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"><\/script>
+  <!-- 6. Tu JavaScript después de Bootstrap -->
+  <script src="js/app.js"><\/script>
+</body>
+</html>
+  </script>
+  <div class="callout callout-por">
+    <div class="callout-titulo"><i class="bi bi-question-circle"></i> ¿Por qué este orden?</div>
+    <ul class="mb-0">
+      <li><strong>meta viewport</strong>: sin ella, el móvil "finge" ser una pantalla de ~980px y reduce la página: los breakpoints nunca se activan.</li>
+      <li><strong>CSS propio después del de Bootstrap</strong>: en CSS, a igual especificidad gana la última regla. Así tus estilos pueden sobrescribir los suyos sin usar <code>!important</code>.</li>
+      <li><strong>JS al final del body</strong> (o con <code>defer</code>): el HTML se pinta antes y los scripts encuentran los elementos ya creados.</li>
+      <li><strong>bootstrap.bundle.min.js</strong> vs <strong>bootstrap.min.js</strong>: el <em>bundle</em> incluye Popper. Si usas el otro, tienes que cargar Popper por separado antes.</li>
+    </ul>
+  </div>
+
+  <h3>2.2 Descarga de archivos</h3>
+  <p>Desde <a href="https://getbootstrap.com/docs/5.3/getting-started/download/" target="_blank">getbootstrap.com → Download</a> se obtiene un ZIP con <code>css/</code> y <code>js/</code>. Copia lo que necesites a tu proyecto y enlázalo con rutas relativas:</p>
+  <script type="text/plain" class="show-code" data-lang="plaintext" data-titulo="Estructura de carpetas recomendada">
+mi-proyecto/
+├── index.html
+├── css/
+│   ├── bootstrap.min.css      ← de Bootstrap
+│   └── estilos.css            ← tus estilos
+├── js/
+│   ├── bootstrap.bundle.min.js
+│   └── app.js                 ← tu código
+└── img/
+  </script>
+
+  <h3>2.3 Instalación con npm y Sass (personalización profesional)</h3>
+  <script type="text/plain" class="show-code" data-lang="bash" data-titulo="Terminal">
+# Crear el proyecto e instalar Bootstrap y Sass
+npm init -y
+npm install bootstrap@5.3.8 @popperjs/core
+npm install --save-dev sass
+
+# Compilar tu SCSS a CSS (y vigilar cambios)
+npx sass scss/main.scss css/main.css --watch
+  </script>
+  <p>En el apartado <a href="#personalizar">9. Personalización</a> verás qué poner en <code>main.scss</code>. Con herramientas como <strong>Vite</strong> puedes además importar el JavaScript por módulos: <code>import { Modal } from 'bootstrap'</code>.</p>
+
+  <h3>2.4 ¿Cómo se usa? La idea clave</h3>
+  <p>Bootstrap funciona <strong>añadiendo clases al HTML</strong>. No escribes CSS para cada cosa: combinas clases ya preparadas. Las clases siguen patrones fáciles de recordar:</p>
+  <ul>
+    <li><strong>Componente</strong>: <code>btn</code>, <code>card</code>, <code>alert</code>, <code>navbar</code>…</li>
+    <li><strong>Modificador</strong> (variante): <code>btn-primary</code>, <code>alert-danger</code>, <code>btn-lg</code>…</li>
+    <li><strong>Utilidad</strong> (una sola propiedad CSS): <code>mt-3</code> (margin-top), <code>text-center</code>, <code>d-none</code>…</li>
+    <li><strong>Infijo responsive</strong>: <code>col-md-6</code>, <code>d-lg-block</code>, <code>text-sm-end</code> → "a partir de este tamaño".</li>
+    <li><strong>Atributos <code>data-bs-*</code></strong>: activan el JavaScript sin escribir código: <code>data-bs-toggle="modal"</code>, <code>data-bs-target="#id"</code>.</li>
+  </ul>
+</section>
+
+<!-- ========== 3. CONTAINERS Y GRID ========== -->
+<section id="grid">
+  <h2 class="capitulo">3. Containers y sistema de columnas (grid)</h2>
+  <p>La rejilla es el corazón de Bootstrap. Se basa en tres piezas que siempre van anidadas en este orden: <strong>container → row → col</strong>.</p>
+
+  <h3>3.1 Breakpoints (puntos de ruptura)</h3>
+  <p>Bootstrap define 6 tamaños de pantalla. Cada infijo significa <strong>"desde este ancho en adelante"</strong> (mobile first: lo que no lleva infijo se aplica a todos los tamaños).</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-sm text-center align-middle tabla-ref">
+    <thead class="table-dark"><tr><th></th><th>xs<br><small>&lt;576px</small></th><th>sm<br><small>≥576px</small></th><th>md<br><small>≥768px</small></th><th>lg<br><small>≥992px</small></th><th>xl<br><small>≥1200px</small></th><th>xxl<br><small>≥1400px</small></th></tr></thead>
+    <tbody>
+      <tr><th>Dispositivo típico</th><td>Móvil vertical</td><td>Móvil horizontal</td><td>Tablet</td><td>Portátil</td><td>Escritorio</td><td>Pantalla grande</td></tr>
+      <tr><th>Ancho de <code>.container</code></th><td>100%</td><td>540px</td><td>720px</td><td>960px</td><td>1140px</td><td>1320px</td></tr>
+      <tr><th>Prefijo de columna</th><td><code>.col-</code></td><td><code>.col-sm-</code></td><td><code>.col-md-</code></td><td><code>.col-lg-</code></td><td><code>.col-xl-</code></td><td><code>.col-xxl-</code></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>3.2 Containers</h3>
+  <p>El <strong>container</strong> centra el contenido y le da márgenes laterales (padding). Hay tres tipos:</p>
+  <ul>
+    <li><code>.container</code>: ancho fijo que "salta" en cada breakpoint (ver tabla). El más usado para el contenido.</li>
+    <li><code>.container-fluid</code>: siempre al 100% del ancho. Ideal para cabeceras, paneles de administración o secciones a sangre.</li>
+    <li><code>.container-{bp}</code> (ej. <code>.container-md</code>): 100% hasta ese breakpoint y fijo a partir de él.</li>
+  </ul>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-bounding-box"></i> Ejemplo 1 · Tipos de container</div>
+    <div class="demo">
+      <div class="container caja py-2 mb-2">.container (ancho fijo por breakpoint)</div>
+      <div class="container-md caja py-2 mb-2">.container-md (fluido hasta md, después fijo)</div>
+      <div class="container-fluid caja py-2">.container-fluid (siempre 100%)</div>
+    </div>
+    <div class="explicacion">
+      <p><strong>Cómo:</strong> basta con envolver el contenido en un <code>div</code> con la clase. <strong>Por qué:</strong> sin container, el contenido iría pegado a los bordes y las <code>.row</code> (que tienen márgenes negativos) provocarían scroll horizontal. Dentro de esta página los anchos se ven reducidos porque el ejemplo está dentro de otra columna.</p>
+    </div>
+  </div>
+
+  <h3>3.3 Filas y columnas</h3>
+  <p>La fila se divide en <strong>12 partes</strong>. Una columna <code>.col-4</code> ocupa 4/12 (un tercio), <code>.col-6</code> la mitad, etc. Si no indicas número (<code>.col</code>), las columnas se reparten el espacio a partes iguales.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-grid-3x3"></i> Ejemplo 2 · Columnas básicas, anchos fijos y automáticos</div>
+    <div class="demo grid-demo">
+      <div class="container">
+        <!-- Columnas iguales: se reparten el espacio -->
+        <div class="row">
+          <div class="col">.col</div>
+          <div class="col">.col</div>
+          <div class="col">.col</div>
+        </div>
+        <!-- Anchos concretos: deben sumar 12 -->
+        <div class="row">
+          <div class="col-8">.col-8</div>
+          <div class="col-4">.col-4</div>
+        </div>
+        <!-- Mezcla: una fija y las demás reparten el resto -->
+        <div class="row">
+          <div class="col">.col</div>
+          <div class="col-6">.col-6</div>
+          <div class="col">.col</div>
+        </div>
+        <!-- col-auto: tan ancha como su contenido -->
+        <div class="row">
+          <div class="col-auto">.col-auto (ancho del contenido)</div>
+          <div class="col">.col (el resto)</div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <p><strong>Reglas de oro:</strong></p>
+      <ol>
+        <li>Las columnas <strong>siempre</strong> son hijas directas de una <code>.row</code>, y el contenido va <strong>dentro</strong> de las columnas.</li>
+        <li>Si las columnas de una fila suman más de 12, las que sobran <strong>bajan a la línea siguiente</strong> (útil a propósito, como verás en responsive).</li>
+        <li>La grid usa Flexbox: por eso las columnas sin número se reparten solas el espacio libre.</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>3.4 Columnas responsive</h3>
+  <p>Aquí está la magia: puedes indicar <strong>varios anchos</strong> para la misma columna, uno por breakpoint. Se aplica el del mayor breakpoint que se cumpla.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-phone"></i> Ejemplo 3 · Una galería que se adapta: 1 → 2 → 4 columnas</div>
+    <div class="demo grid-demo">
+      <div class="container">
+        <div class="row g-3">
+          <div class="col-12 col-md-6 col-lg-3">Producto 1</div>
+          <div class="col-12 col-md-6 col-lg-3">Producto 2</div>
+          <div class="col-12 col-md-6 col-lg-3">Producto 3</div>
+          <div class="col-12 col-md-6 col-lg-3">Producto 4</div>
+        </div>
+        <!-- Lo mismo, más corto, con row-cols: se define en la fila -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
+          <div class="col">row-cols</div>
+          <div class="col">row-cols</div>
+          <div class="col">row-cols</div>
+          <div class="col">row-cols</div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <p><strong>Cómo se lee</strong> <code>col-12 col-md-6 col-lg-3</code>: "en móvil ocupa 12 (todo el ancho); desde tablet (md) ocupa 6 (2 por fila); desde portátil (lg) ocupa 3 (4 por fila)".</p>
+      <p><strong>Por qué funciona</strong>: 4 columnas de 6 suman 24 &gt; 12, así que pasan a 2 filas automáticamente. <code>row-cols-*</code> hace lo mismo indicando <em>cuántas columnas por fila</em> en vez de su ancho: es perfecto para listados de tarjetas.</p>
+      <p><code>g-3</code> es el <strong>gutter</strong> (espacio entre columnas). Va de <code>g-0</code> a <code>g-5</code>; <code>gx-*</code> solo horizontal y <code>gy-*</code> solo vertical.</p>
+    </div>
+  </div>
+
+  <h3>3.5 Desplazar, reordenar, alinear y anidar</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-arrows-move"></i> Ejemplo 4 · offset, order, alineación y anidamiento</div>
+    <div class="demo grid-demo">
+      <div class="container">
+        <!-- offset: deja columnas vacías a la izquierda -->
+        <div class="row">
+          <div class="col-4 offset-4">.col-4 .offset-4 (centrada)</div>
+        </div>
+        <!-- order: cambia el orden visual sin tocar el HTML -->
+        <div class="row">
+          <div class="col order-3">1º en HTML · order-3</div>
+          <div class="col order-1">2º en HTML · order-1</div>
+          <div class="col order-2">3º en HTML · order-2</div>
+        </div>
+        <!-- Alineación horizontal de columnas dentro de la fila -->
+        <div class="row justify-content-between">
+          <div class="col-3">justify-content-between</div>
+          <div class="col-3">↔</div>
+        </div>
+        <!-- Alineación vertical -->
+        <div class="row align-items-center" style="min-height: 90px;">
+          <div class="col">align-items-center</div>
+          <div class="col">fila con altura mínima</div>
+        </div>
+        <!-- Anidamiento: una row dentro de una columna -->
+        <div class="row">
+          <div class="col-md-8">
+            Columna padre .col-md-8
+            <div class="row mt-2">
+              <div class="col-6">hija .col-6</div>
+              <div class="col-6">hija .col-6</div>
+            </div>
+          </div>
+          <div class="col-md-4">.col-md-4</div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><code>offset-{bp}-{n}</code> empuja la columna <em>n</em> posiciones. Alternativa moderna: <code>ms-auto</code> (margin-start auto) para mandarla a la derecha.</li>
+        <li><code>order-{bp}-{0..5}</code>, <code>order-first</code>, <code>order-last</code>: muy útil en responsive, por ejemplo para que la imagen salga arriba en móvil y a la derecha en escritorio (<code>order-first order-md-last</code>).</li>
+        <li><code>justify-content-*</code> (start, center, end, between, around, evenly) y <code>align-items-*</code> (start, center, end) son Flexbox puro aplicado a la fila.</li>
+        <li><strong>Anidar</strong>: dentro de una columna puedes abrir otra <code>.row</code>, que vuelve a tener 12 partes <em>relativas a la columna padre</em>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4. RESPONSIVE ========== -->
+<section id="responsive">
+  <h2 class="capitulo">4. Adaptación responsive de los contenidos</h2>
+  <p>Además de la rejilla, casi todas las utilidades de Bootstrap aceptan infijo de breakpoint con el patrón <code>{propiedad}-{bp}-{valor}</code>. Esto permite mostrar, ocultar, alinear o espaciar distinto según el dispositivo.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-display"></i> Ejemplo 5 · Mostrar/ocultar, alinear e imágenes y vídeos responsive</div>
+    <div class="demo">
+      <!-- Visibilidad según tamaño -->
+      <div class="alert alert-info d-block d-md-none py-2">📱 Solo se ve en móvil (d-block d-md-none)</div>
+      <div class="alert alert-success d-none d-md-block py-2">💻 Solo se ve desde tablet en adelante (d-none d-md-block)</div>
+
+      <!-- Alineación de texto responsive -->
+      <p class="text-center text-md-start border p-2">Centrado en móvil, alineado a la izquierda desde md</p>
+
+      <!-- Flex responsive: columna en móvil, fila en escritorio -->
+      <div class="d-flex flex-column flex-md-row gap-2 mb-3">
+        <div class="caja p-2 flex-fill">Bloque A</div>
+        <div class="caja p-2 flex-fill">Bloque B</div>
+        <div class="caja p-2 flex-fill">Bloque C</div>
+      </div>
+
+      <div class="row g-3 align-items-center">
+        <div class="col-md-6">
+          <!-- img-fluid: max-width:100% y height:auto -->
+          <img class="img-fluid rounded shadow-sm" alt="Imagen de ejemplo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='800' height='400' fill='%237952b3'/%3E%3Ctext x='400' y='215' font-size='40' fill='white' text-anchor='middle' font-family='sans-serif'%3E.img-fluid 800x400%3C/text%3E%3C/svg%3E">
+        </div>
+        <div class="col-md-6">
+          <!-- ratio: mantiene la proporción de vídeos/iframes -->
+          <div class="ratio ratio-16x9 caja">
+            <div class="d-flex align-items-center justify-content-center">.ratio-16x9 (aquí iría un &lt;iframe&gt; de YouTube)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Mostrar/ocultar</strong>: se combina un valor base con otro a partir de un breakpoint. <code>d-none d-lg-block</code> = "oculto, y visible desde lg". <code>d-lg-none</code> = "visible hasta lg".</li>
+        <li><strong>Flex responsive</strong>: <code>flex-column flex-md-row</code> apila en móvil y pone en línea en pantallas grandes. Es el patrón más usado para cabeceras, barras de herramientas o fichas.</li>
+        <li><strong>Imágenes</strong>: siempre <code>img-fluid</code> para que nunca desborden su contenedor.</li>
+        <li><strong>Vídeos/iframes</strong>: <code>ratio ratio-16x9</code> (también 1x1, 4x3, 21x9) mantiene la proporción a cualquier ancho.</li>
+        <li><strong>Mobile first</strong>: diseña primero para móvil (clases sin infijo) y añade cambios para pantallas mayores. Es más simple que al revés.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-tools"></i> Cómo probar el responsive</div>
+    <p class="mb-0">En el navegador abre las herramientas de desarrollo (<kbd>F12</kbd> o <kbd>⌥⌘I</kbd> en Mac) y activa el modo dispositivo (<kbd>Ctrl/⌘ + Shift + M</kbd>). Puedes elegir modelos de móvil o arrastrar el ancho y ver cómo cambian los breakpoints.</p>
+  </div>
+</section>
+
+<!-- ========== 5. UTILIDADES ========== -->
+<section id="utilidades">
+  <h2 class="capitulo">5. Utilidades: el "CSS en clases"</h2>
+  <p>Las <strong>utilidades</strong> son clases que aplican <strong>una sola propiedad CSS</strong>. Combinándolas puedes dar espacio, color, bordes o alinear sin escribir CSS. Es lo que más se usa en el día a día.</p>
+  <h3>5.1 Espaciado: márgenes y padding</h3>
+  <p>Nomenclatura: <code>{propiedad}{lado}-{bp}-{tamaño}</code></p>
+  <div class="table-responsive">
+  <table class="table table-sm table-bordered tabla-ref">
+    <thead class="table-light"><tr><th>Parte</th><th>Valores</th></tr></thead>
+    <tbody>
+      <tr><td>Propiedad</td><td><code>m</code> = margin · <code>p</code> = padding</td></tr>
+      <tr><td>Lado</td><td><code>t</code> top · <code>b</code> bottom · <code>s</code> start (izq.) · <code>e</code> end (dcha.) · <code>x</code> izq.+dcha. · <code>y</code> arriba+abajo · (nada) los 4 lados</td></tr>
+      <tr><td>Tamaño</td><td><code>0</code>=0 · <code>1</code>=.25rem · <code>2</code>=.5rem · <code>3</code>=1rem · <code>4</code>=1.5rem · <code>5</code>=3rem · <code>auto</code> (solo margin). Márgenes negativos: no por defecto.</td></tr>
+      <tr><td>Ejemplos</td><td><code>mt-3</code> margin-top 1rem · <code>px-4</code> padding lateral 1.5rem · <code>mx-auto</code> centrar un bloque con ancho · <code>mb-md-0</code> sin margen inferior desde md</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout callout-por">
+    <div class="callout-titulo"><i class="bi bi-question-circle"></i> ¿Por qué "start/end" y no "left/right"?</div>
+    <p class="mb-0">Para soportar idiomas que se escriben de derecha a izquierda (árabe, hebreo). En una página RTL, <code>ms-3</code> se convierte automáticamente en margen derecho. En Bootstrap 4 eran <code>ml-</code>/<code>mr-</code>: si copias código antiguo, tenlo en cuenta.</p>
+  </div>
+
+  <h3>5.2 Color, fondo, bordes, sombras, tamaños y flex</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-palette"></i> Ejemplo 6 · Una "ficha" maquetada solo con utilidades</div>
+    <div class="demo">
+      <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 p-3 border rounded-3 shadow-sm bg-body">
+        <div class="flex-shrink-0 rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fs-3" style="width:64px;height:64px;">LF</div>
+        <div class="flex-grow-1">
+          <h5 class="mb-1">Lucía Fernández</h5>
+          <p class="mb-0 text-body-secondary small">Profesor · Diseño de Interfaces Web</p>
+        </div>
+        <div class="d-flex gap-2">
+          <span class="badge rounded-pill text-bg-success">Activo</span>
+          <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis border border-warning-subtle">DAW</span>
+        </div>
+      </div>
+      <div class="row g-2 mt-3 text-center small">
+        <div class="col-6 col-md-3"><div class="p-2 bg-primary text-white rounded">bg-primary</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 bg-success bg-opacity-25 rounded">bg-opacity-25</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 text-bg-danger rounded">text-bg-danger</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 bg-info-subtle text-info-emphasis rounded">-subtle / -emphasis</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 border border-2 border-primary rounded-0">border-primary</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 border rounded-pill">rounded-pill</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 shadow rounded">shadow</div></div>
+        <div class="col-6 col-md-3"><div class="p-2 shadow-lg rounded">shadow-lg</div></div>
+      </div>
+      <div class="mt-3 bg-body-secondary rounded p-2">
+        <div class="bg-primary text-white p-1 mb-1 w-25 small">w-25</div>
+        <div class="bg-primary text-white p-1 mb-1 w-50 small">w-50</div>
+        <div class="bg-primary text-white p-1 w-75 small">w-75</div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Colores temáticos</strong>: <code>primary, secondary, success, danger, warning, info, light, dark</code>. Se usan como <code>text-*</code>, <code>bg-*</code>, <code>border-*</code>, <code>btn-*</code>, <code>alert-*</code>… Usar los nombres semánticos (y no "azul") permite cambiar la paleta entera desde un sitio.</li>
+        <li><code>text-bg-*</code> pone fondo <em>y</em> un color de texto con buen contraste. <code>bg-*-subtle</code> + <code>text-*-emphasis</code> dan versiones suaves que se adaptan al modo oscuro.</li>
+        <li><strong>Flex</strong>: <code>d-flex</code>, <code>gap-*</code>, <code>justify-content-*</code>, <code>align-items-*</code>, <code>flex-grow-1</code> (ocupa el espacio sobrante), <code>flex-shrink-0</code> (no se encoge).</li>
+        <li><strong>Tamaño</strong>: <code>w-25/50/75/100/auto</code>, <code>h-*</code>, <code>vh-100</code>. <strong>Posición</strong>: <code>position-relative/absolute/fixed/sticky</code>, <code>top-0</code>, <code>start-50</code>, <code>translate-middle</code>.</li>
+        <li><strong>Por qué utilidades</strong>: no inventas nombres de clases, no tienes CSS que crece sin control y ves el estilo leyendo el HTML. Cuando un conjunto de utilidades se repite mucho, conviene crear una clase propia o un componente.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6. TIPOGRAFÍA ========== -->
+<section id="tipografia">
+  <h2 class="capitulo">6. Tipografía</h2>
+  <p>Bootstrap usa por defecto la <strong>pila de fuentes del sistema</strong> (San Francisco en Mac, Segoe UI en Windows, Roboto en Android…), tamaño base <code>1rem</code> (16px) y unos encabezados que <strong>escalan con el ancho de pantalla</strong> (RFS, <em>responsive font sizes</em>).</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-type"></i> Ejemplo 7 · Encabezados, textos destacados y utilidades de texto</div>
+    <div class="demo">
+      <h1 class="display-4">Display 4</h1>
+      <p class="h3">Párrafo con aspecto de h3 (clase .h3)</p>
+      <h2 class="h5 text-uppercase text-primary">Un h2 con aspecto de h5</h2>
+      <p class="lead">Texto <em>lead</em>: un párrafo introductorio, más grande y ligero.</p>
+      <p>Texto con <mark>resaltado</mark>, <small>texto pequeño</small>, <strong>negrita</strong>, <abbr title="HyperText Markup Language">HTML</abbr> y <kbd>Ctrl + C</kbd>.</p>
+      <p class="fs-5 fw-semibold fst-italic text-decoration-underline">fs-5 · fw-semibold · fst-italic · subrayado</p>
+      <p class="text-end text-body-secondary lh-lg">Alineado a la derecha, color secundario, interlineado grande</p>
+      <p class="text-truncate border p-1" style="max-width: 280px;">text-truncate: este texto es demasiado largo y se corta con puntos suspensivos.</p>
+      <figure>
+        <blockquote class="blockquote"><p>Lo simple es mejor que lo complejo.</p></blockquote>
+        <figcaption class="blockquote-footer">El Zen de Python, <cite title="PEP 20">PEP 20</cite></figcaption>
+      </figure>
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item"><i class="bi bi-check2 text-success"></i> list-inline</li>
+        <li class="list-inline-item"><i class="bi bi-check2 text-success"></i> en línea</li>
+        <li class="list-inline-item"><i class="bi bi-check2 text-success"></i> sin viñetas</li>
+      </ul>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Separa semántica y aspecto</strong>: usa la etiqueta correcta para la estructura (<code>h1</code>…<code>h6</code>, importante para SEO y lectores de pantalla) y la clase <code>.h1</code>…<code>.h6</code> para el tamaño visual que quieras.</li>
+        <li><code>display-1</code>…<code>display-6</code>: títulos grandes para portadas (hero). <code>lead</code>: entradilla.</li>
+        <li><code>fs-1</code>…<code>fs-6</code> (tamaño), <code>fw-light/normal/semibold/bold</code> (grosor), <code>fst-italic</code>, <code>text-uppercase/lowercase/capitalize</code>, <code>text-start/center/end</code> (con infijo responsive), <code>lh-1/sm/base/lg</code>, <code>text-wrap</code>, <code>text-nowrap</code>, <code>text-break</code>.</li>
+        <li><strong>Fuentes de Google</strong>: enlaza la fuente en el <code>&lt;head&gt;</code> y cambia la variable <code>--bs-body-font-family</code> (ver <a href="#personalizar">personalización</a>).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 7. TABLAS ========== -->
+<section id="tablas">
+  <h2 class="capitulo">7. Tablas y elementos para ordenar la información</h2>
+  <p>Para presentar datos tabulares, la base es la clase <code>.table</code> en un <code>&lt;table&gt;</code> y a partir de ahí se añaden modificadores.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-table"></i> Ejemplo 8 · Tabla completa: responsive, rayada, hover, filas de estado y acciones</div>
+    <div class="demo">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered align-middle caption-top">
+          <caption>Listado de alumnos · 2º DAW</caption>
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Alumno</th>
+              <th scope="col">Email</th>
+              <th scope="col" class="text-end">Nota</th>
+              <th scope="col" class="text-center">Estado</th>
+              <th scope="col" class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <th scope="row">1</th><td>Ana López</td><td>ana@ejemplo.es</td><td class="text-end">8,5</td>
+              <td class="text-center"><span class="badge text-bg-success">Aprobado</span></td>
+              <td class="text-center text-nowrap"><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+            </tr>
+            <tr class="table-warning">
+              <th scope="row">2</th><td>Luis Martín</td><td>luis@ejemplo.es</td><td class="text-end">5,0</td>
+              <td class="text-center"><span class="badge text-bg-warning">Por revisar</span></td>
+              <td class="text-center text-nowrap"><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th><td>Marta Ruiz</td><td>marta@ejemplo.es</td><td class="text-end">3,2</td>
+              <td class="text-center"><span class="badge text-bg-danger">Suspenso</span></td>
+              <td class="text-center text-nowrap"><button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></button> <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></td>
+            </tr>
+          </tbody>
+          <tfoot class="table-light">
+            <tr><td colspan="3" class="fw-bold">Media</td><td class="text-end fw-bold">5,6</td><td colspan="2"></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="explicacion">
+      <table class="table table-sm mb-2 tabla-ref">
+        <tbody>
+          <tr><td><code>.table-responsive</code></td><td>Contenedor que añade scroll horizontal cuando la tabla no cabe (imprescindible en móvil). Variante: <code>.table-responsive-md</code>.</td></tr>
+          <tr><td><code>.table-striped</code> / <code>-hover</code></td><td>Filas alternas / resaltado al pasar el ratón: mejoran la lectura en tablas largas.</td></tr>
+          <tr><td><code>.table-bordered</code> / <code>-borderless</code> / <code>-sm</code></td><td>Bordes en todas las celdas / sin bordes / tabla compacta.</td></tr>
+          <tr><td><code>.table-dark</code>, <code>.table-success</code>…</td><td>Colores para toda la tabla, el <code>thead</code>, una fila o una celda.</td></tr>
+          <tr><td><code>.align-middle</code></td><td>Centra verticalmente el contenido (útil con botones o imágenes).</td></tr>
+          <tr><td><code>scope="col/row"</code>, <code>&lt;caption&gt;</code></td><td>No son de Bootstrap sino HTML accesible: ayudan a los lectores de pantalla a relacionar celdas y cabeceras.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-diagram-3"></i> Otros elementos para ordenar información</div>
+    <ul class="mb-0">
+      <li><strong>Containers + grid</strong>: estructura general de la página (capítulo 3).</li>
+      <li><strong>Cards</strong>: bloques de contenido independientes (productos, noticias, fichas).</li>
+      <li><strong>List group</strong>: listas de elementos, enlaces o configuraciones.</li>
+      <li><strong>Accordion y tabs (nav-tabs)</strong>: dividen mucha información en partes que se muestran de una en una.</li>
+      <li><strong>Stacks</strong>: <code>vstack</code> y <code>hstack gap-3</code> para apilar elementos rápidamente con Flexbox.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== 8. COMPONENTES ========== -->
+<section id="componentes">
+  <h2 class="capitulo">8. Componentes más importantes</h2>
+  <p>Los componentes son piezas de interfaz ya diseñadas. Algunos son solo CSS (botones, cards, alerts estáticas…) y otros necesitan el JavaScript de Bootstrap (modales, desplegables, tooltips…). Los he agrupado para que cada ejemplo muestre varios a la vez.</p>
+  <div class="callout callout-por">
+    <div class="callout-titulo"><i class="bi bi-cpu"></i> Dos formas de activar el JavaScript de un componente</div>
+    <ol class="mb-0">
+      <li><strong>Con atributos <code>data-bs-*</code></strong> (sin escribir código): <code>&lt;button data-bs-toggle="modal" data-bs-target="#miModal"&gt;</code>. Es lo más cómodo.</li>
+      <li><strong>Con la API JavaScript</strong>: <code>const m = new bootstrap.Modal('#miModal'); m.show();</code>. Necesario cuando la acción depende de tu lógica (p. ej., abrir un modal tras validar un formulario).</li>
+    </ol>
+  </div>
+
+  <!-- 8.1 -->
+  <section id="comp-botones">
+  <h3>8.1 Botones, badges, alerts, spinners y barras de progreso</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-ui-checks"></i> Ejemplo 9 · Elementos de acción y de estado</div>
+    <div class="demo">
+      <!-- Botones: variantes, contorno, tamaños, estados -->
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-success"><i class="bi bi-check-lg"></i> Guardar</button>
+        <button type="button" class="btn btn-outline-danger">Outline</button>
+        <button type="button" class="btn btn-secondary btn-sm">Pequeño</button>
+        <button type="button" class="btn btn-dark btn-lg">Grande</button>
+        <a href="#" class="btn btn-link">Enlace</a>
+        <button type="button" class="btn btn-primary" disabled>Deshabilitado</button>
+        <button type="button" class="btn btn-primary" disabled>
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Cargando…
+        </button>
+      </div>
+      <!-- Grupo de botones y botón de ancho completo -->
+      <div class="btn-group mb-2" role="group" aria-label="Vista">
+        <button type="button" class="btn btn-outline-primary active">Día</button>
+        <button type="button" class="btn btn-outline-primary">Semana</button>
+        <button type="button" class="btn btn-outline-primary">Mes</button>
+      </div>
+      <div class="d-grid gap-2 d-md-block mb-3">
+        <button class="btn btn-warning" type="button">Ancho completo en móvil (d-grid), normal desde md</button>
+      </div>
+
+      <!-- Badges -->
+      <p>
+        Mensajes <span class="badge text-bg-primary">4</span>
+        <button type="button" class="btn btn-outline-secondary position-relative ms-3">
+          Avisos <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span>
+        </button>
+      </p>
+
+      <!-- Alerts -->
+      <div class="alert alert-success d-flex align-items-center" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> <div><strong>¡Hecho!</strong> Los cambios se han guardado.</div>
+      </div>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> <strong>Atención:</strong> tu sesión caduca en 5 minutos. <a href="#" class="alert-link">Renovar</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Progreso y spinners -->
+      <div class="progress mb-2" role="progressbar" aria-label="Progreso" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: 65%">65%</div>
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando…</span></div>
+        <div class="spinner-grow text-success" role="status"><span class="visually-hidden">Cargando…</span></div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Botones</strong>: siempre <code>btn</code> + variante (<code>btn-primary</code>, <code>btn-outline-*</code>). Tamaños <code>btn-sm</code>/<code>btn-lg</code>. Se puede aplicar a <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code> o <code>&lt;input&gt;</code>; pon <code>type="button"</code> si no es para enviar un formulario.</li>
+        <li><strong>Botón a ancho completo responsive</strong>: <code>d-grid</code> en el contenedor lo estira; <code>d-md-block</code> lo devuelve a su tamaño desde md. Muy usado en formularios en móvil.</li>
+        <li><strong>Badges</strong>: contadores y etiquetas. Con <code>position-absolute</code> + <code>translate-middle</code> se colocan en la esquina de otro elemento (la "burbuja de notificaciones").</li>
+        <li><strong>Alerts</strong>: mensajes de respuesta. Con <code>alert-dismissible</code> + <code>btn-close data-bs-dismiss="alert"</code> se pueden cerrar; <code>fade show</code> añade la animación. <code>role="alert"</code> hace que los lectores de pantalla lo anuncien.</li>
+        <li><strong>Spinners y progress</strong>: indican que algo está ocurriendo. El texto <code>visually-hidden</code> no se ve pero sí lo leen los lectores de pantalla.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 8.2 -->
+  <section id="comp-navegacion">
+  <h3>8.2 Menús de navegación: navbar, nav (tabs/pills), breadcrumb y paginación</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-menu-button-wide"></i> Ejemplo 10 · Barra de navegación responsive con desplegable y buscador</div>
+    <div class="demo">
+      <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body rounded" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="bi bi-shop"></i> MiTienda</a>
+          <!-- Botón "hamburguesa": solo se ve por debajo de lg -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDemo"
+                  aria-controls="menuDemo" aria-expanded="false" aria-label="Abrir menú">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuDemo">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categorías</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Informática</a></li>
+                  <li><a class="dropdown-item" href="#">Móviles</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Ver todo</a></li>
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Próximamente</a></li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+              <button class="btn btn-outline-light" type="submit">Buscar</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><code>navbar-expand-lg</code>: el menú aparece desplegado desde <strong>lg</strong>; por debajo se esconde tras el botón hamburguesa. Cambia a <code>-md</code> o <code>-sm</code> según cuántos enlaces tengas.</li>
+        <li>El botón <code>navbar-toggler</code> abre/cierra el bloque <code>collapse navbar-collapse</code> porque su <code>data-bs-target</code> apunta al <code>id</code> de ese bloque. <strong>Los ids deben coincidir</strong>: es el error más típico.</li>
+        <li><code>me-auto</code> en la lista empuja el buscador a la derecha (margin-end: auto en un contenedor flex).</li>
+        <li>Colores: <code>bg-dark</code> + <code>data-bs-theme="dark"</code> (texto claro), o <code>bg-body-tertiary</code> para una barra clara. Posición: <code>fixed-top</code>, <code>fixed-bottom</code> o <code>sticky-top</code> (como la barra morada de estos apuntes).</li>
+        <li>El <strong>dropdown</strong> necesita Popper (incluido en el <em>bundle</em>).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-segmented-nav"></i> Ejemplo 11 · Pestañas (tabs) con contenido, pills, breadcrumb y paginación</div>
+    <div class="demo">
+      <!-- Pestañas con contenido conmutable -->
+      <ul class="nav nav-tabs" id="pestanasDemo" role="tablist">
+        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-desc" type="button" role="tab">Descripción</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-specs" type="button" role="tab">Características</button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-opiniones" type="button" role="tab">Opiniones <span class="badge text-bg-secondary">3</span></button></li>
+      </ul>
+      <div class="tab-content border border-top-0 rounded-bottom p-3 mb-3">
+        <div class="tab-pane fade show active" id="tab-desc" role="tabpanel">Contenido de la descripción del producto.</div>
+        <div class="tab-pane fade" id="tab-specs" role="tabpanel">Procesador, memoria, pantalla…</div>
+        <div class="tab-pane fade" id="tab-opiniones" role="tabpanel">⭐⭐⭐⭐ "Muy buena relación calidad-precio".</div>
+      </div>
+
+      <!-- Pills (estilo píldora) justificadas -->
+      <ul class="nav nav-pills nav-fill mb-3">
+        <li class="nav-item"><a class="nav-link active" href="#">Activa</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Pill</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Otra pill</a></li>
+      </ul>
+
+      <!-- Breadcrumb (migas de pan) -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="#">Informática</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Portátiles</li>
+        </ol>
+      </nav>
+
+      <!-- Paginación -->
+      <nav aria-label="Paginación de resultados">
+        <ul class="pagination justify-content-center mb-0">
+          <li class="page-item disabled"><a class="page-link">«</a></li>
+          <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">»</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Tabs</strong>: cada botón con <code>data-bs-toggle="tab"</code> muestra el <code>.tab-pane</code> cuyo id indica <code>data-bs-target</code>. Ideal para fichas de producto o configuraciones.</li>
+        <li><code>nav-pills</code> cambia el aspecto; <code>nav-fill</code>/<code>nav-justified</code> reparten el ancho; <code>flex-column</code> la convierte en menú vertical (como el índice de estos apuntes).</li>
+        <li><strong>Breadcrumb</strong>: indica dónde está el usuario en la jerarquía del sitio. <strong>Paginación</strong>: para listados largos; <code>justify-content-center</code> la centra.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 8.3 -->
+  <section id="comp-cards">
+  <h3>8.3 Cards y list group</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-card-heading"></i> Ejemplo 12 · Rejilla de tarjetas de igual altura + list group</div>
+    <div class="demo">
+      <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="bg-primary-subtle d-flex align-items-center justify-content-center card-img-top" style="height:120px;"><i class="bi bi-laptop fs-1 text-primary"></i></div>
+            <div class="card-body">
+              <h5 class="card-title">Portátil Pro</h5>
+              <p class="card-text">Texto breve. Las tarjetas de la fila tienen la misma altura gracias a <code>h-100</code>.</p>
+            </div>
+            <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+              <span class="fw-bold">899 €</span><a href="#" class="btn btn-sm btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 border-success">
+            <div class="card-header text-bg-success">Destacado</div>
+            <div class="card-body">
+              <h5 class="card-title">Plan Premium</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Suscripción anual</h6>
+              <ul class="list-unstyled mb-0">
+                <li><i class="bi bi-check text-success"></i> Soporte 24 h</li>
+                <li><i class="bi bi-check text-success"></i> 1 TB de espacio</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-header">Ajustes</div>
+            <!-- list-group-flush: lista integrada en la card, sin bordes exteriores -->
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center">Notificaciones <span class="badge text-bg-primary rounded-pill">14</span></li>
+              <li class="list-group-item list-group-item-warning">Pagos pendientes</li>
+              <a href="#" class="list-group-item list-group-item-action">Perfil (enlace)</a>
+              <li class="list-group-item disabled">Deshabilitado</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Estructura de una card</strong>: <code>.card</code> → (<code>.card-img-top</code>) → <code>.card-header</code> → <code>.card-body</code> (con <code>.card-title</code>, <code>.card-subtitle</code>, <code>.card-text</code>) → <code>.card-footer</code>. Todas las partes son opcionales.</li>
+        <li><strong>Igual altura</strong>: la card no tiene ancho propio (ocupa el de su columna). <code>h-100</code> la estira a la altura de la columna, y como las columnas de una fila flex miden lo mismo, todas quedan iguales.</li>
+        <li><strong>List group</strong>: listas con estilo. <code>list-group-item-action</code> para elementos clicables, colores con <code>list-group-item-{color}</code>, <code>list-group-flush</code> para integrarla en una card.</li>
+        <li>Variante interesante: <code>card-group</code> (tarjetas pegadas) o <code>stretched-link</code> (hace clicable toda la tarjeta).</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 8.4 -->
+  <section id="comp-capas">
+  <h3>8.4 Capas superpuestas: modales, toasts, tooltips y popovers</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-window-stack"></i> Ejemplo 13 · Modal de confirmación + toast de aviso + tooltips</div>
+    <div class="demo">
+      <div class="d-flex flex-wrap gap-2">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalBorrar"><i class="bi bi-trash"></i> Borrar registro</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="¡Soy un tooltip!">Pasa el ratón</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="popover" data-bs-title="Popover" data-bs-content="Contenido más largo que un tooltip. Se abre al hacer clic.">Haz clic (popover)</button>
+      </div>
+
+      <!-- MODAL -->
+      <div class="modal fade" id="modalBorrar" tabindex="-1" aria-labelledby="modalBorrarTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="modalBorrarTitulo"><i class="bi bi-exclamation-octagon text-danger"></i> ¿Borrar el registro?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">Esta acción no se puede deshacer.</div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-danger" id="btnConfirmarBorrado">Sí, borrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST: se coloca en una esquina con position-fixed -->
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastBorrado" class="toast" role="status" aria-live="polite" aria-atomic="true">
+          <div class="toast-header">
+            <i class="bi bi-check-circle-fill text-success me-2"></i><strong class="me-auto">Sistema</strong><small>ahora</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+          </div>
+          <div class="toast-body">Registro borrado correctamente.</div>
+        </div>
+      </div>
+    </div>
+    <script class="show-code" data-titulo="JavaScript: cerrar el modal y mostrar el toast con la API">
+// Al confirmar: cerramos el modal y mostramos el toast desde JavaScript
+document.getElementById('btnConfirmarBorrado').addEventListener('click', () => {
+  bootstrap.Modal.getInstance('#modalBorrar').hide();
+  bootstrap.Toast.getOrCreateInstance('#toastBorrado').show();
+});
+
+// Tooltips y popovers NO se activan solos (por rendimiento): hay que inicializarlos
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+  document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => new bootstrap.Popover(el));
+});
+    </script>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Modal</strong>: estructura fija <code>.modal &gt; .modal-dialog &gt; .modal-content</code> con header/body/footer. Se abre con <code>data-bs-toggle="modal" data-bs-target="#id"</code> y se cierra con <code>data-bs-dismiss="modal"</code>. Tamaños: <code>modal-sm</code>, <code>modal-lg</code>, <code>modal-xl</code>, <code>modal-fullscreen-md-down</code> (pantalla completa en móvil). <code>modal-dialog-centered</code> lo centra en vertical; <code>modal-dialog-scrollable</code> hace scroll interno.</li>
+        <li><strong>Buena práctica</strong>: coloca los modales justo antes de <code>&lt;/body&gt;</code> o fuera de contenedores con <code>position</code>/<code>transform</code> para evitar problemas de capas (z-index).</li>
+        <li><strong>Toast</strong>: notificación ligera que desaparece sola (por defecto a los 5 s; <code>data-bs-autohide="false"</code> para evitarlo). Se agrupan en un <code>.toast-container</code> posicionado.</li>
+        <li><strong>Tooltip/Popover</strong>: hay que inicializarlos con JavaScript; Bootstrap no lo hace automáticamente para no penalizar páginas con muchos elementos.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 8.5 -->
+  <section id="comp-plegables">
+  <h3>8.5 Contenido plegable: accordion, collapse y offcanvas</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-chevron-bar-expand"></i> Ejemplo 14 · Preguntas frecuentes (accordion), botón collapse y panel lateral</div>
+    <div class="demo">
+      <div class="accordion mb-3" id="faq">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">¿Necesito saber CSS para usar Bootstrap?</button>
+          </h2>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faq">
+            <div class="accordion-body">No para empezar, pero sí para personalizarlo y entender lo que hace cada clase.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">¿Funciona sin jQuery?</button>
+          </h2>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faq">
+            <div class="accordion-body">Sí. Desde Bootstrap 5 todo el JavaScript es nativo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#masInfo" aria-expanded="false" aria-controls="masInfo">Mostrar más información</button>
+        <button class="btn btn-outline-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#panelFiltros" aria-controls="panelFiltros"><i class="bi bi-funnel"></i> Filtros</button>
+      </div>
+      <div class="collapse mt-2" id="masInfo"><div class="card card-body">Contenido oculto que aparece al pulsar el botón.</div></div>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="panelFiltros" aria-labelledby="panelFiltrosTitulo">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="panelFiltrosTitulo">Filtros</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body">Aquí irían los filtros de búsqueda, un menú de navegación en móvil, un carrito…</div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Accordion</strong>: <code>data-bs-parent="#faq"</code> hace que al abrir uno se cierren los demás. Quítalo si quieres que se puedan abrir varios. <code>accordion-flush</code> lo deja sin bordes.</li>
+        <li><strong>Collapse</strong>: muestra/oculta cualquier bloque. Es la misma pieza que usa el menú hamburguesa de la navbar.</li>
+        <li><strong>Offcanvas</strong>: panel que entra desde un lateral (<code>-start</code>, <code>-end</code>, <code>-top</code>, <code>-bottom</code>). Muy útil en móvil para menús o filtros (el índice de estos apuntes en móvil es un offcanvas).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-collection"></i> Otros componentes que conviene conocer</div>
+    <p class="mb-0"><strong>Carousel</strong> (pase de imágenes), <strong>Scrollspy</strong> (resalta el enlace del índice según la sección visible; lo usan estos apuntes), <strong>Placeholders</strong> (esqueletos de carga), <strong>Close button</strong>, <strong>Button group</strong> y <strong>Ratio</strong>. Todos están documentados con ejemplos en <a href="https://getbootstrap.com/docs/5.3/components/" target="_blank">getbootstrap.com/docs/5.3/components</a>.</p>
+  </div>
+  </section>
+</section>
+
+<!-- ========== 9. PERSONALIZACIÓN ========== -->
+<section id="personalizar">
+  <h2 class="capitulo">9. Estilos propios: personalizar y sobrescribir Bootstrap</h2>
+  <p>Hay cuatro niveles de personalización, de más sencillo a más potente. Elige el mínimo que resuelva tu necesidad.</p>
+  <div class="table-responsive">
+  <table class="table table-bordered tabla-ref">
+    <thead class="table-light"><tr><th>Nivel</th><th>Cómo</th><th>Cuándo</th></tr></thead>
+    <tbody>
+      <tr><td>1. Hoja CSS propia</td><td>Un <code>estilos.css</code> cargado <strong>después</strong> de Bootstrap con tus clases o reglas que sobrescriben.</td><td>Ajustes puntuales y clases propias.</td></tr>
+      <tr><td>2. Variables CSS</td><td>Cambiar <code>--bs-*</code> en <code>:root</code> o en un componente.</td><td>Colores, fuentes, radios… sin compilar. Funciona con el CDN.</td></tr>
+      <tr><td>3. Sass</td><td>Redefinir variables (<code>$primary</code>, <code>$font-family-base</code>…) y compilar.</td><td>Proyectos reales: cambia todo de forma coherente y reduce el tamaño.</td></tr>
+      <tr><td>4. Modo de color</td><td><code>data-bs-theme="dark"</code> en <code>&lt;html&gt;</code> o en un bloque.</td><td>Tema oscuro o zonas oscuras.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>9.1 Sobrescribir con CSS propio: la especificidad</h3>
+  <div class="callout callout-aviso">
+    <div class="callout-titulo"><i class="bi bi-exclamation-triangle"></i> Reglas para sobrescribir sin pelearte con Bootstrap</div>
+    <ol class="mb-0">
+      <li><strong>Nunca edites <code>bootstrap.min.css</code></strong>: perderías los cambios al actualizar.</li>
+      <li>Carga tu CSS <strong>después</strong>; con la misma especificidad gana tu regla.</li>
+      <li>Si no gana, sube la especificidad <em>un poco</em> (<code>.mi-web .btn</code>) en lugar de usar <code>!important</code>. Las utilidades de Bootstrap llevan <code>!important</code> a propósito, así que no intentes sobrescribirlas: cambia la clase.</li>
+      <li>Mejor que modificar <code>.btn-primary</code> globalmente: <strong>crea tus propias variantes</strong> (<code>.btn-marca</code>) reutilizando las variables del componente.</li>
+    </ol>
+  </div>
+
+  <h3>9.2 Variables CSS: la forma moderna</h3>
+  <p>En Bootstrap 5.3 casi todo se controla con <strong>variables CSS</strong>. Hay variables globales (<code>--bs-primary</code>, <code>--bs-body-font-family</code>, <code>--bs-border-radius</code>…) y variables de cada componente (<code>--bs-btn-bg</code>, <code>--bs-card-border-color</code>…). Cambiar una variable de componente es la forma más limpia de crear variantes.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-brush"></i> Ejemplo 15 · Botón y tarjeta "de marca" creados con variables CSS</div>
+    <style class="show-code" data-titulo="CSS propio (estilos.css)">
+/* 1) Una variante de botón propia: solo redefinimos las variables del componente .btn */
+.btn-marca {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #e85d04;
+  --bs-btn-border-color: #e85d04;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #c44d03;
+  --bs-btn-hover-border-color: #c44d03;
+  --bs-btn-active-bg: #a34002;
+  --bs-btn-focus-shadow-rgb: 232, 93, 4;
+  --bs-btn-border-radius: 2rem;
+  --bs-btn-padding-x: 1.5rem;
+}
+
+/* 2) Una card con otra apariencia, también mediante sus variables */
+.card-marca {
+  --bs-card-border-color: #e85d04;
+  --bs-card-border-width: 2px;
+  --bs-card-cap-bg: #fff3e8;
+  --bs-card-border-radius: 1rem;
+}
+
+/* 3) Variables globales aplicadas solo a una zona de la página */
+.zona-marca {
+  --bs-body-font-family: Georgia, 'Times New Roman', serif;
+  --bs-link-color-rgb: 232, 93, 4;
+  font-family: var(--bs-body-font-family);
+}
+    </style>
+    <div class="demo">
+      <div class="zona-marca">
+        <div class="card card-marca mb-3">
+          <div class="card-header fw-bold">Tarjeta de marca</div>
+          <div class="card-body">
+            <p class="card-text">Esta zona usa otra fuente y otro color de enlace: <a href="#">un enlace</a>.</p>
+            <button class="btn btn-marca">Botón de marca</button>
+            <button class="btn btn-primary">btn-primary original</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <p><strong>Por qué funciona</strong>: internamente, <code>.btn</code> dice <code>background-color: var(--bs-btn-bg)</code> y <code>.btn-primary</code> solo da valor a esas variables. Nuestra clase <code>.btn-marca</code> hace exactamente lo mismo con otros colores, así que hereda gratis los estados hover, focus, active y disabled.</p>
+      <p><strong>Ojo</strong>: cambiar <code>--bs-primary</code> en <code>:root</code> <em>no</em> cambia los botones <code>.btn-primary</code>, porque estos tienen sus colores calculados al compilar. Para cambiar el color primario en todas partes de forma coherente se usa Sass.</p>
+    </div>
+  </div>
+  <script type="text/plain" class="show-code" data-lang="css" data-titulo="Cambios globales con variables CSS (en tu estilos.css)">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --bs-body-font-family: 'Poppins', sans-serif;  /* fuente de toda la web */
+  --bs-body-font-size: 1.05rem;
+  --bs-border-radius: .75rem;                     /* esquinas más redondeadas */
+  --bs-link-color-rgb: 121, 82, 179;              /* color de los enlaces */
+}
+  </script>
+
+  <h3>9.3 Personalización con Sass (la forma profesional)</h3>
+  <p>Con Bootstrap instalado por npm, creas tu archivo <code>scss/main.scss</code>, redefines variables <strong>antes</strong> de importar Bootstrap y compilas:</p>
+  <script type="text/plain" class="show-code" data-lang="scss" data-titulo="scss/main.scss">
+// 1. Tus variables ANTES de importar Bootstrap (Bootstrap usa !default,
+//    así que respeta los valores que ya existan)
+$primary:          #e85d04;
+$secondary:        #5c677d;
+$font-family-base: 'Poppins', sans-serif;
+$border-radius:    .75rem;
+$enable-shadows:   true;
+$enable-gradients: false;
+
+// 2. Añadir un color nuevo al mapa de colores: genera btn-marca,
+//    bg-marca, text-marca, alert-marca, border-marca...
+$theme-colors: (
+  "primary":   $primary,
+  "secondary": $secondary,
+  "success":   #2a9d8f,
+  "danger":    #d62828,
+  "warning":   #f4a261,
+  "info":      #4cc9f0,
+  "light":     #f8f9fa,
+  "dark":      #212529,
+  "marca":     #6a4c93
+);
+
+// 3. Importar Bootstrap completo...
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// ...o solo las partes que uses (archivo final más ligero):
+// @import "../node_modules/bootstrap/scss/functions";
+// @import "../node_modules/bootstrap/scss/variables";
+// @import "../node_modules/bootstrap/scss/maps";
+// @import "../node_modules/bootstrap/scss/mixins";
+// @import "../node_modules/bootstrap/scss/root";
+// @import "../node_modules/bootstrap/scss/reboot";
+// @import "../node_modules/bootstrap/scss/grid";
+// @import "../node_modules/bootstrap/scss/buttons";
+// @import "../node_modules/bootstrap/scss/utilities/api";
+
+// 4. Tus estilos propios, pudiendo usar las variables y mixins de Bootstrap
+.cabecera {
+  background: $primary;
+  @include media-breakpoint-up(md) { padding: 4rem 0; }
+}
+  </script>
+  <div class="callout callout-por">
+    <div class="callout-titulo"><i class="bi bi-question-circle"></i> ¿Por qué Sass es mejor para cambios globales?</div>
+    <p class="mb-0">Al cambiar <code>$primary</code>, Bootstrap <strong>recalcula todo</strong> lo que depende de él: colores hover más oscuros, versiones <em>subtle</em>, sombras de focus, enlaces, formularios… Con CSS tendrías que redefinir cada una a mano. Además, los mixins como <code>media-breakpoint-up(md)</code> te permiten escribir tus media queries con los mismos breakpoints de Bootstrap.</p>
+  </div>
+
+  <h3>9.4 Modo oscuro</h3>
+  <p>Desde la versión 5.3 basta con el atributo <code>data-bs-theme</code>. Se puede poner en <code>&lt;html&gt;</code> (toda la página) o en un elemento concreto. Prueba el botón <strong>Modo oscuro</strong> de la barra superior: hace esto:</p>
+  <script type="text/plain" class="show-code" data-lang="javascript" data-titulo="Alternar el tema">
+const html = document.documentElement;
+const nuevo = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+html.setAttribute('data-bs-theme', nuevo);
+localStorage.setItem('tema', nuevo);   // recordar la preferencia
+  </script>
+</section>
+
+<!-- ========== 10. FORMULARIOS ========== -->
+<section id="formularios">
+  <h2 class="capitulo">10. Capítulo especial: formularios</h2>
+  <p>Los formularios son probablemente la parte de Bootstrap con más valor práctico: unifican el aspecto de todos los controles en todos los navegadores, los hacen accesibles y responsive, y ofrecen un sistema de validación visual muy completo.</p>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-list-check"></i> Las 5 clases que más vas a usar</div>
+    <ul class="mb-0">
+      <li><code>.form-label</code> → la etiqueta <code>&lt;label&gt;</code>.</li>
+      <li><code>.form-control</code> → inputs de texto, email, password, number, date, file y textarea.</li>
+      <li><code>.form-select</code> → los <code>&lt;select&gt;</code>.</li>
+      <li><code>.form-check</code> + <code>.form-check-input</code> + <code>.form-check-label</code> → checkbox, radio y switch.</li>
+      <li><code>.form-text</code> → texto de ayuda bajo un campo.</li>
+    </ul>
+  </div>
+
+  <!-- 10.1 -->
+  <section id="form-controles">
+  <h3>10.1 Controles básicos</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-input-cursor-text"></i> Ejemplo 16 · Inputs, textarea, select, file, range, tamaños y estados</div>
+    <div class="demo">
+      <form>
+        <div class="mb-3">
+          <label for="f16email" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="f16email" placeholder="nombre@ejemplo.es" aria-describedby="f16emailAyuda">
+          <div id="f16emailAyuda" class="form-text">Nunca compartiremos tu correo.</div>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="f16pass" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="f16pass">
+          </div>
+          <div class="col-md-6">
+            <label for="f16ciclo" class="form-label">Ciclo formativo</label>
+            <select id="f16ciclo" class="form-select">
+              <option selected disabled value="">Elige…</option>
+              <option>DAW</option>
+              <option>DAM</option>
+              <option>ASIR</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="f16coment" class="form-label">Comentarios</label>
+          <textarea class="form-control" id="f16coment" rows="3"></textarea>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="f16archivo" class="form-label">Adjuntar archivo</label>
+            <input class="form-control" type="file" id="f16archivo" accept=".pdf,.jpg,.png" multiple>
+          </div>
+          <div class="col-md-6">
+            <label for="f16rango" class="form-label">Nivel de experiencia</label>
+            <input type="range" class="form-range" min="0" max="10" step="1" id="f16rango">
+          </div>
+        </div>
+        <div class="row g-3 align-items-center">
+          <div class="col-md-4"><input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"></div>
+          <div class="col-md-4"><input class="form-control" type="text" value="Solo lectura" readonly></div>
+          <div class="col-md-4"><input class="form-control form-control-lg" type="text" placeholder="Deshabilitado (lg)" disabled></div>
+          <div class="col-md-6"><input type="text" readonly class="form-control-plaintext" value="form-control-plaintext: parece texto"></div>
+          <div class="col-md-6 d-flex align-items-center gap-2"><label for="f16color" class="form-label mb-0">Color:</label><input type="color" class="form-control form-control-color" id="f16color" value="#7952b3"></div>
+        </div>
+      </form>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Etiqueta + campo</strong>: el <code>for</code> del label debe coincidir con el <code>id</code> del input. Así, al pulsar la etiqueta se enfoca el campo y los lectores de pantalla saben qué es.</li>
+        <li><code>aria-describedby</code> une el campo con su texto de ayuda: el lector lo lee al entrar en el campo.</li>
+        <li><strong>El tipo de input importa</strong>: <code>email</code>, <code>tel</code>, <code>number</code>, <code>date</code> sacan el teclado adecuado en el móvil y activan validación nativa.</li>
+        <li><strong>Tamaños</strong>: <code>form-control-sm</code>/<code>-lg</code> y <code>form-select-sm</code>/<code>-lg</code>.</li>
+        <li><code>readonly</code> (se envía, no se edita) ≠ <code>disabled</code> (ni se edita ni se envía). <code>form-control-plaintext</code> muestra un valor como texto plano alineado con el resto del formulario.</li>
+        <li><code>mb-3</code> en cada grupo da el espacio vertical estándar entre campos.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 10.2 -->
+  <section id="form-checks">
+  <h3>10.2 Checkbox, radio buttons y switches</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-check2-square"></i> Ejemplo 17 · Checks, radios, switches y "botones conmutables"</div>
+    <div class="demo">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <p class="fw-semibold mb-2">Checkbox (varias opciones)</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="html" id="c1" checked>
+            <label class="form-check-label" for="c1">HTML</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="css" id="c2">
+            <label class="form-check-label" for="c2">CSS</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="c3" disabled>
+            <label class="form-check-label" for="c3">Deshabilitado</label>
+          </div>
+
+          <p class="fw-semibold mt-3 mb-2">Radio (una sola opción: mismo <code>name</code>)</p>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="turno" id="r1" value="manana" checked>
+            <label class="form-check-label" for="r1">Mañana</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="turno" id="r2" value="tarde">
+            <label class="form-check-label" for="r2">Tarde</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p class="fw-semibold mb-2">Switch (activar/desactivar)</p>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="s1" checked>
+            <label class="form-check-label" for="s1">Recibir notificaciones</label>
+          </div>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" role="switch" id="s2">
+            <label class="form-check-label" for="s2">Modo privado</label>
+          </div>
+
+          <p class="fw-semibold mb-2">Radios con aspecto de botón</p>
+          <div class="btn-group" role="group" aria-label="Talla">
+            <input type="radio" class="btn-check" name="talla" id="tS" autocomplete="off">
+            <label class="btn btn-outline-primary" for="tS">S</label>
+            <input type="radio" class="btn-check" name="talla" id="tM" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="tM">M</label>
+            <input type="radio" class="btn-check" name="talla" id="tL" autocomplete="off">
+            <label class="btn btn-outline-primary" for="tL">L</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li>Cada opción va en un <code>div.form-check</code> con el input (<code>form-check-input</code>) <strong>antes</strong> del label (<code>form-check-label</code>).</li>
+        <li><strong>Checkbox</strong>: elecciones independientes. <strong>Radio</strong>: una sola dentro del grupo; lo que los agrupa es el <strong>mismo atributo <code>name</code></strong>.</li>
+        <li><code>form-check-inline</code> los pone en línea. <code>form-switch</code> transforma un checkbox en interruptor (añade <code>role="switch"</code> por accesibilidad).</li>
+        <li><code>btn-check</code> oculta el input y el <code>label.btn</code> hace de botón: muy usado para tallas, filtros o selector de vista. Sigue siendo un radio real, así que se envía con el formulario.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 10.3 -->
+  <section id="form-grupos">
+  <h3>10.3 Input groups y floating labels</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-input-cursor"></i> Ejemplo 18 · Input groups (prefijos, sufijos, botones) y etiquetas flotantes</div>
+    <div class="demo">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text">@</span>
+            <input type="text" class="form-control" placeholder="usuario" aria-label="Usuario">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-currency-euro"></i></span>
+            <input type="number" class="form-control" placeholder="Importe" aria-label="Importe">
+            <span class="input-group-text">,00</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="password" class="form-control" id="f18pass" placeholder="Contraseña" aria-label="Contraseña">
+            <button class="btn btn-outline-secondary" type="button" id="f18ver" title="Mostrar/ocultar"><i class="bi bi-eye"></i></button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text">https://</span>
+            <input type="text" class="form-control" placeholder="miweb" aria-label="Dominio">
+            <select class="form-select" style="max-width: 7rem;" aria-label="Extensión"><option>.es</option><option>.com</option></select>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="input-group">
+            <div class="input-group-text"><input class="form-check-input mt-0" type="checkbox" aria-label="Activar cupón"></div>
+            <input type="text" class="form-control" placeholder="Código de descuento" aria-label="Cupón">
+            <button class="btn btn-primary" type="button">Aplicar</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="email" class="form-control" id="f18fEmail" placeholder="nombre@ejemplo.es">
+            <label for="f18fEmail">Correo electrónico</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating">
+            <select class="form-select" id="f18fSel">
+              <option selected>Madrid</option><option>Barcelona</option><option>Valencia</option>
+            </select>
+            <label for="f18fSel">Ciudad</label>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="Deja un comentario" id="f18fTxt" style="height: 90px"></textarea>
+            <label for="f18fTxt">Comentario</label>
+          </div>
+        </div>
+        <div class="col-12">
+          <!-- Floating label dentro de un input group -->
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+            <div class="form-floating">
+              <input type="tel" class="form-control" id="f18fTel" placeholder="Teléfono">
+              <label for="f18fTel">Teléfono</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script class="show-code" data-titulo="JavaScript: botón para mostrar/ocultar la contraseña">
+document.getElementById('f18ver').addEventListener('click', function () {
+  const input = document.getElementById('f18pass');
+  const visible = input.type === 'text';
+  input.type = visible ? 'password' : 'text';
+  this.innerHTML = visible ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+});
+    </script>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Input group</strong>: un <code>div.input-group</code> que une el campo con textos (<code>input-group-text</code>), iconos, botones, selects o checks a los lados. Bootstrap ajusta los bordes redondeados para que parezca una sola pieza. Tamaños: <code>input-group-sm</code>/<code>-lg</code>.</li>
+        <li><strong>Por qué</strong>: aclaran el formato esperado (€, @, https://) sin depender del placeholder y agrupan acciones (buscar, aplicar, mostrar contraseña).</li>
+        <li><strong>Floating labels</strong>: la etiqueta empieza dentro del campo y "flota" hacia arriba al escribir. Requisitos: <code>div.form-floating</code>, el input <strong>antes</strong> del label y <strong>obligatorio un <code>placeholder</code></strong> (aunque no se vea; Bootstrap lo usa con <code>:placeholder-shown</code> para saber si el campo está vacío).</li>
+        <li>Ahorran espacio vertical y mantienen la etiqueta visible al escribir (a diferencia de usar solo placeholder, que desaparece y es una mala práctica de accesibilidad).</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 10.4 -->
+  <section id="form-layout">
+  <h3>10.4 Maquetación de formularios con la grid</h3>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-layout-text-window"></i> Ejemplo 19 · Formulario horizontal y formulario en línea</div>
+    <div class="demo">
+      <!-- Horizontal: label a la izquierda (desde sm) -->
+      <form class="mb-4">
+        <div class="row mb-3">
+          <label for="h1" class="col-sm-3 col-form-label">Nombre</label>
+          <div class="col-sm-9"><input type="text" class="form-control" id="h1"></div>
+        </div>
+        <div class="row mb-3">
+          <label for="h2" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9"><input type="email" class="form-control" id="h2"></div>
+        </div>
+        <fieldset class="row mb-3">
+          <legend class="col-form-label col-sm-3 pt-0">Modalidad</legend>
+          <div class="col-sm-9">
+            <div class="form-check"><input class="form-check-input" type="radio" name="mod" id="m1" checked><label class="form-check-label" for="m1">Presencial</label></div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="mod" id="m2"><label class="form-check-label" for="m2">A distancia</label></div>
+          </div>
+        </fieldset>
+        <div class="row"><div class="col-sm-9 offset-sm-3"><button type="submit" class="btn btn-primary">Enviar</button></div></div>
+      </form>
+
+      <!-- En línea: todo en una fila desde md -->
+      <form class="row row-cols-md-auto g-2 align-items-center">
+        <div class="col-12">
+          <label class="visually-hidden" for="inl1">Usuario</label>
+          <div class="input-group"><div class="input-group-text">@</div><input type="text" class="form-control" id="inl1" placeholder="Usuario"></div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="inl2">Rol</label>
+          <select class="form-select" id="inl2"><option>Alumno</option><option>Profesor</option></select>
+        </div>
+        <div class="col-12">
+          <div class="form-check"><input class="form-check-input" type="checkbox" id="inl3"><label class="form-check-label" for="inl3">Recordarme</label></div>
+        </div>
+        <div class="col-12"><button type="submit" class="btn btn-primary">Entrar</button></div>
+      </form>
+    </div>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Horizontal</strong>: cada campo es una <code>.row</code>; el label lleva <code>col-sm-3 col-form-label</code> (que lo alinea verticalmente con el input) y el campo va en <code>col-sm-9</code>. En móvil todo se apila.</li>
+        <li><code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code>: agrupan semánticamente los radios bajo un mismo título (accesibilidad).</li>
+        <li><strong>En línea</strong>: <code>row-cols-md-auto</code> hace que cada columna mida lo que su contenido a partir de md. Los labels se ocultan visualmente con <code>visually-hidden</code> pero siguen existiendo para los lectores de pantalla.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+</section>
+
+<!-- ========== 11. VALIDACIÓN ========== -->
+<section id="validacion">
+  <h2 class="capitulo">11. Validación de formularios y visualización de errores</h2>
+  <p>Validar es comprobar que los datos son correctos <strong>antes</strong> de enviarlos, y sobre todo <strong>decírselo bien al usuario</strong>: qué campo falla, por qué y cómo arreglarlo. Bootstrap no valida nada por sí mismo: se apoya en la <strong>validación nativa de HTML5</strong> (la <em>Constraint Validation API</em> del navegador) y pone la parte visual.</p>
+  <div class="callout callout-aviso">
+    <div class="callout-titulo"><i class="bi bi-shield-exclamation"></i> Importante</div>
+    <p class="mb-0">La validación en el navegador es para la <strong>experiencia de usuario</strong>, no para la seguridad: cualquiera puede saltársela. <strong>El servidor siempre debe volver a validar</strong> los datos.</p>
+  </div>
+
+  <h3>11.1 Piezas del sistema de validación</h3>
+  <div class="table-responsive">
+  <table class="table table-bordered tabla-ref">
+    <thead class="table-light"><tr><th>Pieza</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td>Atributos HTML5</td><td><code>required</code>, <code>type="email|url|number|tel|date"</code>, <code>minlength</code>, <code>maxlength</code>, <code>min</code>, <code>max</code>, <code>step</code>, <code>pattern="regex"</code>. Definen las reglas.</td></tr>
+      <tr><td><code>novalidate</code> en el <code>&lt;form&gt;</code></td><td>Desactiva los bocadillos nativos del navegador (feos y distintos en cada uno) para mostrar los de Bootstrap. Las reglas siguen funcionando.</td></tr>
+      <tr><td><code>.was-validated</code> en el form</td><td>Activa los estilos automáticos según <code>:valid</code>/<code>:invalid</code> de cada campo. Se añade al intentar enviar.</td></tr>
+      <tr><td><code>.is-valid</code> / <code>.is-invalid</code> en el campo</td><td>Fuerzan el estado a mano desde JavaScript o desde el servidor. Dan control total.</td></tr>
+      <tr><td><code>.valid-feedback</code> / <code>.invalid-feedback</code></td><td>Mensajes bajo el campo; se muestran solos cuando el campo hermano anterior está en ese estado.</td></tr>
+      <tr><td><code>.valid-tooltip</code> / <code>.invalid-tooltip</code></td><td>Igual, pero como bocadillo flotante (el padre necesita <code>position-relative</code>).</td></tr>
+      <tr><td><code>.has-validation</code> en <code>.input-group</code></td><td>Corrige los bordes redondeados cuando el mensaje de error va dentro del grupo.</td></tr>
+      <tr><td><code>setCustomValidity("msg")</code> (JS)</td><td>Marca un campo como inválido con tu propio mensaje (cadena vacía = válido). Es el <strong>puente</strong> entre tus funciones de validación y Bootstrap.</td></tr>
+      <tr><td><code>form.checkValidity()</code> / <code>campo.validity</code></td><td>Preguntan al navegador si el formulario/campo es válido y por qué no (<code>valueMissing</code>, <code>typeMismatch</code>, <code>patternMismatch</code>, <code>tooShort</code>…).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- 11.2 -->
+  <section id="val-nativa">
+  <h3>11.2 Validación nativa con estilos de Bootstrap</h3>
+  <p>Es el patrón oficial de la documentación: reglas en HTML y cuatro líneas de JavaScript. Pulsa <strong>Enviar</strong> sin rellenar nada y luego ve corrigiendo.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-check2-circle"></i> Ejemplo 20 · Formulario con <code>.needs-validation</code> y <code>.was-validated</code></div>
+    <div class="demo">
+      <form class="row g-3 needs-validation" id="formNativo" novalidate>
+        <div class="col-md-6">
+          <label for="v1nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="v1nombre" required minlength="2">
+          <div class="valid-feedback">¡Correcto!</div>
+          <div class="invalid-feedback">Escribe tu nombre (mínimo 2 letras).</div>
+        </div>
+        <div class="col-md-6">
+          <label for="v1email" class="form-label">Email</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            <input type="email" class="form-control" id="v1email" required>
+            <div class="invalid-feedback">Introduce un email válido (ej. nombre@dominio.es).</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="v1edad" class="form-label">Edad</label>
+          <input type="number" class="form-control" id="v1edad" min="16" max="99" required>
+          <div class="invalid-feedback">Debe estar entre 16 y 99.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="v1cp" class="form-label">Código postal</label>
+          <input type="text" class="form-control" id="v1cp" pattern="[0-9]{5}" inputmode="numeric" maxlength="5" required>
+          <div class="invalid-feedback">5 dígitos.</div>
+        </div>
+        <div class="col-md-4">
+          <label for="v1ciclo" class="form-label">Ciclo</label>
+          <select class="form-select" id="v1ciclo" required>
+            <option selected disabled value="">Elige…</option>
+            <option>DAW</option><option>DAM</option><option>ASIR</option>
+          </select>
+          <div class="invalid-feedback">Selecciona un ciclo.</div>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="v1acepto" required>
+            <label class="form-check-label" for="v1acepto">Acepto las condiciones</label>
+            <div class="invalid-feedback">Debes aceptarlas para continuar.</div>
+          </div>
+        </div>
+        <div class="col-12 d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Enviar</button>
+          <button class="btn btn-outline-secondary" type="reset">Limpiar</button>
+        </div>
+        <div class="col-12"><div class="alert alert-success d-none mb-0" id="v1ok"><i class="bi bi-send-check"></i> Formulario válido: aquí se enviaría.</div></div>
+      </form>
+    </div>
+    <script class="show-code" data-titulo="JavaScript (patrón oficial de Bootstrap, adaptado)">
+document.querySelectorAll('.needs-validation').forEach(form => {
+  form.addEventListener('submit', event => {
+    // checkValidity() comprueba TODAS las reglas HTML5 del formulario
+    if (!form.checkValidity()) {
+      event.preventDefault();      // no enviar
+      event.stopPropagation();
+    } else {
+      event.preventDefault();      // (solo en esta demo, para no recargar la página)
+      document.getElementById('v1ok').classList.remove('d-none');
+    }
+    form.classList.add('was-validated');   // ← activa los estilos verde/rojo
+  });
+  // Al limpiar, quitamos también los estilos de validación
+  form.addEventListener('reset', () => {
+    form.classList.remove('was-validated');
+    document.getElementById('v1ok').classList.add('d-none');
+  });
+});
+    </script>
+    <div class="explicacion">
+      <ul>
+        <li><strong>Cómo funciona</strong>: hasta que no se pulsa Enviar, el formulario no tiene <code>.was-validated</code> y no se colorea nada (no queremos llenar de rojo un formulario recién abierto). Al pulsarlo, Bootstrap aplica <code>.was-validated .form-control:invalid</code> → borde rojo + icono + muestra <code>.invalid-feedback</code>. A partir de ahí, el color cambia en vivo al escribir.</li>
+        <li><strong>Orden del HTML</strong>: el mensaje debe ir <strong>después</strong> del campo y como hermano (el CSS usa el selector <code>~</code>). En un <em>input group</em>, dentro del grupo y con <code>has-validation</code>; en un check, dentro del <code>.form-check</code>.</li>
+        <li><strong>Limitación</strong>: los mensajes son fijos y solo valen reglas de HTML5. Para reglas propias (letra del DNI, contraseñas iguales, usuario repetido…) hace falta JavaScript → apartado 11.4.</li>
+      </ul>
+    </div>
+  </div>
+  </section>
+
+  <!-- 11.3 -->
+  <section id="val-capas">
+  <h3>11.3 Capas para mostrar errores: mensajes, tooltips, iconos y resumen</h3>
+  <p>Un buen formulario combina varias "capas" de información. Este ejemplo muestra los estados fijados con clases (es lo que haría el servidor al devolver un formulario con errores) y cómo cambiar el icono por defecto por una <strong>cruz roja</strong>.</p>
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-layers"></i> Ejemplo 21 · Catálogo de estados e iconos de error/acierto</div>
+    <style class="show-code" data-titulo="CSS: sustituir el icono de error por una cruz roja (clase .iconos-x)">
+/* Bootstrap pone un círculo con "!" en los campos inválidos.
+   Con esta clase en el <form> lo cambiamos por una cruz roja. */
+.iconos-x .form-control.is-invalid,
+.iconos-x.was-validated .form-control:invalid {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath stroke='%23dc3545' stroke-width='2.2' stroke-linecap='round' d='M4 4l8 8M12 4l-8 8'/%3e%3c/svg%3e");
+}
+/* Animación de "sacudida" para el campo con error (refuerza el aviso) */
+.iconos-x .is-invalid.sacudir { animation: sacudir .35s; }
+@keyframes sacudir { 25%{transform:translateX(-4px)} 50%{transform:translateX(4px)} 75%{transform:translateX(-2px)} }
+/* El mensaje de error con un icono delante */
+.iconos-x .invalid-feedback::before { content: "\f622"; font-family: "bootstrap-icons"; margin-right: .3rem; }
+.iconos-x .valid-feedback::before   { content: "\f26a"; font-family: "bootstrap-icons"; margin-right: .3rem; }
+    </style>
+    <div class="demo">
+      <!-- Resumen de errores al principio del formulario -->
+      <div class="alert alert-danger" role="alert">
+        <h6 class="alert-heading mb-1"><i class="bi bi-x-octagon-fill"></i> Hay 2 errores en el formulario</h6>
+        <ul class="mb-0 small"><li><a href="#e21b" class="alert-link">Email</a>: formato no válido</li><li><a href="#e21d" class="alert-link">DNI</a>: la letra no corresponde</li></ul>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="e21a" class="form-label">Icono por defecto (válido)</label>
+          <input type="text" class="form-control is-valid" id="e21a" value="Ana">
+          <div class="valid-feedback">Nombre correcto.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="e21b" class="form-label">Icono por defecto (inválido)</label>
+          <input type="email" class="form-control is-invalid" id="e21b" value="ana@">
+          <div class="invalid-feedback">Formato de email no válido.</div>
+        </div>
+      </div>
+      <form class="iconos-x row g-3 mt-1" novalidate onsubmit="return false">
+        <div class="col-md-6">
+          <label for="e21c" class="form-label">Con <code>.iconos-x</code> (válido)</label>
+          <input type="text" class="form-control is-valid" id="e21c" value="12345678Z">
+          <div class="valid-feedback">DNI correcto.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="e21d" class="form-label">Con <code>.iconos-x</code> (inválido, cruz roja)</label>
+          <input type="text" class="form-control is-invalid" id="e21d" value="12345678A">
+          <div class="invalid-feedback">La letra no corresponde al número.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="e21e" class="form-label">Icono en el input group</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text text-danger"><i class="bi bi-x-circle-fill"></i></span>
+            <input type="text" class="form-control is-invalid" id="e21e" value="admin">
+            <div class="invalid-feedback">Ese usuario ya existe.</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="e21f" class="form-label">Icono en el input group</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text text-success"><i class="bi bi-check-circle-fill"></i></span>
+            <input type="text" class="form-control is-valid" id="e21f" value="ana_2026">
+            <div class="valid-feedback">Usuario disponible.</div>
+          </div>
+        </div>
+        <div class="col-md-6 position-relative">
+          <label for="e21g" class="form-label">Error como tooltip</label>
+          <input type="text" class="form-control is-invalid" id="e21g" value="2809">
+          <div class="invalid-tooltip">El código postal tiene 5 dígitos.</div>
+        </div>
+        <div class="col-md-6">
+          <label for="e21h" class="form-label">Select inválido</label>
+          <select class="form-select is-invalid" id="e21h"><option selected value="">Elige…</option></select>
+          <div class="invalid-feedback">Selecciona una opción.</div>
+        </div>
+        <div class="col-12 mt-5">
+          <div class="form-check">
+            <input class="form-check-input is-invalid" type="checkbox" id="e21i">
+            <label class="form-check-label" for="e21i">Acepto la política de privacidad</label>
+            <div class="invalid-feedback">Es obligatorio aceptarla.</div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="explicacion">
+      <p><strong>Las capas y para qué sirve cada una:</strong></p>
+      <ol>
+        <li><strong>Resumen de errores (alert)</strong> arriba del formulario: imprescindible en formularios largos, porque el error puede quedar fuera de la pantalla. Cada error es un enlace al campo. Al mostrarlo se le da el foco para que los lectores de pantalla lo anuncien.</li>
+        <li><strong>Color del borde + icono</strong> dentro del campo: identificación inmediata. El icono es importante porque <strong>no se debe transmitir información solo con color</strong> (daltonismo).</li>
+        <li><strong>Mensaje concreto</strong> bajo el campo (<code>invalid-feedback</code>): dice qué está mal y cómo corregirlo. "Campo incorrecto" no ayuda; "La letra no corresponde al número" sí.</li>
+        <li><strong>Tooltip</strong>: alternativa cuando no hay espacio debajo (formularios en línea, tablas editables).</li>
+        <li><strong>Mensaje de acierto</strong> (<code>valid-feedback</code>): úsalo con moderación, solo donde aporte (usuario disponible, contraseña segura, provincia detectada…).</li>
+      </ol>
+      <p class="mb-0"><strong>Cómo cambiamos el icono</strong>: Bootstrap lo dibuja como <code>background-image</code> (un SVG) del input. Sobrescribimos esa propiedad con más especificidad (<code>.iconos-x .form-control.is-invalid</code>) y nuestro SVG con una cruz. Con Sass se haría cambiando la variable <code>$form-feedback-icon-invalid</code>. Los iconos de los mensajes usan los códigos de la fuente Bootstrap Icons.</p>
+    </div>
+  </div>
+  </section>
+
+  <!-- 11.4 -->
+  <section id="val-js">
+  <h3>11.4 Validación personalizada con funciones JavaScript</h3>
+  <p>Cuando las reglas de HTML5 no bastan, escribimos <strong>funciones de validación propias</strong> y las <strong>integramos</strong> en el sistema de Bootstrap. La clave es separar tres responsabilidades:</p>
+  <div class="row g-3 mb-3">
+    <div class="col-md-4"><div class="card h-100 border-primary"><div class="card-body"><h6 class="card-title"><span class="badge text-bg-primary">1</span> Funciones puras</h6><p class="card-text small mb-0">Reciben un valor y devuelven si es válido: <code>validarDNI("12345678Z")</code> → <code>true</code>. No tocan el HTML, así que se pueden reutilizar y probar en cualquier sitio (incluso en el servidor con Node).</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100 border-primary"><div class="card-body"><h6 class="card-title"><span class="badge text-bg-primary">2</span> Reglas por campo</h6><p class="card-text small mb-0">Para cada campo, una función que devuelve el <strong>mensaje de error</strong> o una cadena vacía si está bien. Combina reglas nativas y funciones propias.</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100 border-primary"><div class="card-body"><h6 class="card-title"><span class="badge text-bg-primary">3</span> Pintar el resultado</h6><p class="card-text small mb-0">Una única función <code>marcar()</code> que llama a <code>setCustomValidity()</code>, pone <code>is-valid</code>/<code>is-invalid</code> y escribe el mensaje. Así todo el formulario se ve igual.</p></div></div></div>
+  </div>
+  <script type="text/plain" class="show-code" data-lang="javascript" data-titulo="El patrón en pocas líneas">
+// (1) Función pura: no sabe nada del HTML
+function validarDNI(valor) { /* ... devuelve true / false ... */ }
+
+// (3) Pinta el estado con las clases de Bootstrap y lo registra en el navegador
+function marcar(campo, mensajeError) {
+  campo.setCustomValidity(mensajeError);                 // '' = válido
+  campo.classList.toggle('is-invalid', mensajeError !== '');
+  campo.classList.toggle('is-valid',   mensajeError === '');
+  document.getElementById(campo.id + '-error').textContent = mensajeError;
+}
+
+// (2) Regla del campo: primero lo nativo (required, pattern...), luego lo propio
+const dni = document.getElementById('dni');
+dni.addEventListener('input', () => {
+  dni.setCustomValidity('');                             // limpiar antes de comprobar
+  let error = '';
+  if (dni.validity.valueMissing)      error = 'El DNI es obligatorio';
+  else if (!validarDNI(dni.value))    error = 'La letra no corresponde al número';
+  marcar(dni, error);
+});
+  </script>
+  <div class="callout callout-por">
+    <div class="callout-titulo"><i class="bi bi-question-circle"></i> ¿Por qué usar <code>setCustomValidity</code> y no solo poner la clase <code>is-invalid</code>?</div>
+    <p class="mb-0">Porque así el navegador "sabe" que el campo es inválido: <code>form.checkValidity()</code> devolverá <code>false</code>, el selector <code>:invalid</code> funcionará (y con él <code>.was-validated</code>), y <code>campo.validationMessage</code> contendrá tu mensaje. Las reglas propias quedan integradas con las nativas en un único sistema.</p>
+  </div>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-clock-history"></i> ¿Cuándo validar? (experiencia de usuario)</div>
+    <ul class="mb-0">
+      <li><strong>No</strong> mostrar errores mientras el usuario empieza a escribir un campo por primera vez: es molesto.</li>
+      <li>Validar al <strong>salir del campo</strong> (<code>blur</code>) la primera vez; a partir de ahí, en cada pulsación (<code>input</code>) para que vea cómo se corrige.</li>
+      <li>Al <strong>enviar</strong>, validar todo, mostrar el resumen y llevar el foco al primer error.</li>
+      <li>Validaciones costosas (consultar al servidor) con <strong>debounce</strong>: esperar a que el usuario deje de escribir ~500 ms.</li>
+    </ul>
+  </div>
+  </section>
+
+  <!-- 11.5 -->
+  <section id="val-completo">
+  <h3>11.5 Ejemplo completo: formulario de registro</h3>
+  <p>Este ejemplo reúne todo el capítulo: floating labels, input groups, checks, radios, switch, validaciones nativas y <strong>validaciones específicas con funciones externas</strong>:</p>
+  <div class="row row-cols-1 row-cols-md-2 g-2 small mb-3">
+    <div class="col"><i class="bi bi-person-vcard text-primary"></i> <strong>DNI/NIE</strong>: cálculo de la letra de control (módulo 23).</div>
+    <div class="col"><i class="bi bi-calendar-check text-primary"></i> <strong>Fecha de nacimiento</strong>: cálculo de edad (≥ 18, no futura).</div>
+    <div class="col"><i class="bi bi-geo-alt text-primary"></i> <strong>Código postal</strong>: comprueba la provincia (01–52) y la muestra.</div>
+    <div class="col"><i class="bi bi-cloud-check text-primary"></i> <strong>Usuario</strong>: comprobación <em>asíncrona</em> simulando una petición al servidor, con spinner.</div>
+    <div class="col"><i class="bi bi-shield-lock text-primary"></i> <strong>Contraseña</strong>: medidor de fortaleza y lista de requisitos con ✓/✗ en vivo.</div>
+    <div class="col"><i class="bi bi-arrow-repeat text-primary"></i> <strong>Repetir contraseña</strong>: validación cruzada entre dos campos.</div>
+    <div class="col"><i class="bi bi-bank text-primary"></i> <strong>IBAN</strong>: algoritmo oficial de dígitos de control (módulo 97).</div>
+    <div class="col"><i class="bi bi-ui-checks text-primary"></i> <strong>Intereses</strong>: grupo de checkbox con mínimo 1 y máximo 3.</div>
+  </div>
+  <div class="callout callout-tip"><p class="mb-0"><strong>Datos para probar</strong>: DNI <code>12345678Z</code> (válido) o <code>12345678A</code> (inválido) · NIE <code>X1234567L</code> · CP <code>28911</code> · IBAN <code>ES91 2100 0418 4502 0005 1332</code> · usuarios ocupados: <code>admin</code>, <code>root</code>, <code>usuario</code>, <code>test</code>, <code>profesor</code>.</p></div>
+
+  <div class="ejemplo">
+    <div class="ejemplo-titulo"><i class="bi bi-stars"></i> Ejemplo 22 · Registro con validación completa integrada en Bootstrap</div>
+    <div class="demo">
+      <form id="formRegistro" class="iconos-x" novalidate>
+
+        <!-- Capa 1: resumen de errores (oculto hasta que se envía con errores) -->
+        <div id="resumenErrores" class="alert alert-danger d-none" role="alert" tabindex="-1">
+          <h6 class="alert-heading"><i class="bi bi-x-octagon-fill"></i> <span id="resumenTitulo">Revisa los campos marcados</span></h6>
+          <ul id="listaErrores" class="mb-0 small"></ul>
+        </div>
+
+        <!-- ===== 1. Datos personales ===== -->
+        <fieldset class="mb-4">
+          <legend class="fs-6 fw-bold text-primary border-bottom pb-1 mb-3"><i class="bi bi-person"></i> 1. Datos personales</legend>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required minlength="2" maxlength="40" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' \-]+" data-patron="Solo letras, espacios, apóstrofo y guion" data-nombre="Nombre" autocomplete="given-name">
+                <label for="nombre">Nombre *</label>
+                <div class="invalid-feedback" id="nombre-error"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" required minlength="2" maxlength="60" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' \-]+" data-patron="Solo letras, espacios, apóstrofo y guion" data-nombre="Apellidos" autocomplete="family-name">
+                <label for="apellidos">Apellidos *</label>
+                <div class="invalid-feedback" id="apellidos-error"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control text-uppercase" id="dni" name="dni" placeholder="DNI" required maxlength="9" data-nombre="DNI/NIE">
+                <label for="dni">DNI / NIE *</label>
+                <div class="invalid-feedback" id="dni-error"></div>
+                <div class="valid-feedback" id="dni-ok"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="fnac" name="fnac" placeholder="Fecha" required data-nombre="Fecha de nacimiento">
+                <label for="fnac">Fecha de nacimiento *</label>
+                <div class="invalid-feedback" id="fnac-error"></div>
+                <div class="valid-feedback" id="fnac-ok"></div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ===== 2. Contacto ===== -->
+        <fieldset class="mb-4">
+          <legend class="fs-6 fw-bold text-primary border-bottom pb-1 mb-3"><i class="bi bi-envelope"></i> 2. Contacto</legend>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email *</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text"><i class="bi bi-at"></i></span>
+                <input type="email" class="form-control" id="email" name="email" required pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}" data-patron="Falta el dominio (ej. nombre@dominio.es)" data-nombre="Email" autocomplete="email" placeholder="nombre@dominio.es">
+                <div class="invalid-feedback" id="email-error"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="telefono" class="form-label">Teléfono móvil</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">+34</span>
+                <input type="tel" class="form-control" id="telefono" name="telefono" pattern="[67][0-9]{8}" inputmode="numeric" maxlength="9" data-nombre="Teléfono" data-patron="Debe tener 9 cifras y empezar por 6 o 7" placeholder="600123456" autocomplete="tel-national">
+                <div class="invalid-feedback" id="telefono-error"></div>
+              </div>
+              <div class="form-text">Opcional.</div>
+            </div>
+            <div class="col-md-4">
+              <label for="cp" class="form-label">Código postal *</label>
+              <input type="text" class="form-control" id="cp" name="cp" required pattern="[0-9]{5}" inputmode="numeric" maxlength="5" data-nombre="Código postal" data-patron="Debe tener 5 cifras" placeholder="28911" autocomplete="postal-code">
+              <div class="invalid-feedback" id="cp-error"></div>
+              <div class="valid-feedback" id="cp-ok"></div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ===== 3. Cuenta ===== -->
+        <fieldset class="mb-4">
+          <legend class="fs-6 fw-bold text-primary border-bottom pb-1 mb-3"><i class="bi bi-key"></i> 3. Cuenta de acceso</legend>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="usuario" class="form-label">Nombre de usuario *</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text" id="usuario-estado" style="width:2.6rem"><i class="bi bi-person"></i></span>
+                <input type="text" class="form-control" id="usuario" name="usuario" required minlength="4" maxlength="20" pattern="[a-z0-9_]+" data-nombre="Usuario" data-patron="Solo minúsculas, números y guion bajo" autocomplete="username">
+                <div class="invalid-feedback" id="usuario-error"></div>
+                <div class="valid-feedback" id="usuario-ok"></div>
+              </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block"></div>
+            <div class="col-md-6">
+              <label for="password" class="form-label">Contraseña *</label>
+              <div class="input-group has-validation">
+                <input type="password" class="form-control" id="password" name="password" required data-nombre="Contraseña" autocomplete="new-password">
+                <button class="btn btn-outline-secondary" type="button" id="verPassword" aria-label="Mostrar contraseña"><i class="bi bi-eye"></i></button>
+                <div class="invalid-feedback" id="password-error"></div>
+              </div>
+              <!-- Medidor de fortaleza -->
+              <div class="progress mt-2" style="height: 6px;" role="progressbar" aria-label="Fortaleza de la contraseña">
+                <div class="progress-bar" id="fuerzaBarra" style="width: 0%"></div>
+              </div>
+              <div class="form-text" id="fuerzaTexto">Fortaleza: —</div>
+            </div>
+            <div class="col-md-6">
+              <label for="password2" class="form-label">Repetir contraseña *</label>
+              <input type="password" class="form-control" id="password2" name="password2" required data-nombre="Repetir contraseña" autocomplete="new-password">
+              <div class="invalid-feedback" id="password2-error"></div>
+              <div class="valid-feedback">Las contraseñas coinciden.</div>
+            </div>
+            <div class="col-12">
+              <!-- Lista de requisitos con iconos que cambian en vivo -->
+              <ul class="list-unstyled small row row-cols-2 row-cols-md-5 g-1 mb-0" id="reglasPassword">
+                <li class="col" data-regla="longitud"><i class="bi bi-x-circle-fill text-danger"></i> 8+ caracteres</li>
+                <li class="col" data-regla="mayuscula"><i class="bi bi-x-circle-fill text-danger"></i> Una mayúscula</li>
+                <li class="col" data-regla="minuscula"><i class="bi bi-x-circle-fill text-danger"></i> Una minúscula</li>
+                <li class="col" data-regla="numero"><i class="bi bi-x-circle-fill text-danger"></i> Un número</li>
+                <li class="col" data-regla="simbolo"><i class="bi bi-dash-circle text-body-secondary"></i> Un símbolo (extra)</li>
+              </ul>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ===== 4. Datos bancarios ===== -->
+        <fieldset class="mb-4">
+          <legend class="fs-6 fw-bold text-primary border-bottom pb-1 mb-3"><i class="bi bi-bank"></i> 4. Domiciliación</legend>
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label for="iban" class="form-label">IBAN *</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                <input type="text" class="form-control text-uppercase font-monospace" id="iban" name="iban" required maxlength="34" data-nombre="IBAN" placeholder="ES00 0000 0000 0000 0000 0000">
+                <div class="invalid-feedback" id="iban-error"></div>
+                <div class="valid-feedback" id="iban-ok"></div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ===== 5. Preferencias ===== -->
+        <fieldset class="mb-4">
+          <legend class="fs-6 fw-bold text-primary border-bottom pb-1 mb-3"><i class="bi bi-sliders"></i> 5. Preferencias</legend>
+          <div class="row g-4">
+            <div class="col-md-6">
+              <p class="form-label mb-1">Intereses * <small class="text-body-secondary">(de 1 a 3)</small></p>
+              <div id="grupoIntereses">
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="intereses" value="Diseño web" id="int1" data-nombre="Intereses"><label class="form-check-label" for="int1">Diseño web</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="intereses" value="Back-end" id="int2"><label class="form-check-label" for="int2">Back-end</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="intereses" value="Bases de datos" id="int3"><label class="form-check-label" for="int3">Bases de datos</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="intereses" value="Ciberseguridad" id="int4"><label class="form-check-label" for="int4">Ciberseguridad</label></div>
+              </div>
+              <div class="invalid-feedback" id="int1-error"></div>
+            </div>
+            <div class="col-md-6">
+              <p class="form-label mb-1">Plan *</p>
+              <div class="form-check"><input class="form-check-input" type="radio" name="plan" value="Gratuito" id="plan1" required data-nombre="Plan"><label class="form-check-label" for="plan1">Gratuito</label></div>
+              <div class="form-check"><input class="form-check-input" type="radio" name="plan" value="Estudiante" id="plan2" required><label class="form-check-label" for="plan2">Estudiante</label></div>
+              <div class="form-check"><input class="form-check-input" type="radio" name="plan" value="Profesional" id="plan3" required><label class="form-check-label" for="plan3">Profesional</label></div>
+              <div class="invalid-feedback" id="plan1-error"></div>
+              <div class="form-check form-switch mt-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="boletin" name="boletin" checked>
+                <label class="form-check-label" for="boletin">Recibir el boletín</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terminos" name="terminos" required data-nombre="Condiciones">
+                <label class="form-check-label" for="terminos">He leído y acepto las <a href="#">condiciones de uso</a> *</label>
+                <div class="invalid-feedback" id="terminos-error"></div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="d-grid gap-2 d-sm-flex">
+          <button type="submit" class="btn btn-primary btn-lg" id="btnRegistro"><i class="bi bi-person-plus"></i> Crear cuenta</button>
+          <button type="reset" class="btn btn-outline-secondary btn-lg">Limpiar</button>
+        </div>
+        <p class="form-text mt-2 mb-0">* Campos obligatorios</p>
+      </form>
+
+      <!-- Modal de éxito -->
+      <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header text-bg-success">
+              <h1 class="modal-title fs-5" id="modalRegistroTitulo"><i class="bi bi-check-circle-fill"></i> ¡Registro correcto!</h1>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body"><p>Estos son los datos que se enviarían al servidor:</p><table class="table table-sm table-striped mb-0"><tbody id="tablaResumen"></tbody></table></div>
+            <div class="modal-footer"><button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script class="show-code" data-titulo="JavaScript completo del formulario de registro">
+/* =====================================================================
+   1) FUNCIONES DE VALIDACIÓN "EXTERNAS" (puras, reutilizables, sin DOM)
+   ===================================================================== */
+
+// DNI (8 cifras + letra) o NIE (X/Y/Z + 7 cifras + letra). Letra = número mod 23
+function validarDNI(valor) {
+  const v = valor.toUpperCase().replace(/[\s-]/g, '');
+  if (!/^(\d{8}|[XYZ]\d{7})[A-Z]$/.test(v)) return false;
+  const numero = v.slice(0, -1).replace('X', '0').replace('Y', '1').replace('Z', '2');
+  const letra = 'TRWAGMYFPDXBNJZSQVHLCKE'[parseInt(numero, 10) % 23];
+  return letra === v.slice(-1);
+}
+
+// Edad en años cumplidos a partir de una fecha 'AAAA-MM-DD'
+function calcularEdad(fechaISO) {
+  const nac = new Date(fechaISO + 'T00:00:00');
+  const hoy = new Date();
+  let edad = hoy.getFullYear() - nac.getFullYear();
+  const m = hoy.getMonth() - nac.getMonth();
+  if (m < 0 || (m === 0 && hoy.getDate() < nac.getDate())) edad--;
+  return edad;
+}
+
+// Las 2 primeras cifras del CP son el código de provincia (01-52)
+const PROVINCIAS = ['Álava','Albacete','Alicante','Almería','Ávila','Badajoz','Illes Balears','Barcelona',
+  'Burgos','Cáceres','Cádiz','Castellón','Ciudad Real','Córdoba','A Coruña','Cuenca','Girona','Granada',
+  'Guadalajara','Gipuzkoa','Huelva','Huesca','Jaén','León','Lleida','La Rioja','Lugo','Madrid','Málaga',
+  'Murcia','Navarra','Ourense','Asturias','Palencia','Las Palmas','Pontevedra','Salamanca',
+  'Santa Cruz de Tenerife','Cantabria','Segovia','Sevilla','Soria','Tarragona','Teruel','Toledo',
+  'Valencia','Valladolid','Bizkaia','Zamora','Zaragoza','Ceuta','Melilla'];
+function provinciaDeCP(cp) {
+  const n = parseInt(cp.slice(0, 2), 10);
+  return (n >= 1 && n <= 52) ? PROVINCIAS[n - 1] : null;
+}
+
+// IBAN: se mueven 4 caracteres al final, letras → números (A=10...) y el resto mod 97 debe ser 1
+function validarIBAN(valor) {
+  const s = valor.replace(/\s+/g, '').toUpperCase();
+  if (!/^[A-Z]{2}\d{2}[A-Z0-9]{10,30}$/.test(s)) return false;
+  if (s.startsWith('ES') && s.length !== 24) return false;
+  const reordenado = s.slice(4) + s.slice(0, 4);
+  const numerico = reordenado.replace(/[A-Z]/g, c => (c.charCodeAt(0) - 55).toString());
+  let resto = 0;
+  for (const cifra of numerico) resto = (resto * 10 + Number(cifra)) % 97;  // evita números gigantes
+  return resto === 1;
+}
+
+// Fortaleza de la contraseña: qué reglas cumple y una puntuación de 0 a 5
+function analizarPassword(pw) {
+  const reglas = {
+    longitud:  pw.length >= 8,
+    mayuscula: /[A-ZÁÉÍÓÚÑ]/.test(pw),
+    minuscula: /[a-záéíóúñ]/.test(pw),
+    numero:    /\d/.test(pw),
+    simbolo:   /[^A-Za-z0-9ÁÉÍÓÚÑáéíóúñ]/.test(pw)
+  };
+  const puntos = Object.values(reglas).filter(Boolean).length + (pw.length >= 12 ? 1 : 0);
+  return { reglas, puntos: Math.min(puntos, 5) };
+}
+
+// Simula una petición al servidor (en la vida real: fetch('/api/usuarios/existe?u=...'))
+function comprobarUsuarioServidor(usuario) {
+  const ocupados = ['admin', 'root', 'usuario', 'test', 'profesor'];
+  return new Promise(resolve => setTimeout(() => resolve(!ocupados.includes(usuario)), 900));
+}
+
+/* =====================================================================
+   2) INTEGRACIÓN CON BOOTSTRAP
+   ===================================================================== */
+const form = document.getElementById('formRegistro');
+const $ = id => document.getElementById(id);
+
+// Pinta el estado de un campo: setCustomValidity + clases + mensajes
+function marcar(campo, error, mensajeOk = '') {
+  campo.setCustomValidity(error);
+  campo.classList.toggle('is-invalid', !!error);
+  campo.classList.toggle('is-valid', !error);
+  if ($(campo.id + '-error')) $(campo.id + '-error').textContent = error;
+  if ($(campo.id + '-ok')) $(campo.id + '-ok').textContent = mensajeOk;
+}
+
+// Traduce los errores nativos de HTML5 a mensajes claros en español
+function errorNativo(c) {
+  const v = c.validity;
+  if (v.valueMissing)    return 'Este campo es obligatorio';
+  if (v.typeMismatch)    return c.type === 'email' ? 'Escribe un email válido (nombre@dominio.es)' : 'Formato no válido';
+  if (v.tooShort)        return `Mínimo ${c.minLength} caracteres (llevas ${c.value.length})`;
+  if (v.patternMismatch) return c.dataset.patron || 'Hay caracteres no permitidos';
+  return '';
+}
+
+// Reglas de cada campo: devuelven el mensaje de error ('' si es correcto)
+const reglas = {
+  nombre:    c => errorNativo(c),
+  apellidos: c => errorNativo(c),
+  dni:       c => errorNativo(c) || (validarDNI(c.value) ? '' :
+               (/^(\d{8}|[XYZ]\d{7})[A-Z]$/.test(c.value) ? 'La letra no corresponde al número' : 'Formato: 8 cifras + letra, o X/Y/Z + 7 cifras + letra')),
+  fnac:      c => {
+               const e = errorNativo(c); if (e) return e;
+               const edad = calcularEdad(c.value);
+               if (edad < 0)   return 'La fecha no puede ser futura';
+               if (edad < 18)  return `Debes ser mayor de edad (tendrías ${edad} años)`;
+               if (edad > 110) return 'Revisa el año de nacimiento';
+               return '';
+             },
+  email:     c => errorNativo(c),
+  telefono:  c => errorNativo(c),
+  cp:        c => errorNativo(c) || (provinciaDeCP(c.value) ? '' : 'No existe ninguna provincia con ese código'),
+  password:  c => {
+               if (c.validity.valueMissing) return 'Este campo es obligatorio';
+               const { reglas } = analizarPassword(c.value);
+               return (reglas.longitud && reglas.mayuscula && reglas.minuscula && reglas.numero)
+                 ? '' : 'No cumple los requisitos indicados abajo';
+             },
+  password2: c => errorNativo(c) || (c.value === $('password').value ? '' : 'Las contraseñas no coinciden'),
+  iban:      c => errorNativo(c) || (validarIBAN(c.value) ? '' : 'IBAN incorrecto: revisa los dígitos de control'),
+  terminos:  c => c.checked ? '' : 'Debes aceptar las condiciones'
+};
+
+// Mensajes de acierto con información útil
+const mensajesOk = {
+  dni:  c => /^[XYZ]/.test(c.value) ? 'NIE correcto' : 'DNI correcto',
+  fnac: c => `Edad: ${calcularEdad(c.value)} años`,
+  cp:   c => `Provincia: ${provinciaDeCP(c.value)}`,
+  iban: () => 'IBAN válido'
+};
+
+function validarCampo(c) {
+  c.setCustomValidity('');                        // limpiar error propio antes de evaluar
+  if (c.id === 'telefono' && c.value === '') {    // opcional y vacío: neutro
+    c.classList.remove('is-valid', 'is-invalid'); return;
+  }
+  const error = reglas[c.id](c);
+  marcar(c, error, !error && mensajesOk[c.id] ? mensajesOk[c.id](c) : '');
+}
+
+// Grupos (checkbox con mínimo/máximo y radios): se marcan todos sus elementos
+function validarGrupo(nombre, comprobar) {
+  const opciones = [...form.querySelectorAll(`[name="${nombre}"]`)];
+  opciones.forEach(o => o.setCustomValidity(''));
+  const error = comprobar(opciones);
+  opciones.forEach(o => { o.classList.toggle('is-invalid', !!error); o.classList.toggle('is-valid', !error); });
+  opciones[0].setCustomValidity(error);
+  const fb = $(opciones[0].id + '-error');
+  fb.textContent = error;
+  fb.classList.toggle('d-block', !!error);       // el feedback no es hermano del input: lo mostramos a mano
+}
+const validarIntereses = () => validarGrupo('intereses', ops => {
+  const n = ops.filter(o => o.checked).length;
+  return n === 0 ? 'Elige al menos un interés' : n > 3 ? `Máximo 3 intereses (has marcado ${n})` : '';
+});
+const validarPlan = () => validarGrupo('plan', ops => ops.some(o => o.checked) ? '' : 'Elige un plan');
+
+/* ---------- Usuario: validación asíncrona con debounce ---------- */
+let temporizador, peticionActual = 0;
+function estadoUsuario(estado) {
+  const iconos = {
+    neutro:   '<i class="bi bi-person"></i>',
+    cargando: '<span class="spinner-border spinner-border-sm text-primary" role="status"></span>',
+    ok:       '<i class="bi bi-check-circle-fill text-success"></i>',
+    error:    '<i class="bi bi-x-circle-fill text-danger"></i>'
+  };
+  $('usuario-estado').innerHTML = iconos[estado];
+}
+async function validarUsuario() {
+  const c = $('usuario');
+  c.setCustomValidity('');
+  const e = errorNativo(c);
+  if (e) { marcar(c, e); estadoUsuario('error'); return; }
+  const id = ++peticionActual;
+  c.classList.remove('is-valid', 'is-invalid');
+  c.setCustomValidity('Comprobando…');           // mientras tanto no se puede enviar
+  estadoUsuario('cargando');
+  const libre = await comprobarUsuarioServidor(c.value);
+  if (id !== peticionActual) return;             // llegó una respuesta antigua: se ignora
+  marcar(c, libre ? '' : `"${c.value}" ya está en uso. Prueba con "${c.value}_${new Date().getFullYear()}"`,
+         libre ? '¡Nombre de usuario disponible!' : '');
+  estadoUsuario(libre ? 'ok' : 'error');
+}
+
+/* ---------- Contraseña: medidor y lista de requisitos ---------- */
+function actualizarFuerza() {
+  const { reglas: r, puntos } = analizarPassword($('password').value);
+  document.querySelectorAll('#reglasPassword li').forEach(li => {
+    const ok = r[li.dataset.regla];
+    const opcional = li.dataset.regla === 'simbolo';
+    li.querySelector('i').className = ok ? 'bi bi-check-circle-fill text-success'
+      : opcional ? 'bi bi-dash-circle text-body-secondary' : 'bi bi-x-circle-fill text-danger';
+  });
+  const niveles = [['—', ''], ['Muy débil', 'bg-danger'], ['Débil', 'bg-danger'], ['Media', 'bg-warning'], ['Fuerte', 'bg-info'], ['Muy fuerte', 'bg-success']];
+  const [texto, color] = niveles[$('password').value ? puntos : 0];
+  $('fuerzaBarra').className = 'progress-bar ' + color;
+  $('fuerzaBarra').style.width = ($('password').value ? puntos * 20 : 0) + '%';
+  $('fuerzaTexto').textContent = 'Fortaleza: ' + texto;
+}
+
+/* =====================================================================
+   3) EVENTOS: cuándo se valida
+   ===================================================================== */
+Object.keys(reglas).forEach(id => {
+  const c = $(id);
+  // Primera validación al salir del campo; después, en cada cambio
+  c.addEventListener('blur', () => { c.dataset.tocado = '1'; validarCampo(c); });
+  c.addEventListener(c.type === 'checkbox' || c.type === 'date' ? 'change' : 'input', () => {
+    if (c.id === 'dni') c.value = c.value.toUpperCase();
+    if (c.id === 'password') {
+      actualizarFuerza();
+      if ($('password2').dataset.tocado) validarCampo($('password2'));  // validación cruzada
+    }
+    if (c.dataset.tocado || c.type === 'checkbox') validarCampo(c);
+  });
+});
+// IBAN: formato en bloques de 4 al salir del campo
+$('iban').addEventListener('blur', e => {
+  e.target.value = e.target.value.replace(/\s+/g, '').toUpperCase().replace(/(.{4})/g, '$1 ').trim();
+  validarCampo(e.target);
+});
+$('usuario').addEventListener('input', () => {
+  clearTimeout(temporizador);
+  temporizador = setTimeout(validarUsuario, 500);   // debounce: espera a que deje de escribir
+});
+form.querySelectorAll('[name="intereses"]').forEach(o => o.addEventListener('change', validarIntereses));
+form.querySelectorAll('[name="plan"]').forEach(o => o.addEventListener('change', validarPlan));
+$('verPassword').addEventListener('click', function () {
+  const p = $('password'), visible = p.type === 'text';
+  p.type = visible ? 'password' : 'text';
+  this.innerHTML = visible ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+});
+
+/* ---------- Envío ---------- */
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = $('btnRegistro'), textoBtn = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Validando…';
+
+  Object.keys(reglas).forEach(id => { $(id).dataset.tocado = '1'; validarCampo($(id)); });
+  validarIntereses(); validarPlan();
+  clearTimeout(temporizador);
+  await validarUsuario();                          // esperamos al "servidor"
+
+  btn.disabled = false; btn.innerHTML = textoBtn;
+
+  // Campos inválidos (un solo elemento por grupo de radios/checks)
+  const vistos = new Set();
+  const invalidos = [...form.querySelectorAll('input:invalid, select:invalid, textarea:invalid')]
+    .filter(c => !vistos.has(c.name) && vistos.add(c.name));
+
+  const resumen = $('resumenErrores');
+  if (invalidos.length) {
+    $('resumenTitulo').textContent = invalidos.length === 1 ? 'Hay 1 error en el formulario' : `Hay ${invalidos.length} errores en el formulario`;
+    $('listaErrores').innerHTML = '';
+    invalidos.forEach(c => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="#${c.id}" class="alert-link"></a>: <span></span>`;
+      li.querySelector('a').textContent = c.dataset.nombre || c.name;
+      li.querySelector('span').textContent = c.validationMessage;
+      li.querySelector('a').addEventListener('click', ev => { ev.preventDefault(); c.focus(); });
+      $('listaErrores').appendChild(li);
+    });
+    invalidos.forEach(c => { c.classList.remove('sacudir'); void c.offsetWidth; c.classList.add('sacudir'); });  // animación de aviso
+    resumen.classList.remove('d-none');
+    resumen.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    resumen.focus({ preventScroll: true });        // los lectores de pantalla lo anuncian
+    return;
+  }
+
+  // Todo correcto: mostramos los datos (aquí se haría el fetch al servidor)
+  resumen.classList.add('d-none');
+  const datos = new FormData(form);
+  const filas = [['Nombre', datos.get('nombre') + ' ' + datos.get('apellidos')], ['DNI/NIE', datos.get('dni')],
+    ['Email', datos.get('email')], ['Provincia', provinciaDeCP(datos.get('cp'))], ['Usuario', datos.get('usuario')],
+    ['IBAN', datos.get('iban')], ['Intereses', datos.getAll('intereses').join(', ')], ['Plan', datos.get('plan')],
+    ['Boletín', datos.get('boletin') ? 'Sí' : 'No']];
+  $('tablaResumen').innerHTML = '';
+  filas.forEach(([k, v]) => {
+    const tr = $('tablaResumen').insertRow();
+    tr.insertCell().textContent = k; tr.cells[0].className = 'fw-semibold';
+    tr.insertCell().textContent = v;
+  });
+  bootstrap.Modal.getOrCreateInstance('#modalRegistro').show();
+});
+
+/* ---------- Limpiar ---------- */
+form.addEventListener('reset', () => {
+  setTimeout(() => {   // esperamos a que el navegador vacíe los campos
+    form.querySelectorAll('.is-valid, .is-invalid').forEach(c => c.classList.remove('is-valid', 'is-invalid'));
+    form.querySelectorAll('input').forEach(c => { c.setCustomValidity(''); delete c.dataset.tocado; });
+    form.querySelectorAll('.invalid-feedback.d-block').forEach(f => f.classList.remove('d-block'));
+    $('resumenErrores').classList.add('d-none');
+    estadoUsuario('neutro'); actualizarFuerza();
+  });
+});
+    </script>
+    <div class="explicacion">
+      <p><strong>Cómo está construido (y por qué):</strong></p>
+      <ol>
+        <li><strong>Funciones externas puras</strong> (<code>validarDNI</code>, <code>validarIBAN</code>, <code>calcularEdad</code>, <code>provinciaDeCP</code>, <code>analizarPassword</code>): no dependen del formulario. Podrías moverlas a un archivo <code>validaciones.js</code> y usarlas en cualquier proyecto.</li>
+        <li><strong>Un objeto <code>reglas</code></strong> que asocia cada id de campo con su función. Primero se comprueban las reglas nativas (<code>errorNativo</code>, que traduce <code>validity</code> a mensajes en español) y después las propias. Añadir un campo nuevo es añadir una línea.</li>
+        <li><strong>Una sola función <code>marcar()</code></strong> conecta todo con Bootstrap: <code>setCustomValidity</code> (el navegador lo sabe) + <code>is-valid/is-invalid</code> (se ve) + texto del <code>invalid-feedback</code>/<code>valid-feedback</code> (se explica).</li>
+        <li><strong>Mensajes dinámicos</strong>: en lugar de un texto fijo en el HTML, el mensaje se genera según el error concreto ("Mínimo 4 caracteres (llevas 2)", "tendrías 16 años", "Provincia: Madrid").</li>
+        <li><strong>Validación asíncrona</strong>: mientras se consulta al "servidor", el campo tiene un error temporal ("Comprobando…") para que no se pueda enviar, se muestra un spinner en el <em>input group</em> y se ignoran respuestas antiguas (el contador <code>peticionActual</code> evita que una respuesta lenta pise a una más reciente).</li>
+        <li><strong>Validación cruzada</strong>: al cambiar la contraseña se revalida la confirmación.</li>
+        <li><strong>Grupos</strong>: checkboxes y radios se marcan todos a la vez; como el mensaje no es hermano directo de un input, se muestra con <code>d-block</code>.</li>
+        <li><strong>Al enviar</strong>: se valida todo, se espera al servidor, se construye el <strong>resumen de errores</strong> con enlaces (usando <code>validationMessage</code>, que contiene nuestros mensajes gracias a <code>setCustomValidity</code>) y, si todo está bien, se muestra un <strong>modal</strong> con los datos de <code>FormData</code>.</li>
+        <li><strong>Seguridad</strong>: los textos del usuario se insertan con <code>textContent</code> (nunca con <code>innerHTML</code>) para evitar inyección de código (XSS).</li>
+      </ol>
+    </div>
+  </div>
+  </section>
+</section>
+
+<!-- ========== 12. TEMPLATES ========== -->
+<section id="templates">
+  <h2 class="capitulo">12. Templates (plantillas): uso y recomendaciones</h2>
+  <p>Un <strong>template</strong> es un sitio o una página ya maquetada con Bootstrap (HTML + CSS + JS + imágenes) que se usa como punto de partida: una landing page, un panel de administración, una tienda, un portfolio… En lugar de empezar desde cero, adaptas los contenidos y los estilos.</p>
+  <div class="row g-3 mb-3">
+    <div class="col-md-6"><div class="card h-100 border-success"><div class="card-header text-bg-success"><i class="bi bi-hand-thumbs-up"></i> Ventajas</div><ul class="list-group list-group-flush small">
+      <li class="list-group-item">Ahorro de tiempo enorme en maquetación.</li>
+      <li class="list-group-item">Diseño profesional y probado en distintos dispositivos.</li>
+      <li class="list-group-item">Aprendes viendo cómo están resueltos componentes complejos.</li>
+      <li class="list-group-item">Ideal para prototipos y para presentar ideas a un cliente.</li>
+    </ul></div></div>
+    <div class="col-md-6"><div class="card h-100 border-danger"><div class="card-header text-bg-danger"><i class="bi bi-hand-thumbs-down"></i> Riesgos</div><ul class="list-group list-group-flush small">
+      <li class="list-group-item">Código innecesario (plugins, librerías, CSS que no usas) → web más lenta.</li>
+      <li class="list-group-item">Versiones antiguas de Bootstrap (3 o 4) o de jQuery con fallos de seguridad.</li>
+      <li class="list-group-item">Licencias: algunas exigen mantener el enlace al autor o no permiten uso comercial.</li>
+      <li class="list-group-item">Tu web se parecerá a muchas otras si no la personalizas.</li>
+    </ul></div></div>
+  </div>
+
+  <h3>12.1 Cómo trabajar con un template paso a paso</h3>
+  <ol>
+    <li><strong>Elegir bien</strong>: comprueba la <strong>versión de Bootstrap</strong> (mejor 5.3), la fecha de la última actualización, la demo en móvil y la <strong>licencia</strong> (MIT o similar si es para un proyecto real o comercial).</li>
+    <li><strong>Descargar y estudiar la estructura</strong>: localiza el <code>index.html</code>, las carpetas <code>css/</code>, <code>js/</code>, <code>img/</code> o <code>assets/</code>, y si incluye las fuentes <code>scss/</code>.</li>
+    <li><strong>Identificar qué es Bootstrap y qué es del autor</strong>: el CSS propio del template suele estar en <code>style.css</code> o <code>main.css</code>. Ahí es donde harás tus cambios.</li>
+    <li><strong>Personalizar sin romper</strong>: cambia colores y fuentes mediante variables (CSS o Sass), no editando cientos de reglas. Si el template trae SCSS, compílalo con tus variables.</li>
+    <li><strong>Sustituir contenidos</strong>: textos, imágenes (optimizadas: WebP, tamaños adecuados, <code>alt</code> descriptivos) y enlaces.</li>
+    <li><strong>Limpiar</strong>: elimina secciones, plugins y librerías que no uses (animaciones, carruseles, mapas…).</li>
+    <li><strong>Revisar accesibilidad y rendimiento</strong>: Lighthouse (en las DevTools de Chrome) y el validador W3C.</li>
+    <li><strong>Respetar la licencia</strong>: mantén los créditos si la licencia lo exige.</li>
+  </ol>
+
+  <h3>12.2 Ejemplos oficiales: el mejor punto de partida para aprender</h3>
+  <p>La propia documentación ofrece una colección de plantillas sencillas, gratuitas y con código limpio en <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank">getbootstrap.com/docs/5.3/examples</a>: <em>Album</em> (galería), <em>Pricing</em> (precios), <em>Checkout</em> (formulario de compra con validación), <em>Product</em>, <em>Blog</em>, <em>Dashboard</em> (panel de administración), <em>Sign-in</em> (login), <em>Sticky footer</em>, <em>Carousel</em>, <em>Headers</em>, <em>Footers</em>, <em>Sidebars</em>, <em>Features</em>, <em>Heroes</em>… Son ideales para clase porque no añaden librerías extra.</p>
+  <div class="callout callout-tip">
+    <div class="callout-titulo"><i class="bi bi-mortarboard"></i> Recomendaciones</div>
+    <ul class="mb-0">
+      <li>Para <strong>aprender</strong>: empieza con los ejemplos oficiales; los templates comerciales son demasiado complejos.</li>
+      <li>Para <strong>proyectos</strong>: un template bien elegido + personalización con variables es más productivo que maquetar todo a mano.</li>
+      <li>Para <strong>paneles de administración</strong>: AdminLTE, CoreUI o Tabler ya resuelven menús laterales, tablas y gráficos.</li>
+      <li>Desconfía de templates "gratuitos" de webs desconocidas: pueden incluir scripts maliciosos o enlaces ocultos. Descarga siempre de fuentes reconocidas.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== 13. RECURSOS ========== -->
+<section id="recursos">
+  <h2 class="capitulo">13. Webs de recursos: componentes, plantillas, temas e iconos</h2>
+  <div class="table-responsive">
+  <table class="table table-hover align-middle tabla-ref">
+    <thead class="table-dark"><tr><th>Recurso</th><th>Qué ofrece</th><th>Tipo</th></tr></thead>
+    <tbody>
+      <tr class="table-group-divider"><td colspan="3" class="fw-bold text-primary"><i class="bi bi-book"></i> Oficiales</td></tr>
+      <tr><td><a href="https://getbootstrap.com/docs/5.3/" target="_blank">getbootstrap.com</a></td><td>Documentación oficial con todos los componentes y su código.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank">Bootstrap Examples</a></td><td>Plantillas y fragmentos oficiales (heroes, headers, footers, dashboard…).</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://icons.getbootstrap.com/" target="_blank">Bootstrap Icons</a></td><td>Más de 2.000 iconos SVG / fuente de iconos (los usados en estos apuntes).</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://themes.getbootstrap.com/" target="_blank">Bootstrap Themes</a></td><td>Tienda oficial de temas profesionales revisados por el equipo de Bootstrap.</td><td><span class="badge text-bg-warning">Pago</span></td></tr>
+      <tr><td><a href="https://blog.getbootstrap.com/" target="_blank">Blog de Bootstrap</a></td><td>Novedades y notas de cada versión.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+
+      <tr class="table-group-divider"><td colspan="3" class="fw-bold text-primary"><i class="bi bi-window"></i> Plantillas (templates)</td></tr>
+      <tr><td><a href="https://startbootstrap.com/" target="_blank">Start Bootstrap</a></td><td>Plantillas y temas de calidad con licencia MIT (landing, blog, admin, portfolio).</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://bootstrapmade.com/" target="_blank">BootstrapMade</a></td><td>Gran colección de plantillas modernas para empresas, portfolios y servicios.</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+      <tr><td><a href="https://themewagon.com/" target="_blank">ThemeWagon</a></td><td>Catálogo amplio de plantillas gratuitas y premium.</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+      <tr><td><a href="https://colorlib.com/wp/templates/" target="_blank">Colorlib</a></td><td>Cientos de plantillas HTML (revisa la licencia: suelen exigir mantener el crédito).</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+      <tr><td><a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a></td><td>Kits de UI y dashboards con diseño muy cuidado.</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+
+      <tr class="table-group-divider"><td colspan="3" class="fw-bold text-primary"><i class="bi bi-speedometer2"></i> Paneles de administración</td></tr>
+      <tr><td><a href="https://adminlte.io/" target="_blank">AdminLTE</a></td><td>Dashboard muy popular y completo, código abierto.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://coreui.io/" target="_blank">CoreUI</a></td><td>Framework de administración basado en Bootstrap (también para React, Vue y Angular).</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+      <tr><td><a href="https://tabler.io/" target="_blank">Tabler</a></td><td>Dashboard moderno y limpio, código abierto, con su propio set de iconos.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+
+      <tr class="table-group-divider"><td colspan="3" class="fw-bold text-primary"><i class="bi bi-puzzle"></i> Temas, componentes y snippets</td></tr>
+      <tr><td><a href="https://bootswatch.com/" target="_blank">Bootswatch</a></td><td>Temas gratuitos que sustituyen el CSS de Bootstrap (cambian todo el aspecto con un solo archivo).</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://mdbootstrap.com/" target="_blank">MDBootstrap</a></td><td>Bootstrap con estética Material Design y muchos componentes extra.</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+      <tr><td><a href="https://bootsnipp.com/" target="_blank">Bootsnipp</a></td><td>Fragmentos de código de la comunidad (filtra por versión: muchos son de Bootstrap 3/4).</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://www.layoutit.com/" target="_blank">LayoutIt!</a></td><td>Generador visual de maquetas Bootstrap arrastrando elementos.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://bootstrapstudio.io/" target="_blank">Bootstrap Studio</a></td><td>Editor de escritorio para diseñar webs Bootstrap visualmente.</td><td><span class="badge text-bg-warning">Pago</span></td></tr>
+
+      <tr class="table-group-divider"><td colspan="3" class="fw-bold text-primary"><i class="bi bi-fonts"></i> Complementos útiles</td></tr>
+      <tr><td><a href="https://fonts.google.com/" target="_blank">Google Fonts</a></td><td>Tipografías web gratuitas.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://fontawesome.com/" target="_blank">Font Awesome</a></td><td>Alternativa clásica de iconos.</td><td><span class="badge text-bg-info">Gratis + Pro</span></td></tr>
+      <tr><td><a href="https://unsplash.com/" target="_blank">Unsplash</a> / <a href="https://www.pexels.com/" target="_blank">Pexels</a></td><td>Fotografías libres para sustituir las imágenes de los templates.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://coolors.co/" target="_blank">Coolors</a></td><td>Generador de paletas de color para personalizar las variables.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+      <tr><td><a href="https://validator.w3.org/" target="_blank">Validador W3C</a></td><td>Comprueba que tu HTML es correcto.</td><td><span class="badge text-bg-success">Gratis</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ========== 14. CHULETA ========== -->
+<section id="chuleta">
+  <h2 class="capitulo">14. Chuleta final</h2>
+  <div class="row g-3 small">
+    <div class="col-md-6">
+      <div class="card h-100"><div class="card-header fw-bold">Estructura y responsive</div><div class="card-body">
+        <p class="mb-1"><code>container</code> → <code>row</code> → <code>col-{bp}-{n}</code></p>
+        <p class="mb-1">Breakpoints: <code>sm</code> 576 · <code>md</code> 768 · <code>lg</code> 992 · <code>xl</code> 1200 · <code>xxl</code> 1400</p>
+        <p class="mb-1"><code>row-cols-{bp}-{n}</code> · <code>g-{0-5}</code> · <code>offset-*</code> · <code>order-*</code></p>
+        <p class="mb-0"><code>d-none d-md-block</code> · <code>img-fluid</code> · <code>ratio ratio-16x9</code> · <code>table-responsive</code></p>
+      </div></div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100"><div class="card-header fw-bold">Utilidades</div><div class="card-body">
+        <p class="mb-1"><code>m|p</code> + <code>t|b|s|e|x|y</code> + <code>-0..5|auto</code> (ej. <code>mt-3</code>, <code>px-2</code>, <code>mx-auto</code>)</p>
+        <p class="mb-1"><code>text-*</code> · <code>bg-*</code> · <code>text-bg-*</code> · <code>border</code> · <code>rounded</code> · <code>shadow</code></p>
+        <p class="mb-1"><code>d-flex</code> · <code>justify-content-*</code> · <code>align-items-*</code> · <code>gap-*</code> · <code>flex-column flex-md-row</code></p>
+        <p class="mb-0"><code>fs-1..6</code> · <code>fw-bold</code> · <code>text-center</code> · <code>text-uppercase</code> · <code>w-50</code></p>
+      </div></div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100"><div class="card-header fw-bold">Componentes</div><div class="card-body">
+        <p class="mb-1"><code>btn btn-primary</code> · <code>badge</code> · <code>alert alert-danger alert-dismissible</code></p>
+        <p class="mb-1"><code>navbar navbar-expand-lg</code> + <code>navbar-toggler</code> + <code>collapse navbar-collapse</code></p>
+        <p class="mb-1"><code>card</code> &gt; <code>card-body</code> · <code>list-group</code> · <code>nav nav-tabs</code></p>
+        <p class="mb-0">JS: <code>data-bs-toggle</code> + <code>data-bs-target="#id"</code> · <code>data-bs-dismiss</code></p>
+      </div></div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100"><div class="card-header fw-bold">Formularios y validación</div><div class="card-body">
+        <p class="mb-1"><code>form-label</code> · <code>form-control</code> · <code>form-select</code> · <code>form-check(-input|-label)</code> · <code>form-switch</code></p>
+        <p class="mb-1"><code>input-group(-text)</code> · <code>form-floating</code> (¡con placeholder!)</p>
+        <p class="mb-1"><code>novalidate</code> · <code>was-validated</code> · <code>is-valid</code> / <code>is-invalid</code></p>
+        <p class="mb-0"><code>valid-feedback</code> / <code>invalid-feedback</code> · <code>has-validation</code> · JS: <code>setCustomValidity()</code></p>
+      </div></div>
+    </div>
+  </div>
+  <p class="text-center text-body-secondary small mt-5 mb-0">Apuntes de Bootstrap 5.3 · Diseño de Interfaces Web · 2º DAW</p>
+</section>
+
+</div><!-- /.hoja -->
+</main>
+</div><!-- /.row -->
+</div><!-- /.container -->
+
+<!-- ================= SCRIPTS DE LOS APUNTES ================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+// Genera automáticamente el bloque de código de cada ejemplo a partir de su propio HTML,
+// así el código mostrado es exactamente el que se está ejecutando.
+(function () {
+  function desindentar(txt) {
+    const lineas = txt.replace(/^\s*\n/, '').replace(/\s+$/, '').split('\n');
+    const sangria = Math.min(...lineas.filter(l => l.trim()).map(l => l.match(/^ */)[0].length));
+    return lineas.map(l => l.slice(sangria)).join('\n');
+  }
+  function crearBloque(codigo, lenguaje, titulo) {
+    const det = document.createElement('details');
+    det.className = 'codigo'; det.open = true;
+    const sum = document.createElement('summary');
+    sum.innerHTML = '<span><i class="bi bi-code-slash"></i> </span>';
+    sum.firstChild.append(titulo);
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'btn btn-sm btn-outline-secondary py-0';
+    btn.innerHTML = '<i class="bi bi-clipboard"></i> Copiar';
+    btn.addEventListener('click', ev => {
+      ev.preventDefault();
+      navigator.clipboard.writeText(codigo).then(() => {
+        btn.innerHTML = '<i class="bi bi-check2"></i> Copiado';
+        setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i> Copiar', 1500);
+      }).catch(() => {});
+    });
+    sum.appendChild(btn);
+    const pre = document.createElement('pre');
+    const code = document.createElement('code');
+    code.className = 'language-' + lenguaje;
+    code.textContent = codigo;
+    pre.appendChild(code); det.append(sum, pre);
+    if (window.hljs) hljs.highlightElement(code);
+    return det;
+  }
+  // 1) Ejemplos en vivo: el HTML del propio .demo
+  document.querySelectorAll('.demo').forEach(demo => {
+    const html = desindentar(demo.innerHTML).replace(/=""/g, '');
+    demo.after(crearBloque(html, 'xml', 'Código HTML'));
+  });
+  // 2) Scripts y estilos marcados con .show-code
+  document.querySelectorAll('script.show-code, style.show-code').forEach(el => {
+    const texto = desindentar(el.textContent).replace(/<\\\//g, '</');
+    const lenguaje = el.dataset.lang || (el.tagName === 'STYLE' ? 'css' : 'javascript');
+    const titulo = el.dataset.titulo || (lenguaje === 'css' ? 'Código CSS' : 'Código JavaScript');
+    const bloque = crearBloque(texto, lenguaje, titulo);
+    if (!el.closest('.ejemplo')) { bloque.classList.add('mb-3', 'border', 'rounded', 'overflow-hidden'); }
+    el.after(bloque);
+  });
+  // 3) Copiar el índice al offcanvas para móvil
+  const indice = document.getElementById('toc').cloneNode(true);
+  indice.removeAttribute('id');
+  indice.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    const oc = window.bootstrap && bootstrap.Offcanvas.getInstance('#indiceMovil');
+    if (oc) oc.hide();
+  }));
+  document.getElementById('indiceMovilCuerpo').appendChild(indice);
+  // 4) Modo oscuro (recordado entre visitas)
+  const html = document.documentElement;
+  const btnTema = document.getElementById('btnTema');
+  function aplicarTema(t) {
+    html.setAttribute('data-bs-theme', t);
+    btnTema.innerHTML = t === 'dark'
+      ? '<i class="bi bi-sun"></i> <span class="d-none d-sm-inline">Modo claro</span>'
+      : '<i class="bi bi-moon-stars"></i> <span class="d-none d-sm-inline">Modo oscuro</span>';
+  }
+  try { if (localStorage.getItem('tema') === 'dark') aplicarTema('dark'); } catch (e) {}
+  btnTema.addEventListener('click', () => {
+    const nuevo = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+    aplicarTema(nuevo);
+    try { localStorage.setItem('tema', nuevo); } catch (e) {}
+  });
+})();
+</script>
+<!-- Bootstrap JS (incluye Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
