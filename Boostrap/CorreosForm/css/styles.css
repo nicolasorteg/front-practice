@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.barra-correos {
+  background-color: #FFCD00;
+  width: 100%;
+}
+
+.logo-correos {
+  height: 60px;  
+  width: auto;   
+}
+
+.barra-correos {
+  background-color: #FFCD00;
+  width: 100%;
+}
+
+/* 3 columnas: logo | título (ocupa el centro) | hueco */
+.barra-correos-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.logo-correos {
+  height: 40px;
+  width: auto;
+}
+
+.titulo-correos {
+  color: #00457d;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+@media (min-width: 768px) {
+  .titulo-correos { font-size: 1.75rem; }
+}
