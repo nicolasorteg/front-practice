@@ -16,9 +16,96 @@
                 <img src="images/correos-logo.png" alt="Correos" class="logo-correos">
             </a>
                 <h1 class="titulo-correos flex-grow-1 text-center text-nowrap m-0">Formulario Correos</h1>
-            
         </div>
     </header>
+
+     <div id="body">
+        <form id="formulario">
+            <div id="datos-destinatario">
+                <div>
+                    <label class="linea">Nombre (1)</label>
+                    <input class="caja" id="nombre" type="text" placeholder="Nombre sin apellidos">
+                </div>
+                <div>
+                    <label class="linea">Primer apellido</label>
+                    <input class="caja" id="primer-apellido" type="text" placeholder="Primer apellido" maxlength="120">
+                </div>
+                <div>
+                    <label class="linea">Segundo Apellido</label>
+                    <input class="caja" id="direccionCompleta" type="text" placeholder="Segundo apellido" maxlength="120">
+                </div>
+                <div>
+                    <label class="linea">Empresa (1)</label>
+                    <input class="caja" id="empresa" type="text" placeholder="Nombre empresa" maxlength="100">
+                </div>
+                <div>
+                    <label class="linea">Tipo de documento</label>
+                    <input class="caja" id="codigoPostal" type="text" placeholder="Codigo postal" maxlength="5">
+                    <p class="obligatorio" id="errorCP">Código postal erróneo, 5 dígitos entre 01001 y 52006</p>
+                </div>
+                <div>
+                    <label class="linea">Nº de documento</label>
+                    <input class="caja" id="ciudad" type="text" placeholder="Ciudad">
+                    <p class="obligatorio" id="errorCiudad">Ciudad obligatoria, entre 1 y 50 caracteres</p>
+                </div>
+                <div>
+                    <label class="linea">Tipo de vía</label>
+                    <select class="cajaList1" id="provincias">
+                    <option value="selecciona" selected>- Selecciona provincia -</option>
+                    </select>
+                </div>
+                <div class="noCaja">
+                    <label class="linea">Nombre de la vía (*)</label>
+                    <input id="preferente" type="checkbox">
+                    <span id="tooltip">Accede a una vida mejor</span>
+                </div>
+                <div>
+                    <label class="linea">CP (*)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Teléfono de contacto</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Email</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+            </div>
+            <div id="peso-tam">
+                <div>
+                    <label class="linea">Peso (Kg) (*)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Peso Volumétrico (*)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Alto (*) (cm)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Ancho (*) (cm)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Largo (*) (cm)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
+                </div>
+                <br><button id="submit" type="submit">Calcular</button>
+            </div>
+        </form>
+    </div>
+    
 
     <script src="https://jsdelivr.net"></script>
 </body>
