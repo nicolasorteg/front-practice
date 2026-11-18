@@ -3,9 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Talleres Vives</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
     
+     <div id="body">
+    
+        <img src="images/coche-taller.jpg" alt="Imagen coche">
+
+        <form id="formulario">
+            <div id="datos-destinatario">
+                <div>
+                    <label class="linea">Número factura: (*)</label>
+                    <input class="caja" id="nombre" type="text" placeholder="Nº Factura">
+                    <p class="obligatorio" id="errorNumFactura">Número de factura obligatorio</p>
+                </div>
+                <div>
+                    <label class="linea">Fecha: (*)</label>
+                    <input class="caja" id="primer-apellido" type="date">
+                    <p class="obligatorio" id="errorFecha">Fecha obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Nombre cliente: (*)</label>
+                    <input class="caja" id="direccionCompleta" type="text" placeholder="Nombre sin apellidos" maxlength="50">
+                    <p class="obligatorio" id="errorNombre">Nombre obligatorio, máximo 50 caracteres</p>
+                </div>
+                <div>
+                    <label class="linea">Dirección: (*)</label>
+                    <input class="caja" id="empresa" type="text" placeholder="Dirección" maxlength="100">
+                    <p class="obligatorio" id="errorNumFactura">Dirección completa obligatoria</p>
+                </div>
+                <div>
+                    <label class="linea">Código Postal: (*)</label>
+                    <input class="caja" id="codigoPostal" type="text" placeholder="Codigo postal" maxlength="5">
+                    <p class="obligatorio" id="errorCP">Código postal erróneo, 5 dígitos entre 01001 y 52006</p>
+                </div>
+                <div>
+                    <label class="linea">Provincia: (*)</label>
+                    <input class="caja" id="ciudad" type="text" placeholder="Provincia">
+                    <p class="obligatorio" id="errorProvincia">Provincia, entre 1 y 50 caracteres</p>
+                </div>
+                <div>
+                    <label class="linea">Ciudad: (*)</label>
+                    <input class="caja" id="ciudad" type="text" placeholder="Ciudad">
+                    <p class="obligatorio" id="errorCiudad">Ciudad obligatoria, máximo 30 caracteres.</p>
+                </div>
+                <div class="noCaja">
+                    <label class="linea">CIF/NIF</label>
+                    <input id="preferente" type="checkbox">
+                </div>
+                <div>
+                    <label class="linea">Teléfono de contacto:</label>
+                    <input class="caja" id="codigoPostal" type="text" placeholder="Teléfono" maxlength="50">
+                </div>
+                <div>
+                    <label class="linea">E-mail: (*)</label>
+                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
+                    <p class="obligatorio" id="errorEmail">Email obligatorio</p>
+                </div>
+                <br><button id="submit" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
