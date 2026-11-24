@@ -1,112 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Correos Formulario</title>
+    <title>Formulario Correos - Bootstrap 5.3</title>
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Tus estilos propios -->
     <link href="css/styles.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     
-    <header class="barra-correos">
+    <!-- Cabecera estilo Correos -->
+    <header class="barra-correos shadow-sm">
         <div class="container-fluid d-flex align-items-center px-3 py-3">
             <a href="#" class="d-inline-flex">
-                <img src="images/correos-logo.png" alt="Correos" class="logo-correos">
+                <img src="images/correos-logo.png" alt="Correos" class="logo-correos" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/2f/Correos_Logo_2019.svg'">
             </a>
-                <h1 class="titulo-correos flex-grow-1 text-center text-nowrap m-0">Formulario Correos</h1>
+            <h1 class="titulo-correos flex-grow-1 text-center m-0">Formulario de Envío - Correos</h1>
         </div>
     </header>
 
-     <div id="body">
-        <form id="formulario">
-            <div id="datos-destinatario">
-                <div>
-                    <label class="linea">Nombre (1)</label>
-                    <input class="caja" id="nombre" type="text" placeholder="Nombre sin apellidos">
-                </div>
-                <div>
-                    <label class="linea">Primer apellido</label>
-                    <input class="caja" id="primer-apellido" type="text" placeholder="Primer apellido" maxlength="120">
-                </div>
-                <div>
-                    <label class="linea">Segundo Apellido</label>
-                    <input class="caja" id="direccionCompleta" type="text" placeholder="Segundo apellido" maxlength="120">
-                </div>
-                <div>
-                    <label class="linea">Empresa (1)</label>
-                    <input class="caja" id="empresa" type="text" placeholder="Nombre empresa" maxlength="100">
-                </div>
-                <div>
-                    <label class="linea">Tipo de documento</label>
-                    <input class="caja" id="codigoPostal" type="text" placeholder="Codigo postal" maxlength="5">
-                    <p class="obligatorio" id="errorCP">Código postal erróneo, 5 dígitos entre 01001 y 52006</p>
-                </div>
-                <div>
-                    <label class="linea">Nº de documento</label>
-                    <input class="caja" id="ciudad" type="text" placeholder="Ciudad">
-                    <p class="obligatorio" id="errorCiudad">Ciudad obligatoria, entre 1 y 50 caracteres</p>
-                </div>
-                <div>
-                    <label class="linea">Tipo de vía</label>
-                    <select class="cajaList1" id="provincias">
-                    <option value="selecciona" selected>- Selecciona provincia -</option>
-                    </select>
-                </div>
-                <div class="noCaja">
-                    <label class="linea">Nombre de la vía (*)</label>
-                    <input id="preferente" type="checkbox">
-                    <span id="tooltip">Accede a una vida mejor</span>
-                </div>
-                <div>
-                    <label class="linea">CP (*)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Teléfono de contacto</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Email</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-            </div>
-            <div id="peso-tam">
-                <div>
-                    <label class="linea">Peso (Kg) (*)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Peso Volumétrico (*)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Alto (*) (cm)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Ancho (*) (cm)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Largo (*) (cm)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorCP">La contraseña es obligatoria</p>
-                </div>
-                <br><button id="submit" type="submit">Calcular</button>
-            </div>
-        </form>
-    </div>
-    
+    <main class="container my-5">
+        <div class="card shadow border-0 rounded-4 p-4 p-md-5 bg-white">
+            <form id="formulario" class="needs-validation" novalidate>
+                
+                <!-- SECCIÓN 1: DATOS DESTINATARIO -->
+                <h4 class="text-primary mb-3"><i class="bi bi-person-fill"></i> Datos del Destinatario</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="nombreEmpresa" class="form-label">Nombre o Empresa <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nombreEmpresa" placeholder="Obligatorio (Nombre o Empresa)" required>
+                        <div class="invalid-feedback">Debe indicar el nombre o la empresa.</div>
+                        <div class="form-text">Al menos uno de los dos campos (Nombre o Empresa) es obligatorio.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="empresa" class="form-label">Empresa (Alternativo)</label>
+                        <input type="text" class="form-control" id="empresa" placeholder="Nombre de empresa (opcional si hay nombre)">
+                    </div>
 
-    <script src="https://jsdelivr.net"></script>
+                    <div class="col-md-6">
+                        <label for="tipoDocumento" class="form-label">Tipo de documento</label>
+                        <select class="form-select" id="tipoDocumento">
+                            <option value="" selected>-- Seleccione tipo --</option>
+                            <option value="NIF">NIF</option>
+                            <option value="NIE">NIE</option>
+                            <option value="CIF">CIF</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="numDocumento" class="form-label">Número de documento</label>
+                        <input type="text" class="form-control" id="numDocumento" placeholder="Obligatorio si elige tipo de documento">
+                        <div class="invalid-feedback" id="errorNumDoc">Formato de documento no válido para el tipo seleccionado.</div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h4 class="text-primary mb-3"><i class="bi bi-geo-alt-fill"></i> Dirección de Entrega</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label for="tipoVia" class="form-label">Tipo de vía</label>
+                        <select class="form-select" id="tipoVia">
+                            <option value="" selected>- Selecciona vía -</option>
+                            <option value="Calle">Calle</option>
+                            <option value="Avda">Avenida (Avda)</option>
+                            <option value="Plaza">Plaza</option>
+                            <option value="Camino">Camino</option>
+                            <option value="Carretera">Carretera</option>
+                            <option value="Paseo">Paseo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="nombreVia" class="form-label">Nombre de la vía <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nombreVia" required placeholder="Ej: Mayor">
+                        <div class="invalid-feedback">El nombre de la vía es obligatorio.</div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="numeroVia" class="form-label">Número (Máx 5)</label>
+                        <input type="text" class="form-control" id="numeroVia" maxlength="5" placeholder="Ej: 12">
+                        <div class="invalid-feedback">Máximo 5 caracteres.</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="bloque" class="form-label">Bloque (Máx 5)</label>
+                        <input type="text" class="form-control" id="bloque" maxlength="5" placeholder="Bl. 3">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="escalera" class="form-label">Escalera (Máx 5)</label>
+                        <input type="text" class="form-control" id="escalera" maxlength="5" placeholder="Esc. A">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="pisoPuer" class="form-label">Piso / Puerta (Máx 5)</label>
+                        <input type="text" class="form-control" id="pisoPuer" maxlength="5" placeholder="2ºB">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="codigoPostal" class="form-label">Código Postal (PPNNN) <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="codigoPostal" required maxlength="5" placeholder="Ej: 28001">
+                        <div class="invalid-feedback">Código postal incorrecto (debe tener 5 dígitos).</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="provincia" class="form-label">Provincia</label>
+                        <input type="text" class="form-control" id="provincia" readonly placeholder="Se autocompleta con el C.P.">
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- SECCIÓN 3: CONTACTO -->
+                <h4 class="text-primary mb-3"><i class="bi bi-telephone-fill"></i> Datos de Contacto</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="movil" class="form-label">Móvil SMS / Teléfono contacto <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="movil" required maxlength="9" placeholder="9 dígitos (6, 7 o 9)">
+                        <div class="invalid-feedback">Debe tener 9 dígitos y empezar por 6, 7 o 9.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email (Opcional)</label>
+                        <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com">
+                        <div class="invalid-feedback">El formato del email no es válido.</div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- SECCIÓN 4: PESO Y TAMAÑO -->
+                <h4 class="text-primary mb-3"><i class="bi bi-box-seam"></i> Peso y Dimensiones</h4>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label for="peso" class="form-label">Peso (Kg) <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="peso" required placeholder="Ej: 2.50">
+                        <div class="invalid-feedback">Debe ser un número entero o con dos decimales (ej: 1.50).</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="largo" class="form-label">Largo (cm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control dimension" id="largo" required min="1" placeholder="cm">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="ancho" class="form-label">Ancho (cm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control dimension" id="ancho" required min="1" placeholder="cm">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="alto" class="form-label">Alto (cm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control dimension" id="alto" required min="1" placeholder="cm">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pesoVolumetrico" class="form-label">Peso Volumétrico (Kg)</label>
+                        <input type="text" class="form-control bg-white" id="pesoVolumetrico" readonly placeholder="Calculado automáticamente">
+                        <div class="form-text">Fórmula estándar paquetería: (Largo × Ancho × Alto) / 5000</div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- SECCIÓN 5: SERVICIOS ADICIONALES (CHECKBOXES) -->
+                <h4 class="text-primary mb-3"><i class="bi bi-shield-check"></i> Servicios Adicionales y Opciones</h4>
+                
+                <!-- Envío de vuelta -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="checkEnvioVuelta">
+                    <label class="form-check-label fw-semibold" for="checkEnvioVuelta">
+                        Preparar envío de vuelta asociado
+                    </label>
+                </div>
+                <div class="mb-3 ps-4 d-none" id="contenedorFechaLimite">
+                    <label for="fechaLimite" class="form-label">Fecha límite de devolución <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control w-50" id="fechaLimite">
+                    <div class="invalid-feedback">La fecha límite debe ser superior a 7 días a partir de hoy.</div>
+                </div>
+
+                <!-- Seguro a todo riesgo -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="checkSeguro">
+                    <label class="form-check-label fw-semibold" for="checkSeguro">
+                        Seguro a todo riesgo
+                    </label>
+                </div>
+                <div class="mb-3 ps-4 d-none" id="contenedorSeguro">
+                    <label for="importeSeguro" class="form-label">Importe asegurado (€) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control w-50" id="importeSeguro" min="1" step="0.01" placeholder="Ej: 150.00">
+                    <div class="invalid-feedback">Introduzca un importe numérico válido.</div>
+                </div>
+
+                <!-- Reembolso a cuenta -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="checkReembolso">
+                    <label class="form-check-label fw-semibold" for="checkReembolso">
+                        Reembolso a cuenta
+                    </label>
+                </div>
+                <div class="row g-3 mb-4 ps-4 d-none" id="contenedorReembolso">
+                    <div class="col-md-6">
+                        <label for="importeReembolso" class="form-label">Importe Reembolso (€) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="importeReembolso" min="0.01" step="0.01" placeholder="Ej: 45.90">
+                        <div class="invalid-feedback">Introduzca un importe obligatorio.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cuentaIban" class="form-label">Número de cuenta IBAN <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control text-uppercase" id="cuentaIban" placeholder="ES00 0000 0000 0000 0000 0000">
+                        <div class="invalid-feedback">El IBAN introducido no es válido.</div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="mb-4">
+                    <label for="observaciones" class="form-label">Observaciones (Opcional, máx 150 caracteres)</label>
+                    <textarea class="form-control" id="observaciones" rows="3" maxlength="150" placeholder="Instrucciones de entrega..."></textarea>
+                    <div class="form-text text-end"><span id="contadorCaracteres">150</span> caracteres restantes</div>
+                </div>
+
+                <!-- BOTÓN DE ENVÍO -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-warning btn-lg fw-bold text-dark shadow-sm">
+                        <i class="bi bi-send-fill"></i> Aceptar y Enviar Envío
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-labelledby="modalResultadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" id="modalHeader">
+                    <h5 class="modal-title fw-bold" id="modalResultadoLabel">Título del Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Contenido dinámico (errores o datos) -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    
+        
 </body>
 </html>
