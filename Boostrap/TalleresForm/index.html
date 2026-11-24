@@ -6,69 +6,148 @@
     <title>Talleres Vives</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-    
-     <div id="body">
-    
-        <img src="images/coche-taller.jpg" alt="Imagen coche">
+<div class="container py-4">
 
-        <form id="formulario">
-            <div id="datos-destinatario">
-                <div>
-                    <label class="linea">Número factura: (*)</label>
-                    <input class="caja" id="nombre" type="text" placeholder="Nº Factura">
-                    <p class="obligatorio" id="errorNumFactura">Número de factura obligatorio</p>
-                </div>
-                <div>
-                    <label class="linea">Fecha: (*)</label>
-                    <input class="caja" id="primer-apellido" type="date">
-                    <p class="obligatorio" id="errorFecha">Fecha obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Nombre cliente: (*)</label>
-                    <input class="caja" id="direccionCompleta" type="text" placeholder="Nombre sin apellidos" maxlength="50">
-                    <p class="obligatorio" id="errorNombre">Nombre obligatorio, máximo 50 caracteres</p>
-                </div>
-                <div>
-                    <label class="linea">Dirección: (*)</label>
-                    <input class="caja" id="empresa" type="text" placeholder="Dirección" maxlength="100">
-                    <p class="obligatorio" id="errorNumFactura">Dirección completa obligatoria</p>
-                </div>
-                <div>
-                    <label class="linea">Código Postal: (*)</label>
-                    <input class="caja" id="codigoPostal" type="text" placeholder="Codigo postal" maxlength="5">
-                    <p class="obligatorio" id="errorCP">Código postal erróneo, 5 dígitos entre 01001 y 52006</p>
-                </div>
-                <div>
-                    <label class="linea">Provincia: (*)</label>
-                    <input class="caja" id="ciudad" type="text" placeholder="Provincia">
-                    <p class="obligatorio" id="errorProvincia">Provincia, entre 1 y 50 caracteres</p>
-                </div>
-                <div>
-                    <label class="linea">Ciudad: (*)</label>
-                    <input class="caja" id="ciudad" type="text" placeholder="Ciudad">
-                    <p class="obligatorio" id="errorCiudad">Ciudad obligatoria, máximo 30 caracteres.</p>
-                </div>
-                <div class="noCaja">
-                    <label class="linea">CIF/NIF</label>
-                    <input id="preferente" type="checkbox">
-                </div>
-                <div>
-                    <label class="linea">Teléfono de contacto:</label>
-                    <input class="caja" id="codigoPostal" type="text" placeholder="Teléfono" maxlength="50">
-                </div>
-                <div>
-                    <label class="linea">E-mail: (*)</label>
-                    <input class="caja" id="codigoPostal" type="password" placeholder="Contraseña" maxlength="120">
-                    <p class="obligatorio" id="errorEmail">Email obligatorio</p>
-                </div>
-                <br><button id="submit" type="submit">Enviar</button>
+    <h1 class="text-center mb-3"><i class="bi bi-car-front"></i> Talleres Vives</h1>
+    <!-- <img src="images/coche-taller.jpg" alt="Imagen coche" class="img-fluid rounded mb-3"> -->
+
+    <form id="formulario" novalidate>
+
+        <!-- Resumen de errores (se muestra al pulsar Generar factura) -->
+        <div id="resumenErrores" class="alert alert-danger d-none" role="alert"></div>
+
+        <!-- ========== DATOS DEL CLIENTE ========== -->
+        <h2 class="h5 border-bottom pb-1">Datos de la factura y del cliente</h2>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label for="numFactura" class="form-label">Número factura (*)</label>
+                <input type="text" class="form-control" id="numFactura" placeholder="Nº Factura">
+                <div class="invalid-feedback"></div>
             </div>
-        </form>
-    </div>
+            <div class="col-md-6">
+                <label for="fecha" class="form-label">Fecha (*)</label>
+                <input type="date" class="form-control" id="fecha">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre cliente (*)</label>
+                <input type="text" class="form-control" id="nombre" maxlength="50" placeholder="Nombre">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="nif" class="form-label">NIF / CIF / NIE (*)</label>
+                <input type="text" class="form-control" id="nif" maxlength="9" placeholder="12345678Z">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-12">
+                <label for="direccion" class="form-label">Dirección (*)</label>
+                <input type="text" class="form-control" id="direccion" maxlength="100" placeholder="Dirección">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="cp" class="form-label">Código postal (*)</label>
+                <input type="text" class="form-control" id="cp" maxlength="5" placeholder="28911">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="provincia" class="form-label">Provincia (*)</label>
+                <input type="text" class="form-control" id="provincia" maxlength="50" placeholder="Provincia">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="ciudad" class="form-label">Ciudad (*)</label>
+                <input type="text" class="form-control" id="ciudad" maxlength="30" placeholder="Ciudad">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono de contacto</label>
+                <input type="text" class="form-control" id="telefono" maxlength="9" placeholder="600123456">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="col-md-6">
+                <label for="email" class="form-label">E-mail (*)</label>
+                <input type="email" class="form-control" id="email" maxlength="120" placeholder="nombre@dominio.es">
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/app.js"></script>
+        <!-- ========== LÍNEAS DE FACTURA ========== -->
+        <h2 class="h5 border-bottom pb-1">Líneas de factura</h2>
+        <div class="table-responsive">
+            <table class="table table-sm align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nº</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Descripción</th>
+                        <th>IVA</th>
+                        <th>Importe</th>
+                        <th>Importe IVA</th>
+                        <th>Total línea</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="lineas"></tbody>
+            </table>
+        </div>
+        <div id="errorLinea" class="text-danger small mb-2"></div>
+        <button type="button" id="btnAnadir" class="btn btn-success mb-4">
+            <i class="bi bi-plus-circle"></i> Añadir línea
+        </button>
+
+        <!-- ========== TOTALES ========== -->
+        <h2 class="h5 border-bottom pb-1">Totales</h2>
+        <table class="table table-bordered w-auto mb-4">
+            <thead class="table-light">
+                <tr><th>IVA</th><th class="text-end">Base imponible</th><th class="text-end">Total IVA</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>4%</td><td class="text-end" id="base4">0.00</td><td class="text-end" id="iva4">0.00</td></tr>
+                <tr><td>10%</td><td class="text-end" id="base10">0.00</td><td class="text-end" id="iva10">0.00</td></tr>
+                <tr><td>21%</td><td class="text-end" id="base21">0.00</td><td class="text-end" id="iva21">0.00</td></tr>
+            </tbody>
+            <tfoot>
+                <tr class="table-dark">
+                    <th colspan="2">TOTAL FACTURA</th>
+                    <th class="text-end" id="totalFactura">0.00</th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- ========== CAPTCHA ========== -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <label for="captcha" class="form-label">Captcha: ¿cuánto es <strong id="textoCaptcha"></strong>? (*)</label>
+                <input type="text" class="form-control" id="captcha" maxlength="2">
+                <div class="invalid-feedback"></div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg">Generar factura</button>
+    </form>
+</div>
+
+<!-- ========== MODAL FINAL ========== -->
+<div class="modal fade" id="modalFactura" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header text-bg-success">
+                <h1 class="modal-title fs-5">Factura generada</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body" id="contenidoModal"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

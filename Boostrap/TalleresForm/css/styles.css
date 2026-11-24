@@ -1,0 +1,19 @@
+/* Estilos propios (se cargan después de Bootstrap) */
+body {
+    background-color: #f4f6f8;
+}
+
+/* Inputs pequeños de las líneas de factura */
+#lineas input,
+#lineas select {
+    min-width: 70px;
+}
+
+#lineas .descripcion {
+    min-width: 200px;
+}
+
+#lineas .importe {
+    white-space: nowrap;
+    text-align: right;
+}
