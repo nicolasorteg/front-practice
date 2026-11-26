@@ -1,0 +1,22 @@
+/* Estilos propios: se cargan después de Bootstrap */
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 70px;
+}
+
+.cabecera {
+  background-color: #fccc49; 
+  color: #212529;
+}
+
+.cabecera h1 {
+  color: #c8402f;  
+}
+
+.participa {
+  background-color: #2e004d;  
+}
